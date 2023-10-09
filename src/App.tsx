@@ -17,11 +17,12 @@ function App() {
         Link
       </Button> */}
       <Input
-        isSearch={true}
+        name="email"
+        isSearch={false}
         type={'text'}
-        label={'Input'}
+        label={'email'}
         placeholder={'Input'}
-        error={false}
+        /* error={'false'} */
         isDisabled={true}
       />
 
