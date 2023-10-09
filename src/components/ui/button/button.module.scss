@@ -1,0 +1,35 @@
+.button {
+    all: unset;
+    cursor: pointer;
+}
+
+.primary {
+    background-color: red;
+  }
+   
+  .secondary {
+    background-color: green;
+  }
+   
+  .tertiary {
+    background-color: blue;
+  }
+   
+  .link {
+    background-color: yellow;
+  }
+
+  .purple { // added
+    padding: 6px 28px;
+
+    font-size: 14px;
+    font-weight: 700;
+    color: white;
+
+    background-color: #704ECC;
+    border-radius: 4px;
+  }
+   
+  .fullWidth {
+    width: 100%;
+  }
