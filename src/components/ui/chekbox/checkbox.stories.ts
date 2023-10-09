@@ -15,5 +15,6 @@ export const JustCheckbox: Story = {
   args: {
     id: 'ID',
     label: 'I accept',
+    checked: false,
   },
 }

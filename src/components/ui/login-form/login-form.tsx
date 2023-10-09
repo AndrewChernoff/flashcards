@@ -1,10 +1,9 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useController, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 import { Button } from '../button'
-import CheckboxDemo from '../chekbox/checkbox'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
 import Input from '../input/input'
 
@@ -37,7 +36,7 @@ export const LoginForm = () => {
   }) */
 
   const onSubmit = (data: FormValues) => {
-    console.log(data)
+    alert(JSON.stringify(data))
   }
 
   return (

@@ -1,10 +1,6 @@
-import { Button } from './components/ui/button'
-import Card from './components/ui/card/card'
-import CheckboxDemo from './components/ui/chekbox/checkbox'
 import Header from './components/ui/header/header'
 import Input from './components/ui/input/input'
 import SelectDemo from './components/ui/select/select'
-import EditableSlider from './components/ui/slider/slider'
 
 function App() {
   return (

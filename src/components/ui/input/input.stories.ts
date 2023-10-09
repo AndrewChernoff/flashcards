@@ -18,43 +18,48 @@ type Story = StoryObj<typeof meta>
 
 export const SimpleInput: Story = {
   args: {
+    name: 'email',
     isSearch: false,
     type: 'text',
-    label: 'Input',
+    label: 'email',
     placeholder: 'Input',
-    error: false,
+    error: 'Some error',
     isDisabled: false,
   },
 }
 export const SearchInput: Story = {
   args: {
+    name: 'password',
     isSearch: true,
     type: 'text',
-    label: 'Input',
+    label: 'password',
+    error: undefined,
     placeholder: 'Input',
-    error: false,
+
     isDisabled: false,
   },
 }
 
 export const ErrorInput: Story = {
   args: {
+    name: 'email',
     isSearch: true,
     type: 'text',
-    label: 'Input',
+    label: 'email',
     placeholder: 'Input',
-    error: true,
+    error: undefined,
     isDisabled: false,
   },
 }
 
 export const DisabledInput: Story = {
   args: {
+    name: 'email',
     isSearch: true,
     type: 'text',
-    label: 'Input',
+    label: 'email',
     placeholder: 'Input',
-    error: false,
+    error: undefined,
     isDisabled: true,
   },
 }

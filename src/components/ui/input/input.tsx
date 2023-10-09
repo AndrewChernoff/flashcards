@@ -1,6 +1,6 @@
-import { ChangeEvent, forwardRef, useState } from 'react'
+import { forwardRef, useState } from 'react'
 
-import { Path, UseFormRegister } from 'react-hook-form'
+import { Path } from 'react-hook-form'
 
 import eye from '../../../common/imgs/eye.png'
 
