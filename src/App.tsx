@@ -23,8 +23,9 @@ function App() {
       />
 
       {/* <Card>Card</Card> */}
-
-      <SelectDemo />
+      <div style={{ position: 'absolute', padding: '10px', width: '300px' }}>
+        <SelectDemo />
+      </div>
 
       {/* <CheckboxDemo label={'Label'} id={'nothing'} />
 
