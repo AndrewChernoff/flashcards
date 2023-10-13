@@ -1,0 +1,32 @@
+.form {
+    &__title {
+        text-align: center;
+    }
+
+    &__input {
+        margin-top: 24px;
+    }
+
+    button {
+        margin-top: 40px;
+        border-radius: 4px;
+        outline: none;
+        box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
+    }
+
+    h3 {
+        margin: 20px 0 11px;
+        font-size: 14px;
+        font-weight: 400;
+        text-align: center;
+    }
+
+    &__link {
+        display: block;
+        margin: 0 auto;
+        color: #8C61FF !important;
+        text-align: center;
+
+        // background: #313131
+    }
+}

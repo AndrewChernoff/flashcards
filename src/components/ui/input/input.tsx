@@ -1,29 +1,30 @@
 import { forwardRef, useState } from 'react'
 
-import { Path } from 'react-hook-form'
+/* import { Path } from 'react-hook-form' */
 
 import eye from '../../../common/imgs/eye.png'
 
 import s from './input.module.scss'
 
-interface IFormValues {
+/* interface IFormValues {
   email: string
   password: string
   rememberMe: boolean
-}
+} */
 
-interface Props {
+export interface InputProps {
   isSearch: boolean
-  name: 'email' | 'password'
-  label: Path<IFormValues>
+  name: string /* 'email' | 'password' */
+  label: string /* Path<IFormValues> */
   placeholder: string
   type: 'password' | 'text' | 'email'
   error?: string
   isDisabled: boolean
+  className?: string
 }
 
-const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
-  const { isSearch, label, isDisabled, error, placeholder, type, ...rest } = props
+const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
+  const { className, isSearch, label, isDisabled, error, placeholder, type, ...rest } = props
 
   const [passwordShown, setPasswordShown] = useState(false)
 
@@ -33,11 +34,12 @@ const Input = forwardRef<HTMLInputElement, Props>((props, ref) => {
 
   // eslint-disable-next-line no-nested-ternary
   const inputType = type === 'password' ? (passwordShown ? 'text' : 'password') : type
-  const inputClassname = isSearch ? `${s.input__normal} ${s.input__search}` : s.input__normal
+  const inputClassname = isSearch ? `${s.input__normal} ${s.input__search}` : `${s.input__normal}`
+
   const errorInputClassname = `${s.input__error} ${s.input__search}`
 
   return (
-    <div className={s.inputBlock}>
+    <div className={`${s.inputBlock} ${className}`}>
       {label && !error && <label htmlFor="input-field">{label}</label>}
 
       <div className={s.input}>
