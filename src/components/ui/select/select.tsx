@@ -5,45 +5,45 @@ import * as Select from '@radix-ui/react-select'
 import { styled } from '@stitches/react'
 import classnames from 'classnames'
 
-import './select.scss'
+import s from './select.module.scss'
 
-const items: string[] = ['Item 1', 'Item 2', 'Item 3', 'Item 4']
+//const items: string[] = ['Item 1', 'Item 2', 'Item 3', 'Item 4']
 
-const SelectDemo = () => {
+const SelectDemo = ({ items, label }: { items: string[]; label: string }) => {
   const [toggled, setToggled] = useState('closed')
 
-  debugger
-
   return (
-    <Select.Root
-      // open={true}
-      defaultValue={items?.[0]}
-      onOpenChange={e => setToggled(e === true ? 'open' : 'closed')}
-    >
-      <Select.Trigger asChild data-state={toggled} className="SelectTrigger">
-        <button /* error={!!error} */>
-          <span>
-            <Select.Value />
-          </span>
-          <Select.Icon asChild>
-            <Chevron direction="down" />
-          </Select.Icon>
-        </button>
-      </Select.Trigger>
+    <div className={s.select}>
+      <p className={s.select__label}>{label}</p>
+      <Select.Root
+        // open={true}
+        defaultValue={items?.[0]}
+        onOpenChange={e => setToggled(e === true ? 'open' : 'closed')}
+      >
+        <Select.Trigger asChild data-state={toggled} className={s.select__trigger}>
+          <button>
+            <span>
+              <Select.Value />
+            </span>
+            <Select.Icon asChild>
+              <Chevron direction="down" />
+            </Select.Icon>
+          </button>
+        </Select.Trigger>
 
-      {/*       <div className="Width">fgdgfd</div>*/}
-      <Select.Content asChild className="Content" position="popper" /* className="Dropdown" */>
-        <Select.Viewport className="Dropdown">
-          {items.map((item, i) => {
-            return (
-              <Select.Item key={i} value={item} className={'Item'}>
-                <Select.ItemText> {item} </Select.ItemText>
-              </Select.Item>
-            )
-          })}
-        </Select.Viewport>
-      </Select.Content>
-    </Select.Root>
+        <Select.Content asChild className={s.select__content} position="popper">
+          <Select.Viewport>
+            {items.map((item, i) => {
+              return (
+                <Select.Item key={i} value={item} className={s.select__content_item}>
+                  <Select.ItemText> {item} </Select.ItemText>
+                </Select.Item>
+              )
+            })}
+          </Select.Viewport>
+        </Select.Content>
+      </Select.Root>
+    </div>
   )
 }
 
