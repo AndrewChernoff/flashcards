@@ -7,8 +7,6 @@ import classnames from 'classnames'
 
 import s from './select.module.scss'
 
-//const items: string[] = ['Item 1', 'Item 2', 'Item 3', 'Item 4']
-
 const SelectDemo = ({ items, label }: { items: string[]; label: string }) => {
   const [toggled, setToggled] = useState('closed')
 
