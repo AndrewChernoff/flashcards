@@ -1,6 +1,7 @@
 import Header from './components/ui/header/header'
 import Input from './components/ui/input/input'
 import SelectDemo from './components/ui/select/select'
+import SignUp from './components/ui/sign-up/sign-up'
 
 function App() {
   return (
@@ -12,24 +13,25 @@ function App() {
       <Button as={'a'} href={'http://localhost:5173/hello'}>
         Link
       </Button> */}
-      <Input
+      {/* <Input
         name="email"
         isSearch={false}
         type={'text'}
         label={'email'}
         placeholder={'Input'}
-        /* error={'false'} */
         isDisabled={true}
-      />
+      /> */}
 
       {/* <Card>Card</Card> */}
-      <div style={{ position: 'absolute', padding: '10px', width: '300px' }}>
+      {/* <div style={{ position: 'absolute', padding: '10px', width: '300px' }}>
         <SelectDemo label={'Select label'} items={['Item 1', 'Item 2', 'Item 3', 'Item 4']} />
-      </div>
+      </div> */}
 
       {/* <CheckboxDemo label={'Label'} id={'nothing'} />
 
       <EditableSlider value={[25, 75]} /> */}
+
+      <SignUp />
     </div>
   )
 }
