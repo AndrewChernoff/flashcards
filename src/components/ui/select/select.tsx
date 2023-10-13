@@ -1,9 +1,7 @@
 import { forwardRef, useState } from 'react'
 
-import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons'
 import * as Select from '@radix-ui/react-select'
 import { styled } from '@stitches/react'
-import classnames from 'classnames'
 
 import s from './select.module.scss'
 

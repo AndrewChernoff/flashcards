@@ -27,14 +27,6 @@ export const LoginForm = () => {
     handleSubmit,
   } = useForm<FormValues>({ resolver: zodResolver(SignUpSchema) })
 
-  /* const {
-    field: { value, onChange },
-  } = useController({
-    name: 'rememberMe',
-    control,
-    defaultValue: false,
-  }) */
-
   const onSubmit = (data: FormValues) => {
     alert(JSON.stringify(data))
   }
@@ -62,13 +54,6 @@ export const LoginForm = () => {
         label={'password'}
       />
 
-      {/* <CheckboxDemo
-        onCheckedChange={onChange}
-        checked={value}
-        label={'Remember me'}
-        id={'rememberMe'}
-      />
- */}
       <ControlledCheckbox
         name={'rememberMe'}
         label={'Remember me'}
