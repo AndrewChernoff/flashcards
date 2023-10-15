@@ -1,5 +1,6 @@
 import Header from './components/ui/header/header'
 import Input from './components/ui/input/input'
+import { LoginForm } from './components/ui/login-form/login-form'
 import SelectDemo from './components/ui/select/select'
 import SignUp from './components/ui/sign-up/sign-up'
 
@@ -32,6 +33,7 @@ function App() {
       <EditableSlider value={[25, 75]} /> */}
 
       <SignUp />
+      <LoginForm />
     </div>
   )
 }
