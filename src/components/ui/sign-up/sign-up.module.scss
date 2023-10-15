@@ -7,8 +7,10 @@
         margin-top: 24px;
     }
 
-    button {
+    &__button {
         margin-top: 40px;
+        padding: 6px 0;
+
         border-radius: 4px;
         outline: none;
         box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);

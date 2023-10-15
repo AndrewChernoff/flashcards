@@ -8,13 +8,16 @@ export interface CheckboxProps {
   id: string
   checked: boolean
   onCheckedChange: (value: boolean) => void
+  className?: string
 }
 
-const CheckboxDemo = ({ id, label, checked, onCheckedChange }: CheckboxProps) => {
+const CheckboxDemo = ({ className, id, label, checked, onCheckedChange }: CheckboxProps) => {
   const checkboxBackground = checked ? 'white' : 'black'
 
+  const checkboxClassname = className ? `${s.checkbox} ${className}` : s.checkbox
+
   return (
-    <div className={s.checkbox}>
+    <div className={checkboxClassname}>
       <div className={s.wrapper}>
         <Checkbox.Root
           className={s.checkboxRoot}

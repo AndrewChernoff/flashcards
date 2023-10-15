@@ -6,7 +6,13 @@ import { FormValues } from '../login-form/login-form'
 export type ControlledCheckboxProps<T extends FormValues> = UseControllerProps<T> &
   Omit<CheckboxProps, 'onCheckedChange' | 'value' | 'checked'>
 
-const ControlledCheckbox = ({ id, label, control, name }: ControlledCheckboxProps<FormValues>) => {
+const ControlledCheckbox = ({
+  className,
+  id,
+  label,
+  control,
+  name,
+}: ControlledCheckboxProps<FormValues>) => {
   const {
     field: { value, onChange },
   } = useController({
@@ -15,7 +21,15 @@ const ControlledCheckbox = ({ id, label, control, name }: ControlledCheckboxProp
     defaultValue: false,
   })
 
-  return <CheckboxDemo id={id} label={label} checked={Boolean(value)} onCheckedChange={onChange} />
+  return (
+    <CheckboxDemo
+      className={className}
+      id={id}
+      label={label}
+      checked={Boolean(value)}
+      onCheckedChange={onChange}
+    />
+  )
 }
 
 export default ControlledCheckbox

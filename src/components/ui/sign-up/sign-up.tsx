@@ -26,6 +26,7 @@ function SignUp() {
     formState: { errors },
     register,
     handleSubmit,
+    control,
   } = useForm<SignUpFormValues>({ resolver: zodResolver(SignUpSchema) })
 
   const onSubmit = (data: SignUpFormValues) => {
@@ -34,6 +35,7 @@ function SignUp() {
 
   return (
     <Card>
+      <DevTool control={control} />
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={s.form__title}> Sign Up</h2>
         <Input
@@ -69,7 +71,7 @@ function SignUp() {
           label={'Confirm Password'}
         />
 
-        <Button type="submit" variant={'tertiary'} fullWidth={true}>
+        <Button type="submit" className={s.form__button} variant={'tertiary'} fullWidth={true}>
           Sign Up
         </Button>
 
