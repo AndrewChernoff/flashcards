@@ -12,8 +12,6 @@ export type ButtonProps<T extends ElementType> = {
 export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
   const { variant = 'primary', fullWidth, className, as: Component = 'button', ...rest } = props
 
-  console.log(`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`)
-
   return (
     <Component className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`} {...rest} />
   )
