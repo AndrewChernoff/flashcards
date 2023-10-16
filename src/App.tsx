@@ -3,6 +3,7 @@ import CreatePassword from './components/ui/create-password/create-password'
 import Header from './components/ui/header/header'
 import Input from './components/ui/input/input'
 import { LoginForm } from './components/ui/login-form/login-form'
+import PersonalInfo from './components/ui/personal-info/personal-info'
 import SelectDemo from './components/ui/select/select'
 import SignUp from './components/ui/sign-up/sign-up'
 
@@ -37,7 +38,8 @@ function App() {
       {/* <SignUp />
       <LoginForm /> */}
       {/* <CheckEmail /> */}
-      <CreatePassword />
+      {/* <CreatePassword /> */}
+      <PersonalInfo name={'Andrew'} email={'whitedrew538@gmail.com'} />
     </div>
   )
 }
