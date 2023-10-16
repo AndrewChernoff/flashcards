@@ -1,4 +1,5 @@
 import CheckEmail from './components/ui/check-email/check-email'
+import CreatePassword from './components/ui/create-password/create-password'
 import Header from './components/ui/header/header'
 import Input from './components/ui/input/input'
 import { LoginForm } from './components/ui/login-form/login-form'
@@ -35,7 +36,8 @@ function App() {
 
       {/* <SignUp />
       <LoginForm /> */}
-      <CheckEmail />
+      {/* <CheckEmail /> */}
+      <CreatePassword />
     </div>
   )
 }
