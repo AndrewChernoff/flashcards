@@ -1,3 +1,4 @@
+import CheckEmail from './components/ui/check-email/check-email'
 import Header from './components/ui/header/header'
 import Input from './components/ui/input/input'
 import { LoginForm } from './components/ui/login-form/login-form'
@@ -32,8 +33,9 @@ function App() {
 
       <EditableSlider value={[25, 75]} /> */}
 
-      <SignUp />
-      <LoginForm />
+      {/* <SignUp />
+      <LoginForm /> */}
+      <CheckEmail />
     </div>
   )
 }
