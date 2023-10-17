@@ -7,12 +7,24 @@ export type ButtonProps<T extends ElementType> = {
   fullWidth?: boolean
   as?: T
   className?: string
+  callBack?: () => void
 } & ComponentPropsWithoutRef<T>
 
 export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
-  const { variant = 'primary', fullWidth, className, as: Component = 'button', ...rest } = props
+  const {
+    variant = 'primary',
+    callBack,
+    fullWidth,
+    className,
+    as: Component = 'button',
+    ...rest
+  } = props
 
   return (
-    <Component className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`} {...rest} />
+    <Component
+      onClick={callBack}
+      className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
+      {...rest}
+    />
   )
 }

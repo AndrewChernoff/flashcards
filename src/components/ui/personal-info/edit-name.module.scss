@@ -1,0 +1,30 @@
+.form {
+    &__title {
+        font-size: 26px;
+        font-weight: 700;
+        text-align: center;
+    }
+
+    img {     
+        display: block;
+
+        width: 100%;
+        max-width: 96px;
+        margin: 27px auto 12px;
+
+        border-radius: 100%;
+    }
+
+    &__input {
+        height: 36px;
+    }
+
+    &__button {
+        margin: 36px 0 55px;
+        padding: 6px 28px;
+
+        background: #8C61FF;
+        border-radius: 4px;
+        box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
+    }
+}

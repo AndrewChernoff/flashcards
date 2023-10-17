@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { Button } from '../button'
 import Card from '../card/card'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
+import ControlledInput from '../controlled/controlled-input'
 import Input from '../input/input'
 
 import s from './login-form.module.scss'
@@ -60,6 +61,17 @@ export const LoginForm = () => {
           {...register('password')}
           label={'password'}
         />
+        {/* <ControlledInput
+          className={s.form__input}
+          isSearch={false}
+          placeholder={'Type your password'}
+          type={'password'}
+          error={errors.password?.message}
+          isDisabled={false}
+          {...register('password')}
+          label={'password'}
+          control={control}
+        /> */}
 
         <ControlledCheckbox
           className={s.form__checkbox}
