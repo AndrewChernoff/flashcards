@@ -35,8 +35,8 @@ function App() {
 
       <EditableSlider value={[25, 75]} /> */}
 
-      {/* <SignUp />
-      <LoginForm /> */}
+      {/* <SignUp /> */}
+      {/* <LoginForm /> */}
       {/* <CheckEmail /> */}
       {/* <CreatePassword /> */}
       <PersonalInfo name={'Andrew'} email={'whitedrew538@gmail.com'} />

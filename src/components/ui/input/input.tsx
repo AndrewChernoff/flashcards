@@ -14,8 +14,8 @@ import s from './input.module.scss'
 
 export interface InputProps {
   isSearch: boolean
-  name: string /* 'email' | 'password' */
-  label: string /* Path<IFormValues> */
+  name: string
+  label: string
   placeholder: string
   type: 'password' | 'text' | 'email'
   error?: string

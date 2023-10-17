@@ -1,6 +1,9 @@
+import { useState } from 'react'
+
 import { Button } from '../button'
 import Card from '../card/card'
 
+import EditName from './edit-name'
 import s from './personal-info.module.scss'
 
 interface Props {
@@ -9,25 +12,39 @@ interface Props {
 }
 
 const PersonalInfo = ({ name, email }: Props) => {
+  const [edit, setEdit] = useState<boolean>(false)
+
+  const changeToEdit = () => setEdit(!edit)
+
   return (
     <Card>
-      <form className={s.form}>
-        <h2 className={s.form__title}>Personal Information</h2>
+      {!edit ? (
+        <div className={s.info}>
+          <h2 className={s.info__title}>Personal Information</h2>
 
-        <div className={s.form__imgBlock}>
-          <img src="https://avatars.githubusercontent.com/u/79928353?v=4" />
-          <EditButton />
-        </div>
-        <h3>
-          {name} <EditButton />
-        </h3>
-        <h4>{email}</h4>
-        <Button type="submit" variant={'secondary'} className={s.form__button} fullWidth={false}>
-          <div>
-            <LogoutIcon /> Logout
+          <div className={s.info__imgBlock} onClick={changeToEdit}>
+            <img src="https://avatars.githubusercontent.com/u/79928353?v=4" />
+            <EditButton />
           </div>
-        </Button>
-      </form>
+          <h3>
+            {name} <EditButton />
+          </h3>
+          <h4>{email}</h4>
+          <Button
+            type="submit"
+            //callBack={changeToEdit}
+            variant={'secondary'}
+            className={s.info__button}
+            fullWidth={false}
+          >
+            <div>
+              <LogoutIcon /> Logout
+            </div>
+          </Button>
+        </div>
+      ) : (
+        <EditName />
+      )}
     </Card>
   )
 }
