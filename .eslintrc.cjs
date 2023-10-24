@@ -21,3 +21,21 @@ module.exports = {
   extends: ['@it-incubator/eslint-config', 'plugin:storybook/recommended', 'plugin:storybook/recommended', 'plugin:storybook/recommended', 'plugin:storybook/recommended'],
   rules: { 'no-console': ['warn', { allow: ['warn', 'error'] }] },
 }
+
+/* module.exports = {
+  extends: '@it-incubator/eslint-config',
+  rules: {
+    'no-console': ['warn', { allow: ['warn', 'error'] }]
+  },
+  settings: {
+    'import/resolver': {
+      alias: {
+        map: [
+          ['@', './src'], // Define your module alias(es) and their corresponding paths
+          // Add more aliases if needed
+        ],
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    }
+  }
+}; */

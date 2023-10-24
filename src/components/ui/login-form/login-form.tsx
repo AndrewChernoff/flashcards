@@ -6,10 +6,11 @@ import { z } from 'zod'
 import { Button } from '../button'
 import Card from '../card/card'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
-import ControlledInput from '../controlled/controlled-input'
 import Input from '../input/input'
 
 import s from './login-form.module.scss'
+
+import { useLogInMutation } from '@/services/sign-in/sign-in'
 
 export type FormValues = {
   email: string
@@ -18,6 +19,8 @@ export type FormValues = {
 }
 
 export const LoginForm = () => {
+  const { data, error, isLoading } = useLogInMutation()
+
   const SignUpSchema = z.object({
     email: z.string().email(),
     password: z.string().min(3).max(20),
