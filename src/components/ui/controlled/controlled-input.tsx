@@ -1,5 +1,4 @@
-import { Control, UseControllerProps, useController } from 'react-hook-form'
-import { string } from 'zod'
+import { Control, useController } from 'react-hook-form'
 
 import Input, { InputProps } from '../input/input'
 import { FormValues } from '../login-form/login-form'
@@ -11,8 +10,6 @@ export type ControlledInputProps = InputProps & {
 
 const ControlledInput = (props: ControlledInputProps) => {
   const { field } = useController(props)
-
-  console.log(props)
 
   return (
     <>
