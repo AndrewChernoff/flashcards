@@ -1,8 +1,11 @@
+import { useEffect } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { useSignupMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
@@ -12,26 +15,39 @@ import s from './sign-up.module.scss'
 type SignUpFormValues = {
   email: string
   password: string
-  subject: boolean //confirm password
+  passwordConfirmation: boolean
 }
 
 function SignUp() {
+  const [signup, { error }] = useSignupMutation()
+
   const SignUpSchema = z.object({
-    email: z.string().email(),
+    email: z.string() /* .email() */,
     password: z.string().min(3).max(20),
-    subject: z.string().min(3).max(20),
+    passwordConfirmation: z.string().min(3).max(20),
   })
 
   const {
     formState: { errors },
     register,
     handleSubmit,
+    setError,
     control,
   } = useForm<SignUpFormValues>({ resolver: zodResolver(SignUpSchema) })
 
-  const onSubmit = (data: SignUpFormValues) => {
-    alert(JSON.stringify(data))
+  const onSubmit = (formData: SignUpFormValues) => {
+    signup({ email: formData.email, password: formData.password })
   }
+
+  useEffect(() => {
+    if (error) {
+      if ('status' in error) {
+        ;(error?.data as any).errorMessages.forEach((errorMessage: any) => {
+          setError(errorMessage.field, { type: 'manual', message: errorMessage.message })
+        })
+      }
+    }
+  }, [error])
 
   return (
     <Card>
@@ -67,7 +83,7 @@ function SignUp() {
           type={'password'}
           error={errors.password?.message}
           isDisabled={false}
-          {...register('subject')}
+          {...register('passwordConfirmation')}
           label={'Confirm Password'}
         />
 

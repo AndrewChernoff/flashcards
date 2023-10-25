@@ -3,14 +3,13 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { useLogInMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
 import Input from '../input/input'
 
 import s from './login-form.module.scss'
-
-import { useLogInMutation } from '@/services/sign-in/sign-in'
 
 export type FormValues = {
   email: string
@@ -19,7 +18,7 @@ export type FormValues = {
 }
 
 export const LoginForm = () => {
-  const { data, error, isLoading } = useLogInMutation()
+  const [logIn, { error }] = useLogInMutation()
 
   const SignUpSchema = z.object({
     email: z.string().email(),
@@ -34,8 +33,8 @@ export const LoginForm = () => {
     handleSubmit,
   } = useForm<FormValues>({ resolver: zodResolver(SignUpSchema) })
 
-  const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data))
+  const onSubmit = (formData: FormValues) => {
+    logIn(formData)
   }
 
   return (
