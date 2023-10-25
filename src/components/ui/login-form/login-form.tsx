@@ -18,7 +18,7 @@ export type FormValues = {
 }
 
 export const LoginForm = () => {
-  const [logIn, { error }] = useLogInMutation()
+  const [logIn] = useLogInMutation()
 
   const SignUpSchema = z.object({
     email: z.string().email(),
