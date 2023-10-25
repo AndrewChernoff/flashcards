@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 
 import { LoginForm } from './components/ui/login-form/login-form'
+import SignUp from './components/ui/sign-up/sign-up'
 import Decks from './pages/decks'
 
 const privateRoutes = [
@@ -26,6 +27,10 @@ const publicRoutes = [
   {
     path: '/signin',
     element: <LoginForm />,
+  },
+  {
+    path: '/signup',
+    element: <SignUp />,
   },
 ]
 
