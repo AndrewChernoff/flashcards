@@ -5,8 +5,18 @@ import { styled } from '@stitches/react'
 
 import s from './select.module.scss'
 
-const SelectDemo = ({ items, label }: { items: string[]; label: string }) => {
+type SelectProps = {
+  items: string[]
+  label: string
+  callback: (value: string) => void
+}
+
+const SelectDemo = ({ items, label, callback }: SelectProps) => {
   const [toggled, setToggled] = useState('closed')
+
+  const handleValueChange = (newValue: string) => {
+    callback(newValue)
+  }
 
   return (
     <div className={s.select}>
@@ -15,6 +25,7 @@ const SelectDemo = ({ items, label }: { items: string[]; label: string }) => {
         // open={true}
         defaultValue={items?.[0]}
         onOpenChange={e => setToggled(e === true ? 'open' : 'closed')}
+        onValueChange={handleValueChange}
       >
         <Select.Trigger asChild data-state={toggled} className={s.select__trigger}>
           <button>
