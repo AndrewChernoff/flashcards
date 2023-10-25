@@ -1,0 +1,81 @@
+.pagination__container {
+    display: flex;
+    list-style-type: none;
+
+    // background: white;
+  
+    .pagination__item {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      box-sizing: border-box;
+      width: 24px;
+      height: 24px;
+      margin: auto 4px;
+      padding: 0 12px;
+
+      font-size: 13px;
+      line-height: 1.43;
+      color: #fff;
+      text-align: center;
+
+      // border-radius: 16px;
+
+
+  
+      &.dots:hover {
+        cursor: default;
+        background-color: transparent;
+      }
+
+      &:hover {
+        cursor: pointer;
+        background-color: rgb(0 0 0 / 4%);
+      }
+  
+      &_selected {
+        color:black;
+        background-color: #fff;
+      }
+  
+      .arrow {
+        &::before {
+          content: '';
+
+          position: relative;
+
+          /* By using an em scale, the arrows will size with the font */
+          display: inline-block;
+
+          width: 0.4em;
+          height: 0.4em;
+
+          border-top: 0.12em solid rgb(0 0 0 / 87%);
+          border-right: 0.12em solid rgb(0 0 0 / 87%);
+        }
+  
+        &__left {
+          //transform: rotate(-135deg) translate(-50%);
+        }
+  
+        &__right {
+          //transform: rotate(45deg);
+        }
+      }
+  
+      &.disabled {
+        pointer-events: none;
+  
+        .arrow::before {
+          border-top: 0.12em solid rgb(0 0 0 / 43%);
+          border-right: 0.12em solid rgb(0 0 0 / 43%);
+        }
+  
+        &:hover {
+          cursor: default;
+          background-color: transparent;
+        }
+      }
+    }
+  }
