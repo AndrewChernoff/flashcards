@@ -1,5 +1,6 @@
 import classnames from 'classnames'
 
+import { getMultiplesOfTen } from '../../..//common/utils/pagination-utils'
 import { PaginationType, usePagination, DOTS } from '../../../common/hooks/usePagination'
 import SelectDemo from '../select/select'
 import { Select } from '../select/select.stories'
@@ -42,9 +43,11 @@ const Pagination = (props: PropsType) => {
   //console.log(totalCount)
 
   //const arr = totalCount.map((el: number) => el.toString())
-  const arr = Array.from({ length: totalCount }, (_, index) => index + 1).map((el: any) =>
+  /* const arr = Array.from({ length: totalCount }, (_, index) => index + 1).map((el: any) =>
     String(el)
-  )
+  ) */
+
+  const arr = getMultiplesOfTen(totalCount) ////function for getting the first and each 10th element
 
   return (
     <>
@@ -98,7 +101,9 @@ const Pagination = (props: PropsType) => {
         </button>
       </ul>
 
-      <SelectDemo callback={getValueFromSelect} items={arr} label="Label" />
+      <div>
+        <SelectDemo callback={getValueFromSelect} items={arr} label="Label" />
+      </div>
     </>
   )
 }
