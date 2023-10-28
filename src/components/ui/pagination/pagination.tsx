@@ -50,7 +50,7 @@ const Pagination = (props: PropsType) => {
   const arr = getMultiplesOfTen(totalCount) ////function for getting the first and each 10th element
 
   return (
-    <>
+    <div className={s.pagination}>
       <ul className={classnames(s.pagination__container, { [className]: className })}>
         <button
           className={classnames(s.pagination__item, {
@@ -101,10 +101,16 @@ const Pagination = (props: PropsType) => {
         </button>
       </ul>
 
-      <div>
-        <SelectDemo callback={getValueFromSelect} items={arr} label="Label" />
+      <div className={s.pagination__select}>
+        <div>Показать</div>
+        <SelectDemo
+          className={s.pagination__select_tab}
+          callback={getValueFromSelect}
+          items={arr}
+        />
+        <div>на странице</div>
       </div>
-    </>
+    </div>
   )
 }
 
