@@ -1,3 +1,8 @@
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+
 .pagination__container {
     display: flex;
     list-style-type: none;
@@ -20,7 +25,7 @@
       color: #fff;
       text-align: center;
 
-      // border-radius: 16px;
+       border-radius: 1px;
 
 
   
@@ -31,7 +36,13 @@
 
       &:hover {
         cursor: pointer;
-        background-color: rgb(0 0 0 / 4%);
+        color: #fff;
+        background-color: #333;
+      }
+
+      &:focus {
+        cursor: pointer;
+        border: #234E99 1px solid; ////
       }
   
       &_selected {
@@ -55,13 +66,6 @@
           border-right: 0.12em solid rgb(0 0 0 / 87%);
         }
   
-        &__left {
-          //transform: rotate(-135deg) translate(-50%);
-        }
-  
-        &__right {
-          //transform: rotate(45deg);
-        }
       }
   
       &.disabled {
@@ -73,9 +77,25 @@
         }
   
         &:hover {
-          cursor: default;
-          background-color: transparent;
+          cursor: pointer;
+
+          // background-color: #234E99 1px solid;
+
+          // background-color: transparent;
         }
       }
     }
   }
+
+  &__select {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40%;
+
+    &_tab {
+      // min-width: 50px;
+      height: 25px;
+    }
+  }
+}

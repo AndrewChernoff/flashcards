@@ -7,27 +7,32 @@ import s from './select.module.scss'
 
 type SelectProps = {
   items: string[]
-  label: string
+  label?: string
   callback: (value: string) => void
+  className?: string
 }
 
-const SelectDemo = ({ items, label, callback }: SelectProps) => {
+const SelectDemo = ({ items, label, className, callback }: SelectProps) => {
   const [toggled, setToggled] = useState('closed')
 
   const handleValueChange = (newValue: string) => {
     callback(newValue)
   }
 
+  console.log(s.select)
+
+  const triggerClassName = className ? `${s.select__trigger} ${className}` : s.select__trigger
+
   return (
     <div className={s.select}>
-      <p className={s.select__label}>{label}</p>
+      {label && <p className={s.select__label}>{label}</p>}
       <Select.Root
         // open={true}
         defaultValue={items?.[0]}
         onOpenChange={e => setToggled(e === true ? 'open' : 'closed')}
         onValueChange={handleValueChange}
       >
-        <Select.Trigger asChild data-state={toggled} className={s.select__trigger}>
+        <Select.Trigger asChild data-state={toggled} className={triggerClassName}>
           <button>
             <span>
               <Select.Value />
