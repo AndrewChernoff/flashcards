@@ -19,8 +19,6 @@ const SelectDemo = ({ items, label, className, callback }: SelectProps) => {
     callback(newValue)
   }
 
-  console.log(s.select)
-
   const triggerClassName = className ? `${s.select__trigger} ${className}` : s.select__trigger
 
   return (
