@@ -8,19 +8,24 @@ type RadioProps = {
 }
 
 const RadioGroup = ({ isDisabled, items }: RadioProps) => (
-  <form>
+  <form className={s.radio__group}>
     <Radio.Root
-      className={s.RadioGroupRoot}
+      className={s.radio__group_root}
       aria-label="View density"
       onValueChange={e => console.log(e)}
     >
       {items.map((el: any) => {
         return (
           <div key={el.id} className={s.radio}>
-            <Radio.Item className={s.RadioGroupItem} value={el.title} id="r1" disabled={isDisabled}>
-              <Radio.Indicator className={s.RadioGroupIndicator} />
+            <Radio.Item
+              className={s.radio__group_item}
+              value={el.title}
+              id={el.title}
+              disabled={isDisabled}
+            >
+              <Radio.Indicator className={s.radio__group_indicator} />
             </Radio.Item>
-            <label className={s.Label} htmlFor="r1">
+            <label className={s.label} htmlFor={el.title}>
               {el.title}
             </label>
           </div>
