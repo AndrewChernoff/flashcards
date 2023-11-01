@@ -15,17 +15,27 @@ import s from './sign-up.module.scss'
 type SignUpFormValues = {
   email: string
   password: string
-  passwordConfirmation: boolean
+  passwordConfirmation: string
 }
 
 function SignUp() {
   const [signup, { error }] = useSignupMutation()
 
-  const SignUpSchema = z.object({
-    email: z.string() /* .email() */,
-    password: z.string().min(3).max(20),
-    passwordConfirmation: z.string().min(3).max(20),
-  })
+  const SignUpSchema = z
+    .object({
+      email: z.string().email(),
+      password: z.string().min(3).max(20),
+      passwordConfirmation: z.string().min(3).max(20),
+    })
+    .refine(
+      values => {
+        return values.password === values.passwordConfirmation
+      },
+      {
+        message: 'Passwords must match!',
+        path: ['passwordConfirmation'],
+      }
+    )
 
   const {
     formState: { errors },
@@ -39,7 +49,7 @@ function SignUp() {
     signup({ email: formData.email, password: formData.password })
   }
 
-  useEffect(() => {
+  /*   useEffect(() => {
     if (error) {
       if ('status' in error) {
         ;(error?.data as any).errorMessages.forEach((errorMessage: any) => {
@@ -47,7 +57,7 @@ function SignUp() {
         })
       }
     }
-  }, [error])
+  }, [error]) */
 
   return (
     <Card>
@@ -81,7 +91,7 @@ function SignUp() {
           isSearch={false}
           placeholder={'Confirm Password'}
           type={'password'}
-          error={errors.password?.message}
+          error={errors.passwordConfirmation?.message}
           isDisabled={false}
           {...register('passwordConfirmation')}
           label={'Confirm Password'}
