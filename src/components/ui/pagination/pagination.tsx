@@ -66,7 +66,8 @@ const Pagination = (props: PropsType) => {
             return (
               // eslint-disable-next-line react/jsx-key
               <li
-                /* key={i}  */ className={`${s.pagination__item} ${s.dots}`} /* "pagination-item dots" */
+                key={i}
+                className={`${s.pagination__item} ${s.dots}`} /* "pagination-item dots" */
               >
                 &#8230;
               </li>
@@ -76,7 +77,7 @@ const Pagination = (props: PropsType) => {
           return (
             // eslint-disable-next-line react/jsx-key
             <li
-              /*  key={pageNumber} */ ////
+              key={pageNumber + 'asd'} ////
               className={
                 /* classnames(s.pagination__item, {
               selected: pageNumber === currentPage,
