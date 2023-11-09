@@ -1,11 +1,13 @@
-import { useState } from 'react'
-
 import { Link } from 'react-router-dom'
 
 import { Arrow } from '../../common/svg/sorting-arrow'
 import { formatDate } from '../../common/utils/time-transfering'
 import { Table } from '../../components/ui/table/table'
-import { useAddDeckMutation, useGetDecksQuery } from '../../services/decks/decks'
+import {
+  useAddDeckMutation,
+  useGetDecksQuery,
+  useLazyGetDecksQuery,
+} from '../../services/decks/decks'
 
 import s from './decks.module.scss'
 
@@ -14,15 +16,19 @@ const Decks = () => {
 
   const decks = useGetDecksQuery({ itemsPerPage: 25 /* , orderBy: filter */ })
   const [addDeck] = useAddDeckMutation()
+  const [getDecks2, decks2] = useLazyGetDecksQuery()
 
   /*  const filterDirection = () =>
     filter === 'name-asc' ? setFilter('name-desc') : setFilter('name-asc')*/
+
+  console.log(decks2)
 
   return (
     <div className={s.decks}>
       <Link to="/2">Go</Link>
 
       <button onClick={() => addDeck('слегка выгорел)')}>add</button>
+      <button onClick={() => getDecks2()}>DECKS2</button>
 
       <Table.Root className={s.table}>
         <Table.Head>

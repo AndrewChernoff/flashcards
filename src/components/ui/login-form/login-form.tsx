@@ -42,7 +42,7 @@ export const LoginForm = () => {
     logIn(formData)
   }
 
-  if (me && me?.success !== false) return <Navigate to={'/'} />
+  if (me && me?.success !== false) return <Navigate to={'/decks'} />
 
   return (
     <Card>
