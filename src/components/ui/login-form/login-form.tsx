@@ -1,9 +1,10 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import { useLogInMutation } from '../../../services/auth/auth'
+import { useGetMeQuery, useLogInMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
@@ -18,6 +19,10 @@ export type FormValues = {
 }
 
 export const LoginForm = () => {
+  const { data: me } = useGetMeQuery()
+
+  // console.log(me)
+
   const [logIn] = useLogInMutation()
 
   const SignUpSchema = z.object({
@@ -36,6 +41,8 @@ export const LoginForm = () => {
   const onSubmit = (formData: FormValues) => {
     logIn(formData)
   }
+
+  if (me && me?.success !== false) return <Navigate to={'/'} />
 
   return (
     <Card>

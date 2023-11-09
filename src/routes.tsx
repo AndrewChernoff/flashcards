@@ -4,27 +4,25 @@ import { LoginForm } from './components/ui/login-form/login-form'
 import SignUp from './components/ui/sign-up/sign-up'
 import Decks from './pages/decks/decks'
 import PaginationPage from './pages/paginationPage/paginationPage'
+import { useGetMeQuery } from './services/auth/auth'
 
 const privateRoutes = [
   {
     path: '/',
     element: <div>Hello world!</div>,
   },
-]
-
-const publicRoutes = [
-  {
-    path: '/login',
-    element: <div>Login</div>,
-  },
-  {
-    path: '/2',
-    element: <div>2</div>,
-  },
   {
     path: '/decks',
     element: <Decks />,
   },
+]
+
+const publicRoutes = [
+  {
+    path: '/2',
+    element: <div>2</div>,
+  },
+
   {
     path: '/signin',
     element: <LoginForm />,
@@ -40,9 +38,13 @@ const publicRoutes = [
 ]
 
 const PrivateRoute = () => {
-  const isAuth = true
+  const { data: me, isLoading: isMeLoading } = useGetMeQuery()
 
-  return isAuth ? <Outlet /> : <Navigate to="/login" />
+  const isAuth = me
+
+  if (isMeLoading) return <div>Loading...</div>
+
+  return isAuth?.success === false ? <Navigate to="/signin" /> : <Outlet />
 }
 
 const router = createBrowserRouter([
@@ -54,5 +56,9 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
+  /*  const { isLoading } = useGetMeQuery()
+
+  isLoading && <div>Loading...</div> */
+
   return <RouterProvider router={router} />
 }

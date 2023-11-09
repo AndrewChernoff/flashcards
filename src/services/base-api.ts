@@ -1,6 +1,8 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
+import { baseQueryWithReauth } from './basequerywithreauth'
+
 //import type { Pokemon } from './types'
 
 // Define a service using a base URL and expected endpoints
@@ -19,13 +21,10 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
-  tagTypes: ['Decks'],
-  baseQuery: fetchBaseQuery({
+  tagTypes: ['Decks', 'Me'],
+  baseQuery: baseQueryWithReauth /* fetchBaseQuery({
     baseUrl: 'https://api.flashcards.andrii.es',
     credentials: 'include',
-    prepareHeaders: headers => {
-      headers.append('x-auth-skip', 'true')
-    },
-  }),
+  }) */,
   endpoints: () => ({}),
 })
