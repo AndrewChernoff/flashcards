@@ -26,13 +26,13 @@ interface Item {
   author: Author
 }
 
-interface DeckResponse {
+export interface DeckResponse {
   maxCardsCount: number
   pagination: Pagination
   items: Item[]
 }
 
-type DecksParams = {
+export type DecksParams = {
   minCardsCount?: string
   maxCardsCount?: string
   name?: string
