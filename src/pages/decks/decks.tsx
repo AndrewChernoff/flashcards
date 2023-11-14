@@ -12,14 +12,9 @@ import {
 import s from './decks.module.scss'
 
 const Decks = () => {
-  //const [filter, setFilter] = useState<'name-desc' | 'name-asc'>('name-asc')
-
   const { data: decks } = useGetDecksQuery({ itemsPerPage: 25 /* , orderBy: filter */ })
   const [addDeck] = useAddDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
-
-  /*  const filterDirection = () =>
-    filter === 'name-asc' ? setFilter('name-desc') : setFilter('name-asc')*/
 
   const onDeleteDeck = (id: string) => {
     deleteDeck({ id })

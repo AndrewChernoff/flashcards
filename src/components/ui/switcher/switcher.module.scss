@@ -1,0 +1,52 @@
+/* reset */
+button,
+fieldset,
+input {
+  all: unset;
+}
+
+.TabsRoot {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  box-shadow: 0 2px 10px var(--black-a4);
+
+    /* .TabsList {
+  display: flex;
+  flex-shrink: 0;
+  border-bottom: 1px solid var(--mauve-6);
+} */
+
+.TabsTrigger {
+    width: 110px;
+    height: 36px;
+
+    text-align: center;
+
+    background: #4C4C4C;
+    border-radius: 2px 0 0 2px;
+
+
+  &:hover {
+    background:  #4C4C4C;
+    border: 1px solid  #808080;
+  }
+
+  &[data-state='active'] {
+    background: #8C61FF;
+  }
+
+  &:focus {
+    background: #171717;
+    border: 2px solid #234E99;
+    border-radius: 0 2px 2px 0;
+  }
+
+  &:disabled {
+    color: #4C4C4C;
+    background: #171717;
+    border: 1px solid #4C4C4C;
+  }
+}
+}
+

@@ -32,16 +32,13 @@ const decksApi = baseApi.injectEndpoints({
           try {
             const res = await queryFulfilled
 
-            console.log(res)
-
-            /* const patchResult = */ dispatch(
+            dispatch(
               decksApi.util.updateQueryData('getDecks', undefined, draft => {
-                // Object.assign(draft, updatedPost)
                 draft.items.push(res.data)
               })
             )
           } catch (error) {
-            console.log(error)
+            console.error(error)
           }
         },
         invalidatesTags: ['Decks'],
@@ -62,7 +59,7 @@ const decksApi = baseApi.injectEndpoints({
             await queryFulfilled
           } catch (error) {
             patchResult.undo()
-            console.log(error)
+            console.error(error)
           }
         },
         invalidatesTags: ['Decks'],
