@@ -1,5 +1,7 @@
 import { baseApi } from '../base-api'
 
+import { DeckResponse, DecksParams } from './types'
+
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
@@ -13,12 +15,54 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      addDeck: builder.mutation<any, string>({
-        query(name) {
+      addDeck: builder.mutation<any, { name: string }>({
+        /* query(name) {
           return {
             url: `v1/decks`,
             method: 'POST',
             body: { name },
+          }
+        }, */
+        query: data => ({
+          url: `v1/decks`,
+          method: 'POST',
+          body: data,
+        }),
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          try {
+            const res = await queryFulfilled
+
+            console.log(res)
+
+            /* const patchResult = */ dispatch(
+              decksApi.util.updateQueryData('getDecks', undefined, draft => {
+                // Object.assign(draft, updatedPost)
+                draft.items.push(res.data)
+              })
+            )
+          } catch (error) {
+            console.log(error)
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
+      deleteDeck: builder.mutation<any, { id: string }>({
+        query: data => ({
+          url: `v1/decks/${data.id}`,
+          method: 'DELETE',
+        }),
+        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            decksApi.util.updateQueryData('getDecks', undefined, draft => {
+              /*  draft.items = */ draft.items.filter(el => el.id !== id)
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch (error) {
+            patchResult.undo()
+            console.log(error)
           }
         },
         invalidatesTags: ['Decks'],
@@ -27,4 +71,4 @@ const decksApi = baseApi.injectEndpoints({
   },
 })
 
-export const { useGetDecksQuery, useLazyGetDecksQuery, useAddDeckMutation } = decksApi
+export const { useGetDecksQuery, useDeleteDeckMutation, useAddDeckMutation } = decksApi
