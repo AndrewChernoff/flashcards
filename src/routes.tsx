@@ -44,6 +44,8 @@ const PrivateRoute = () => {
 
   if (isMeLoading) return <div>Loading...</div>
 
+  console.log(me)
+
   return isAuth?.success === false ? <Navigate to="/signin" /> : <Outlet />
 }
 
