@@ -18,9 +18,13 @@ input {
 } */
 
 .TabsTrigger {
-    width: 110px;
+  box-sizing: border-box;
+    width: 112px;
     height: 36px;
 
+
+    font-size: 14px;
+    font-weight: 400;
     text-align: center;
 
     background: #4C4C4C;

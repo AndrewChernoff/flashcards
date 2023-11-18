@@ -4,8 +4,9 @@ import { Link } from 'react-router-dom'
 
 import { formatDate } from '../../common/utils/time-transfering'
 import { Button } from '../../components/ui/button'
-import Switcher from '../../components/ui/switcher/switcher'
+import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
+import Tabs from '../../components/ui/tabs/tabs'
 import { useGetMeQuery } from '../../services/auth/auth'
 import {
   useAddDeckMutation,
@@ -18,14 +19,16 @@ import s from './decks.module.scss'
 export type TabValue = 'All cards' | 'My cards'
 
 const Decks = () => {
+  const [sliderValue, setSliderValue] = useState<number[]>([0, 50])
   const [tabValue, setTabValue] = useState<TabValue>('All cards')
 
   const { data: me } = useGetMeQuery()
 
   const { data: decks } = useGetDecksQuery({
     itemsPerPage: 25,
-    authorId:
-      tabValue === 'My cards' && me.id ? me.id : '' /*'6dbbc288-038d-4af2-84a6-abd97c451576' */,
+    authorId: tabValue === 'My cards' && me.id ? me.id : '',
+    minCardsCount: String(sliderValue[0]),
+    maxCardsCount: String(sliderValue[1]),
   })
   const [addDeck] = useAddDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
@@ -34,7 +37,11 @@ const Decks = () => {
     deleteDeck({ id })
   }
 
+  console.log(decks)
+
   const onTabValueChange = (value: TabValue) => setTabValue(value)
+
+  const changeSliderValue = (value: number[]) => setSliderValue(value)
 
   return (
     <div className={s.decks}>
@@ -42,7 +49,18 @@ const Decks = () => {
 
       <button onClick={() => addDeck({ name: '55556' })}>add</button>
 
-      <Switcher tabValue={tabValue} onTabValueChange={onTabValueChange} />
+      <div className={s.filters}>
+        <Tabs
+          tabValue={tabValue}
+          onTabValueChange={onTabValueChange}
+          //className={s.filters__tabs}
+        />
+
+        <EditableSlider
+          value={sliderValue}
+          callback={changeSliderValue} /* className={s.filters__slider} */
+        />
+      </div>
       <Table.Root className={s.table}>
         <Table.Head>
           <Table.Row className={s.row}>

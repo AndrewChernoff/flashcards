@@ -1,4 +1,8 @@
 .decks {
+    .filters {
+        display: flex;
+    }
+
     .table {
         border-collapse: collapse;
         width: 80%;
