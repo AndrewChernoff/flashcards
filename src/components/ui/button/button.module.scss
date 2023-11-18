@@ -1,6 +1,12 @@
-.button {
+@mixin background-and-border {
+  padding: 6px 0;
+  border-radius: 4px;
+}
+
+button {
     all: unset;
-    cursor: pointer;
+    
+    
 }
 
 .primary {
@@ -13,6 +19,9 @@
   }
    
   .tertiary {
+    @include background-and-border;
+
+    padding: 6px 0;
     background-color: #8C61FF;
 
     /* background-color: blue; */
