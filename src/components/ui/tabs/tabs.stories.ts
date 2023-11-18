@@ -1,22 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Switcher from './switcher'
+import Tabs from './tabs'
 
 const meta = {
   title: 'Components/Switcher',
-  component: Switcher,
+  component: Tabs,
   tags: ['autodocs'],
   /* argTypes: {
      isAuth: {
       control: { type: 'radio' },
     },
   }, */
-} satisfies Meta<typeof Switcher>
+} satisfies Meta<typeof Tabs>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const Switch: Story = {
+export const TabsItems: Story = {
   args: {
     tabValue: 'All cards',
   },
