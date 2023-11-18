@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 import { formatDate } from '../../common/utils/time-transfering'
 import { Button } from '../../components/ui/button'
+import Input from '../../components/ui/input/input'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
@@ -50,6 +51,7 @@ const Decks = () => {
       <button onClick={() => addDeck({ name: '55556' })}>add</button>
 
       <div className={s.filters}>
+        <Input isSearch={true} placeholder="Search" type="text" />
         <Tabs
           tabValue={tabValue}
           onTabValueChange={onTabValueChange}
