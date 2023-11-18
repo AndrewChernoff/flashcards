@@ -14,12 +14,12 @@ import s from './input.module.scss'
 
 export interface InputProps {
   isSearch: boolean
-  name: string
-  label: string
+  name?: string
+  label?: string
   placeholder: string
   type: 'password' | 'text' | 'email'
   error?: string
-  isDisabled: boolean
+  isDisabled?: boolean
   className?: string
 }
 
