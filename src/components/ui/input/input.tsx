@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react'
+import { ChangeEvent, forwardRef, memo, useState } from 'react'
 
 /* import { Path } from 'react-hook-form' */
 
@@ -21,10 +21,23 @@ export interface InputProps {
   error?: string
   isDisabled?: boolean
   className?: string
+  value?: string
+  onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { className, isSearch, label, isDisabled, error, placeholder, type, ...rest } = props
+  const {
+    value,
+    onValueChange,
+    className,
+    isSearch,
+    label,
+    isDisabled,
+    error,
+    placeholder,
+    type,
+    ...rest
+  } = props
 
   const [passwordShown, setPasswordShown] = useState(false)
 
@@ -51,6 +64,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           className={error ? errorInputClassname : inputClassname}
           placeholder={placeholder}
           ref={ref}
+          value={value}
+          onChange={onValueChange}
           {...rest}
         />
         {type === 'password' && (
@@ -66,4 +81,4 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   )
 })
 
-export default Input
+export default memo(Input)

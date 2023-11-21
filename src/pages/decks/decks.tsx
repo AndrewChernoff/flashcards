@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, memo, useCallback, useMemo, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
@@ -22,6 +22,7 @@ export type TabValue = 'All cards' | 'My cards'
 const Decks = () => {
   const [sliderValue, setSliderValue] = useState<number[]>([0, 50])
   const [tabValue, setTabValue] = useState<TabValue>('All cards')
+  const [deckNameValue, setDeckNameValue] = useState<string>('')
 
   const { data: me } = useGetMeQuery()
 
@@ -30,6 +31,7 @@ const Decks = () => {
     authorId: tabValue === 'My cards' && me.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
     maxCardsCount: String(sliderValue[1]),
+    name: deckNameValue,
   })
   const [addDeck] = useAddDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
@@ -38,11 +40,14 @@ const Decks = () => {
     deleteDeck({ id })
   }
 
-  console.log(decks)
-
   const onTabValueChange = (value: TabValue) => setTabValue(value)
 
   const changeSliderValue = (value: number[]) => setSliderValue(value)
+
+  const onInputValueChange = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => setDeckNameValue(e.currentTarget.value),
+    []
+  )
 
   return (
     <div className={s.decks}>
@@ -51,7 +56,13 @@ const Decks = () => {
       <button onClick={() => addDeck({ name: '55556' })}>add</button>
 
       <div className={s.filters}>
-        <Input isSearch={true} placeholder="Search" type="text" />
+        <Input
+          isSearch={true}
+          placeholder="Search"
+          type="text"
+          value={deckNameValue}
+          onValueChange={onInputValueChange}
+        />
         <Tabs
           tabValue={tabValue}
           onTabValueChange={onTabValueChange}
@@ -99,4 +110,4 @@ const Decks = () => {
   )
 }
 
-export default Decks
+export default memo(Decks)
