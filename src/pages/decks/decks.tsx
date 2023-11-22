@@ -1,10 +1,11 @@
-import { ChangeEvent, memo, useCallback, useMemo, useState } from 'react'
+import { ChangeEvent, memo, useCallback, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
 import { formatDate } from '../../common/utils/time-transfering'
 import { Button } from '../../components/ui/button'
 import Input from '../../components/ui/input/input'
+import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
@@ -23,17 +24,19 @@ const Decks = () => {
   const [sliderValue, setSliderValue] = useState<number[]>([0, 50])
   const [tabValue, setTabValue] = useState<TabValue>('All cards')
   const [deckNameValue, setDeckNameValue] = useState<string>('')
+  const [currentPage, setCurrentPage] = useState<number>(1)
 
   const { data: me } = useGetMeQuery()
 
   const { data: decks } = useGetDecksQuery({
-    itemsPerPage: 25,
+    itemsPerPage: 10,
     authorId: tabValue === 'My cards' && me.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
     maxCardsCount: String(sliderValue[1]),
     name: deckNameValue,
+    currentPage: currentPage,
   })
-  const [addDeck] = useAddDeckMutation()
+  // const [addDeck] = useAddDeckMutation()
   const [deleteDeck] = useDeleteDeckMutation()
 
   const onDeleteDeck = (id: string) => {
@@ -51,9 +54,9 @@ const Decks = () => {
 
   return (
     <div className={s.decks}>
-      <Link to="/2">Go</Link>
-
-      <button onClick={() => addDeck({ name: '55556' })}>add</button>
+      {/* <Link to="/2">Go</Link>
+       */}
+      {/* <button onClick={() => addDeck({ name: '55556' })}>add</button> */}
 
       <div className={s.filters}>
         <Input
@@ -106,6 +109,15 @@ const Decks = () => {
           })}
         </Table.Body>
       </Table.Root>
+      {decks && (
+        <Pagination
+          totalCount={decks.pagination.totalItems}
+          pageSize={10}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+          className={'smt'}
+        />
+      )}
     </div>
   )
 }

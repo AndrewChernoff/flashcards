@@ -9,7 +9,8 @@ import s from './pagination.module.scss'
 
 type PropsType = PaginationType & {
   onPageChange: (value: number) => void
-  className: string
+  className?: string
+  totalCount: number
 }
 
 const Pagination = (props: PropsType) => {
