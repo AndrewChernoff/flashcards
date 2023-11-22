@@ -1,12 +1,15 @@
 .decks {
+    width: 80%;
+    margin: 0 auto; 
+
     .filters {
         display: flex;
+        margin: 39px 0 36px;
     }
 
     .table {
         border-collapse: collapse;
-        width: 80%;
-        margin: 0 auto;  
+         
 
         .row {
             .headCell {

@@ -3,11 +3,22 @@ import { Button } from '../button'
 
 import s from './header.module.scss'
 
-type HeaderProps = {
-  isAuth: boolean
+type UserData = {
+  avatar: null
+  created: string
+  email: string
+  id: string
+  isEmailVerified: boolean
+  name: string
+  updated: string
 }
 
-function Header({ isAuth }: HeaderProps) {
+type HeaderProps = {
+  isAuth: boolean
+  user: UserData
+}
+
+function Header({ isAuth, user }: HeaderProps) {
   return (
     <header className={s.header}>
       <img src={logo} alt="incubator logo" />
@@ -18,7 +29,14 @@ function Header({ isAuth }: HeaderProps) {
       ) : (
         <div className={s.header__userInfo}>
           <p>Andrew</p>
-          <img src="https://avatars.githubusercontent.com/u/79928353?v=4" alt="user ava" />
+          {user.avatar ? (
+            <img src={user.avatar} alt="user ava" />
+          ) : (
+            <img
+              src="https://winaero.com/blog/wp-content/uploads/2018/08/Windows-10-user-icon-big.png"
+              alt="user ava"
+            />
+          )}
         </div>
       )}
     </header>
