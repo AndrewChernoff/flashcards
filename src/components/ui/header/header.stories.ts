@@ -18,6 +18,6 @@ type Story = StoryObj<typeof meta>
 
 export const AuthHeader: Story = {
   args: {
-    isAuth: true,
+    user: { success: false },
   },
 }

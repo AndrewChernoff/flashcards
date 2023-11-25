@@ -10,7 +10,7 @@ button {
 }
 
 .primary {
-    background-color: red
+   // background-color: red
   }
    
   .secondary {
@@ -47,4 +47,8 @@ button {
    
   .fullWidth {
     width: 100%;
+  }
+
+  .disabled {
+    background: #4C4C4C;
   }

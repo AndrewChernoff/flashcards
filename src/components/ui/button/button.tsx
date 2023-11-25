@@ -8,6 +8,7 @@ export type ButtonProps<T extends ElementType> = {
   as?: T
   className?: string
   callBack?: () => void
+  disabled?: boolean
 } & ComponentPropsWithoutRef<T>
 
 export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) => {
@@ -17,13 +18,24 @@ export const Button = <T extends ElementType = 'button'>(props: ButtonProps<T>) 
     fullWidth,
     className,
     as: Component = 'button',
+    disabled,
     ...rest
   } = props
 
+  const onClickHandler = () => {
+    if (disabled) {
+      return
+    } else {
+      return callBack && callBack()
+    }
+  }
+
   return (
     <Component
-      onClick={callBack}
-      className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}`}
+      onClick={onClickHandler}
+      className={`${s[variant]} ${fullWidth ? s.fullWidth : ''} ${className}  ${
+        disabled && s.disabled
+      }`}
       {...rest}
     />
   )
