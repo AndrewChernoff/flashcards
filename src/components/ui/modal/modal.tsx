@@ -2,64 +2,43 @@ import { useState } from 'react'
 
 import * as Dialog from '@radix-ui/react-dialog'
 
-import Card from '../card/card'
-import CheckboxDemo from '../chekbox/checkbox'
-import Input from '../input/input'
-import SelectDemo from '../select/select'
+import s from './modal.module.scss'
 
 type ModalType = {
   isOpen: boolean
 }
+const wait = () => new Promise(resolve => setTimeout(resolve, 1000))
 
 const Modal = ({ isOpen }: ModalType) => {
+  const [open, setOpen] = useState(false)
+
   return (
-    /*   <div>
-      <Card> */
-    /* <h2>asfdfvds</h2> */
-    <Dialog.Root open={isOpen} /* onOpenChange={setOpen} */>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger>Open</Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Overlay />
-        <Dialog.Content>
-          <form>
-            <SelectDemo
-              items={['1', '2', '3', '4', '5']}
-              callback={function (value: string): void {
-                throw new Error('Function not implemented.')
-              }}
-            />
-
-            <Input
-              isSearch={false}
-              name={'input'}
-              label={'Input'}
-              placeholder={'Input'}
-              type={'text'}
-              isDisabled={false}
-            />
-            <Input
-              isSearch={false}
-              name={'input'}
-              label={'Input'}
-              placeholder={'Input'}
-              type={'text'}
-              isDisabled={false}
-            />
-
-            <CheckboxDemo
-              label={'Check-box'}
-              id={'checkbox'}
-              checked={false}
-              onCheckedChange={function (value: boolean): void {
-                throw new Error('Function not implemented.')
-              }}
-            />
+        <Dialog.Content className={s.dialog}>
+          <form
+            onSubmit={event => {
+              wait().then(() => setOpen(false))
+              event.preventDefault()
+            }}
+          >
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <div>Heyyy</div>
+            <button type="submit">Submit</button>
           </form>
         </Dialog.Content>
       </Dialog.Portal>
     </Dialog.Root>
-    /* </Card>
-    </div> */
   )
 }
 

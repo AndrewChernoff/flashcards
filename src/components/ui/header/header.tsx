@@ -4,7 +4,7 @@ import { Button } from '../button'
 import s from './header.module.scss'
 
 type UserData = {
-  avatar: null
+  avatar: string | null
   created: string
   email: string
   id: string
@@ -14,29 +14,43 @@ type UserData = {
 }
 
 type HeaderProps = {
-  isAuth: boolean
-  user: UserData
+  //isAuth: boolean
+  user: UserData | IsSuccess
 }
 
-function Header({ isAuth, user }: HeaderProps) {
+type IsSuccess = { success: boolean }
+
+function isSuccess(user: UserData | IsSuccess): user is IsSuccess {
+  return (user as IsSuccess).success === false
+}
+
+function Header({ /* isAuth, */ user }: HeaderProps) {
+  console.log(user)
+
   return (
     <header className={s.header}>
       <img src={logo} alt="incubator logo" />
-      {!isAuth ? (
+      {user && isSuccess(user) ? (
         <Button className="purple" as="button" variant="purple">
           Sign In
         </Button>
       ) : (
         <div className={s.header__userInfo}>
-          <p>Andrew</p>
-          {user.avatar ? (
-            <img src={user.avatar} alt="user ava" />
-          ) : (
-            <img
-              src="https://winaero.com/blog/wp-content/uploads/2018/08/Windows-10-user-icon-big.png"
-              alt="user ava"
-            />
-          )}
+          {
+            user && 'avatar' in user && (
+              <>
+                <p>{user.name}</p>
+                <img
+                  src={
+                    !user.avatar
+                      ? 'https://winaero.com/blog/wp-content/uploads/2018/08/Windows-10-user-icon-big.png'
+                      : user.avatar
+                  }
+                  alt="user ava"
+                />
+              </>
+            ) /*  */
+          }
         </div>
       )}
     </header>

@@ -5,11 +5,9 @@ import { useGetMeQuery } from './services/auth/auth'
 function App() {
   const { data: me } = useGetMeQuery()
 
-  console.log(me)
-
   return (
     <>
-      <Header isAuth={!!me} user={me} />
+      <Header user={me} />
       <Router />
     </>
   )
