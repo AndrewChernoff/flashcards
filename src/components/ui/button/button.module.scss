@@ -1,11 +1,12 @@
 @mixin background-and-border {
-  padding: 6px 0;
+  box-sizing: border-box;
+  height: 36px;
+  padding: 6px 28px;
   border-radius: 4px;
 }
 
 button {
     all: unset;
-    
     
 }
 
@@ -33,13 +34,14 @@ button {
     font-weight: 700;
   }
 
-  .purple { // added
+  .purple {
+    @include background-and-border; // added
+
     /* padding: 6px 28px;
 
     font-size: 14px;
     font-weight: 700;
     color: white; */
-
     background-color: #704ECC;
 
     // border-radius: 4px;

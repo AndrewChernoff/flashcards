@@ -25,11 +25,12 @@ import s from './decks.module.scss'
 export type TabValue = 'All cards' | 'My cards'
 
 const Decks = () => {
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 50])
-  const [tabValue, setTabValue] = useState<TabValue>('All cards')
-  const [deckNameValue, setDeckNameValue] = useState<string>('')
-  const [currentPage, setCurrentPage] = useState<number>(1)
-  const [activeIndex, setActiveIndex] = useState<string[]>([])
+  const [sliderValue, setSliderValue] = useState<number[]>([0, 50]) ////slider range
+  const [tabValue, setTabValue] = useState<TabValue>('All cards') ////tabs for decks
+  const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
+  const [currentPage, setCurrentPage] = useState<number>(1) /// for pagination
+  const [activeIndex, setActiveIndex] = useState<string[]>([]) /// flag for disabling button on delete request
+  const [isOpen, setIsOpen] = useState<boolean>(false)
 
   const { data: me } = useGetMeQuery()
 
@@ -58,11 +59,20 @@ const Decks = () => {
     deleteDeck({ id })
   }
 
+  const handleDialogWindow = () => setIsOpen(!isOpen)
+
+  console.log(isOpen)
+
   return (
     <div className={s.decks}>
-      {/* <Link to="/2">Go</Link>
-       */}
-      <button onClick={() => addDeck({ name: '55556' })}>add</button>
+      <header>
+        <h1>Packs list</h1>
+        <Button variant="purple" callBack={handleDialogWindow}>
+          Add New Pack
+        </Button>
+      </header>
+
+      {/* <button onClick={() => addDeck({ name: '55556' })}>add</button> */}
 
       <div className={s.filters}>
         <Input
@@ -113,18 +123,12 @@ const Decks = () => {
                     <PlayCircle />
                     <Edit />
                     {deck.author.id === me.id && (
-                      /*  <Button
-                        variant={undefined}
-                        disabled={activeIndex.some(el => el === deck.id)}
-                        callBack={() => onDeleteDeckHandler(deck.id)}
-                      > */
                       <button
                         disabled={activeIndex.some(el => el === deck.id)}
                         onClick={() => onDeleteDeckHandler(deck.id)}
                       >
                         <Delete />
                       </button>
-                      /* </Button> */
                     )}
                   </div>
                 </Table.DataCell>
@@ -142,7 +146,7 @@ const Decks = () => {
           className={'smt'} /////////////!!!!!!!!!
         />
       )}
-      <Modal isOpen={true} />
+      <Modal isOpen={isOpen} callBack={(value: boolean) => setIsOpen(value)} />
     </div>
   )
 }
