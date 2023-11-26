@@ -1,12 +1,30 @@
+@import '../../../common/styles/forms.module';
+
 .dialog {
     position: absolute;
-    top: 40%;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
 
-   width: 40%;
+    width: 30%;
     height: 40%;
-margin: 0 auto;
+    margin: 0 auto;
 
-    border: red 1px solid;
+    background: $dialogs-color;
+    border: 1px solid #4C4C4C;
+
+    &__container {
+        width: 90%;
+        margin: 18px auto 36px;
+    }
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        margin: 0;
+
+        h3 {
+            margin: 0;
+        }
+    }
 }

@@ -2,6 +2,11 @@
     width: 80%;
     margin: 0 auto; 
 
+    header {
+        display: flex;
+        justify-content: space-between;
+    }
+
     .filters {
         display: flex;
         justify-content: space-between;
