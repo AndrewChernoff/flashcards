@@ -14,7 +14,6 @@ type UserData = {
 }
 
 type HeaderProps = {
-  //isAuth: boolean
   user: UserData | IsSuccess
 }
 
@@ -24,9 +23,7 @@ function isSuccess(user: UserData | IsSuccess): user is IsSuccess {
   return (user as IsSuccess).success === false
 }
 
-function Header({ /* isAuth, */ user }: HeaderProps) {
-  console.log(user)
-
+function Header({ user }: HeaderProps) {
   return (
     <header className={s.header}>
       <img src={logo} alt="incubator logo" />
