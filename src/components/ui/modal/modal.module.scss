@@ -18,6 +18,13 @@
         margin: 18px auto 36px;
     }
 
+    &__overlay {
+        position: fixed;
+        inset: 0;
+        background-color:  rgb(0 0 0 / 55%);
+        animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
     &__header {
         display: flex;
         justify-content: space-between;
