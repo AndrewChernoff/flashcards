@@ -1,80 +1,23 @@
 @import '../../../common/styles/forms.module';
 @import '../../../common/styles/colors.module';
 
-.dialog {
+.modal {
     position: absolute;
     top: 5%;
     left: 50%;
     transform: translateX(-50%);
 
     width: 43%;
-    height: 55%;
+    min-height: 55%;
     margin: 0 auto;
-
-    // padding: 18px 24px 36px;
 
     background: $dialogs-color;
     border: 1px solid #4C4C4C;
-
-   /*  &__container {
-        width: 90%;
-        margin: 18px auto 36px;
-    } */
 
     &__overlay {
         position: fixed;
         inset: 0;
         background-color:  rgb(0 0 0 / 55%);
         animation: overlayShow 150ms cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    &__header {
-        display: flex;
-        justify-content: space-between;
-
-        margin: 0;
-        padding: 18px 24px;
-
-        border-bottom: 1px solid #4C4C4C;
-
-        h3 {
-            margin: 0;
-        }
-    }
-
-    &__checkbox {
-        width: 113px;
-        margin-top: 24px;
-        font-size: 14px;
-        font-weight: 400;
-    }
-
-    &__functionality{
-        padding: 24px 24px 36px;
-
-        img{
-            width: 100%;
-            height: 100px;
-        }
-    }
-
-    &__buttons {
-        display: flex;
-        justify-content: space-between;
-        padding: 12px 24px 0;
-
-
-        &_cancel {
-            width: 100px;
-            height: 36px;
-            text-align: center;
-        }
-
-        &_add {
-           // background-color: $purple;
-           width: 148px;
-           height: 36px;
-           text-align: center;
-        }
     }
 }
