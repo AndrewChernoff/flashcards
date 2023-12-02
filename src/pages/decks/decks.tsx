@@ -8,17 +8,13 @@ import PlayCircle from '../../common/svg/play-circle'
 import { formatDate } from '../../common/utils/time-transfering'
 import { Button } from '../../components/ui/button'
 import Input from '../../components/ui/input/input'
-import Modal from '../../components/ui/modal/modal'
+import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
 import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
 import { useGetMeQuery } from '../../services/auth/auth'
-import {
-  useAddDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-} from '../../services/decks/decks'
+import { useDeleteDeckMutation, useGetDecksQuery } from '../../services/decks/decks'
 
 import s from './decks.module.scss'
 
@@ -43,7 +39,7 @@ const Decks = () => {
     currentPage: currentPage,
   })
   //const [addDeck] = useAddDeckMutation()
-  const [deleteDeck, { isLoading: isUpdating }] = useDeleteDeckMutation()
+  const [deleteDeck] = useDeleteDeckMutation()
 
   const onTabValueChange = (value: TabValue) => setTabValue(value)
 
@@ -60,8 +56,6 @@ const Decks = () => {
   }
 
   const handleDialogWindow = () => setIsOpen(!isOpen)
-
-  console.log(isOpen)
 
   return (
     <div className={s.decks}>
@@ -146,7 +140,7 @@ const Decks = () => {
           className={'smt'} /////////////!!!!!!!!!
         />
       )}
-      <Modal isOpen={isOpen} callBack={(value: boolean) => setIsOpen(value)} />
+      <AddDeckDialog isOpen={isOpen} callBack={(value: boolean) => setIsOpen(value)} />
     </div>
   )
 }

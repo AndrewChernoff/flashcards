@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import Modal from './modal'
+import Modal from './addDeckDialog'
 
 const meta = {
   title: 'Components/Modal',
