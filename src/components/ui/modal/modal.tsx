@@ -89,7 +89,12 @@ const Modal = ({ isOpen, callBack }: ModalType) => {
               </div>
 
               <div className={s.dialog__buttons}>
-                <Button className={s.dialog__buttons_cancel} variant="secondary">
+                <Button
+                  type="button"
+                  className={s.dialog__buttons_cancel}
+                  variant="secondary"
+                  callBack={() => reset()}
+                >
                   Cancel
                 </Button>
                 <Button
