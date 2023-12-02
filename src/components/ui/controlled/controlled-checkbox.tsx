@@ -2,23 +2,24 @@ import { UseControllerProps, useController } from 'react-hook-form'
 
 import CheckboxDemo, { CheckboxProps } from '../chekbox/checkbox'
 import { FormValues } from '../login-form/login-form'
+import { AddDeckInputs } from '../modal/modal'
 
-export type ControlledCheckboxProps<T extends FormValues> = UseControllerProps<T> &
+export type ControlledCheckboxProps<T extends FormValues | AddDeckInputs> = UseControllerProps<T> &
   Omit<CheckboxProps, 'onCheckedChange' | 'value' | 'checked'>
 
-const ControlledCheckbox = ({
+const ControlledCheckbox = <T extends FormValues | AddDeckInputs>({
   className,
   id,
   label,
   control,
   name,
-}: ControlledCheckboxProps<FormValues>) => {
+}: ControlledCheckboxProps<T>) => {
   const {
     field: { value, onChange },
   } = useController({
     name,
     control,
-    defaultValue: false,
+    //defaultValue: false,
   })
 
   return (

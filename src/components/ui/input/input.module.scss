@@ -11,6 +11,26 @@
     border-radius: 2px;
   }
 
+  .file {
+    margin: 24px 0;
+
+    &__label {display: block;
+
+        width: 100%;
+        padding: 6px 28px;
+
+        text-align: center;
+
+        background:  #4C4C4C;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px 0 rgb(109 109 109 / 25%);
+    }
+
+    &__input {
+        display: none;
+    }
+  }
+
   .inputBlock {
     label {
         font-size: 14px;
