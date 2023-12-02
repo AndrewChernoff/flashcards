@@ -23,6 +23,7 @@ const ControlledInput = (props: ControlledInputProps) => {
         label={label}
         {...rest} */
         //name={props.name}
+        value={props.value}
         isSearch={props.isSearch}
         placeholder={props.placeholder}
         type={props.type}

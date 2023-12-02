@@ -17,11 +17,12 @@ export interface InputProps {
   name?: string
   label?: string
   placeholder: string
-  type: 'password' | 'text' | 'email'
+  type: 'password' | 'text' | 'email' | 'file'
   error?: string
   isDisabled?: boolean
   className?: string
   value?: string
+  id?: string
   onValueChange?: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
@@ -36,6 +37,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     error,
     placeholder,
     type,
+    id,
     ...rest
   } = props
 
@@ -49,11 +51,32 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const inputType = type === 'password' ? (passwordShown ? 'text' : 'password') : type
   const inputClassname = isSearch ? `${s.input__normal} ${s.input__search}` : `${s.input__normal}`
 
-  const errorInputClassname = `${s.input__error} ${s.input__search}`
+  const errorInputClassname = s.input__error /* `${s.input__error} ${s.input__search}` */
+
+  if (type === 'file') {
+    return (
+      <div className={s.file}>
+        <label htmlFor={id} className={s.file__label}>
+          Change Cover
+        </label>
+        <input
+          disabled={isDisabled}
+          type={inputType}
+          className={s.file__input}
+          placeholder={placeholder}
+          ref={ref}
+          value={value}
+          id={id}
+          onChange={onValueChange}
+          {...rest}
+        />
+      </div>
+    )
+  }
 
   return (
     <div className={`${s.inputBlock} ${className}`}>
-      {label && !error && <label htmlFor="input-field">{label}</label>}
+      {label /* && !error */ && <label htmlFor="input-field">{label}</label>}
 
       <div className={s.input}>
         {isSearch && <div className={s.input__search_img}></div>}

@@ -42,7 +42,7 @@ const Decks = () => {
     name: deckNameValue,
     currentPage: currentPage,
   })
-  const [addDeck] = useAddDeckMutation()
+  //const [addDeck] = useAddDeckMutation()
   const [deleteDeck, { isLoading: isUpdating }] = useDeleteDeckMutation()
 
   const onTabValueChange = (value: TabValue) => setTabValue(value)
