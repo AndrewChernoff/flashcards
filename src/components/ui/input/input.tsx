@@ -14,9 +14,8 @@ import s from './input.module.scss'
 
 export interface InputProps {
   isSearch: boolean
-  name?: string
   label?: string
-  placeholder: string
+  placeholder?: string
   type: 'password' | 'text' | 'email' | 'file'
   error?: string
   isDisabled?: boolean

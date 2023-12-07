@@ -17,17 +17,19 @@ const ControlledCheckbox = <T extends FormValues | AddDeckInputs>({
   const {
     field: { value, onChange },
   } = useController({
+    defaultValue: false as any,
     name,
     control,
-    //defaultValue: false,
   })
+
+  console.log(value)
 
   return (
     <CheckboxDemo
       className={className}
       id={id}
       label={label}
-      checked={Boolean(value)}
+      checked={value as boolean}
       onCheckedChange={onChange}
     />
   )

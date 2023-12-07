@@ -39,6 +39,7 @@ export const LoginForm = () => {
   } = useForm<FormValues>({ resolver: zodResolver(SignUpSchema) })
 
   const onSubmit = (formData: FormValues) => {
+    alert(JSON.stringify(formData))
     logIn(formData)
   }
 

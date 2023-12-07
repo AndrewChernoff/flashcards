@@ -31,7 +31,7 @@ const CheckboxDemo = ({ className, id, label, checked, onCheckedChange }: Checkb
           </Checkbox.Indicator>
         </Checkbox.Root>
       </div>
-      <p>{label}</p>
+      <label htmlFor={id}>{label}</label>
     </div>
   )
 }

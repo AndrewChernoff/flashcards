@@ -1,7 +1,5 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
-import { Link } from 'react-router-dom'
-
 import Delete from '../../common/svg/delete'
 import Edit from '../../common/svg/edit'
 import PlayCircle from '../../common/svg/play-circle'
@@ -107,7 +105,10 @@ const Decks = () => {
           {decks?.items.map((deck: any) => {
             return (
               <Table.Row className={s.dataRow} key={deck.id}>
-                <Table.DataCell className={s.dataCell}>{deck.name}</Table.DataCell>
+                <Table.DataCell className={s.dataCell}>
+                  <img className={s.dataCell__img} src={deck.cover} />
+                  {deck.name}
+                </Table.DataCell>
                 <Table.DataCell className={s.dataCell}>{deck.cardsCount}</Table.DataCell>
                 <Table.DataCell className={s.dataCell}>{formatDate(deck.updated)}</Table.DataCell>
                 <Table.DataCell className={`${s.dataCell} ${s.decks__createdBy}`}>
