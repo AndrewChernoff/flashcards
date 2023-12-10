@@ -90,7 +90,7 @@ export const LoginForm = () => {
           variant="link"
           as={'a'}
           className={s.form__link}
-          href={'https://api.flashcards.andrii.es/docs#/Auth/AuthController_registration'}
+          href={'/signup'}
           type="submit"
           //fullWidth={true}
         >
