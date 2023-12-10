@@ -5,7 +5,8 @@
     background: #171717;
 
     &__item {
-       all: unset;
+        all: unset;
+        cursor: pointer;
 
         &:nth-child(2) {
             display: flex;
@@ -18,10 +19,12 @@
         }
 
         &:nth-child(3) {
-            display: flex;
-            gap: 6px;
-            align-items: center;
-            padding-top: 12px;
+            button {
+                display: flex;
+                gap: 6px;
+                align-items: center;
+                padding-top: 12px;
+            }
         }
 
         &_profile {

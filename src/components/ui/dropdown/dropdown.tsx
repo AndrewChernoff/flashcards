@@ -6,6 +6,9 @@ import { Caption, Subtitle2 } from '../typography/typography'
 
 import s from './dropdown.module.scss'
 
+// eslint-disable-next-line import/no-unresolved
+import { useLogOutMutation } from '@/services/auth/auth'
+
 type DropdownProps = {
   children: ReactNode
   img: string
@@ -13,18 +16,20 @@ type DropdownProps = {
   email: string
 }
 
-const Dropdown = ({ children }: DropdownProps) => {
+const Dropdown = ({ children, img, email, name }: DropdownProps) => {
+  const [logOut] = useLogOutMutation()
+
   return (
-    <DropdownMenu.Root>
+    <DropdownMenu.Root /*need to fix open property on blur */>
       <DropdownMenu.Trigger>{children}</DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content className={s.dropdown}>
           <DropdownMenu.Item className={s.dropdown__item}>
             <div className={s.user}>
-              <img src="https://i.ytimg.com/vi/X4V7k3hufvM/mqdefault.jpg" />
+              <img src={img} alt="user avatar" />
               <div className={s.user__info}>
-                <Subtitle2 className={s.user__info_name}>Adolfo</Subtitle2>
-                <Caption className={s.user__info_email}>j&johnson@gmail.com</Caption>
+                <Subtitle2 className={s.user__info_name}>{name}</Subtitle2>
+                <Caption className={s.user__info_email}>{email}</Caption>
               </div>
             </div>
           </DropdownMenu.Item>
@@ -33,8 +38,10 @@ const Dropdown = ({ children }: DropdownProps) => {
             <Caption className={s.dropdown__item_profile}>My profile</Caption>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={s.dropdown__item}>
-            <SignOutImg />
-            <Caption className={s.dropdown__item_profile}>Sign Out</Caption>
+            <button onClick={() => logOut()}>
+              <SignOutImg />
+              <Caption className={s.dropdown__item_profile}>Sign Out</Caption>
+            </button>
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>

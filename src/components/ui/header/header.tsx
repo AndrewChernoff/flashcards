@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
 
 import logo from '../../../common/imgs/logo.png'
+import noava from '../../../common/imgs/noAvaUser.png'
 import { Button } from '../button'
+import Dropdown from '../dropdown/dropdown'
 
 import s from './header.module.scss'
 
@@ -27,14 +29,13 @@ function isSuccess(user: UserData | IsSuccess): user is IsSuccess {
 
 function Header({ user }: HeaderProps) {
   const [path, setPath] = useState<string>('/signin')
-  //const path = window.location.pathname
-
-  console.log(window.location.pathname)
 
   useEffect(() => {
-    if (window.location.pathname === '/signin') {
+    const pathName = window.location.pathname
+
+    if (pathName === '/signin') {
       return setPath('/signup')
-    } else if (window.location.pathname === '/signup') {
+    } else if (pathName === '/signup') {
       return setPath('/signin')
     }
   }, [])
@@ -53,19 +54,14 @@ function Header({ user }: HeaderProps) {
           {path === '/signin' ? 'Sign Up' : path === '/signup' && 'Sign in'}
         </Button>
       ) : (
-        <div className={s.header__userInfo}>
+        <div className={s.header__info}>
           {user && 'avatar' in user && (
-            <>
-              <p>{user.name}</p>
-              <img
-                src={
-                  !user.avatar
-                    ? 'https://winaero.com/blog/wp-content/uploads/2018/08/Windows-10-user-icon-big.png'
-                    : user.avatar
-                }
-                alt="user ava"
-              />
-            </>
+            <Dropdown name={user.name} email={user.email} img={!user.avatar ? noava : user.avatar}>
+              <div className={s.header__info_user}>
+                <p>{user.name}</p>
+                <img src={!user.avatar ? noava : user.avatar} alt="user ava" />
+              </div>
+            </Dropdown>
           )}
         </div>
       )}

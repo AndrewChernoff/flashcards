@@ -17,7 +17,7 @@ type SignUpFormValues = {
 }
 
 function SignUp() {
-  const [signup, { error }] = useSignupMutation()
+  const [signup /* , { error } */] = useSignupMutation()
 
   const SignUpSchema = z
     .object({
@@ -39,7 +39,6 @@ function SignUp() {
     formState: { errors },
     register,
     handleSubmit,
-    setError,
     control,
   } = useForm<SignUpFormValues>({ resolver: zodResolver(SignUpSchema) })
 
@@ -58,7 +57,7 @@ function SignUp() {
   }, [error]) */
 
   return (
-    <Card>
+    <Card className={s.card}>
       <DevTool control={control} />
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={s.form__title}> Sign Up</h2>
@@ -105,7 +104,7 @@ function SignUp() {
           variant="link"
           as={'a'}
           className={s.form__link}
-          href={'https://api.flashcards.andrii.es/docs#/Auth/AuthController_registration'}
+          href={'/signin'}
           type="submit"
           //fullWidth={true}
         >
