@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react'
+
 import logo from '../../../common/imgs/logo.png'
 import { Button } from '../button'
 
@@ -24,15 +26,18 @@ function isSuccess(user: UserData | IsSuccess): user is IsSuccess {
 }
 
 function Header({ user }: HeaderProps) {
-  const path = window.location.pathname
+  const [path, setPath] = useState<string>('/signin')
+  //const path = window.location.pathname
 
-  const returnedUrl = () => {
-    if (path === '/signin') {
-      return 'signup'
-    } else if (path === '/signup') {
-      return 'signin'
+  console.log(window.location.pathname)
+
+  useEffect(() => {
+    if (window.location.pathname === '/signin') {
+      return setPath('/signup')
+    } else if (window.location.pathname === '/signup') {
+      return setPath('/signin')
     }
-  }
+  }, [])
 
   return (
     <header className={s.header}>
@@ -41,8 +46,7 @@ function Header({ user }: HeaderProps) {
         <Button
           //className="purple"
           as="a"
-          //href={'/signup'}
-          href={returnedUrl()}
+          href={path}
           variant="purple"
           className={s.header__link}
         >
