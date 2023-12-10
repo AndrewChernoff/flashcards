@@ -7,7 +7,6 @@ import * as z from 'zod'
 
 import { useAddDeckMutation } from '../../../../services/decks/decks'
 import { Button } from '../../button'
-import CheckboxDemo from '../../chekbox/checkbox'
 import ControlledCheckbox from '../../controlled/controlled-checkbox'
 import Input from '../../input/input'
 import Modal from '../modal'
@@ -16,7 +15,7 @@ import s from './addDeckDialog.module.scss'
 
 export type AddDeckInputs = {
   name: string
-  cover?: /* File */ string
+  cover?: /* File */ any
   isPrivate: boolean
 }
 
@@ -48,10 +47,34 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
     resolver: zodResolver(schema),
   })
 
-  const onSubmit: SubmitHandler<AddDeckInputs> = data => {
-    // const { name, isPrivate, cover } = data
+  function text2Binary(input: string) {
+    let binaryResult = ''
 
-    addDeck(data)
+    for (let i = 0; i < input.length; i++) {
+      const charCode = input.charCodeAt(i)
+      let binaryValue = ''
+
+      for (let j = 7; j >= 0; j--) {
+        binaryValue += (charCode >> j) & 1
+      }
+
+      binaryResult += binaryValue + ' '
+    }
+
+    return binaryResult.trim()
+  }
+
+  function convertToBase64(string: string) {
+    // Convert string to Base64
+    var base64String = btoa(string)
+
+    return base64String
+  }
+
+  const onSubmit: SubmitHandler<AddDeckInputs> = data => {
+    const { name, isPrivate, cover } = data
+
+    addDeck({ name, isPrivate, cover: convertToBase64(cover) })
     reset()
     callBack(false)
   }
@@ -63,6 +86,16 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
 
     setPreview(urlImage)
   }
+
+  /*  const onChangeHandler = handleSubmit((data: Form) => {
+    const form = new FormData()
+
+    form.append('avatar', data.avatar ?? '')
+    form.append('name', me?.name ?? '')
+    updateAvatar(form)
+  }) */
+
+  //logic to close the modal when clicked outside
 
   const imageSrc = getValues().cover /* ?.[0] */
 
@@ -107,7 +140,6 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
                   className={s.file__input}
                   id={'cover'}
                   name="cover"
-                  //onChange={handleUploadedFile}
                 />
               }
             </div>

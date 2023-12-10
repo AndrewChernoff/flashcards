@@ -19,11 +19,6 @@ const privateRoutes = [
 
 const publicRoutes = [
   {
-    path: '/2',
-    element: <div>2</div>,
-  },
-
-  {
     path: '/signin',
     element: <LoginForm />,
   },
@@ -44,8 +39,6 @@ const PrivateRoute = () => {
 
   if (isMeLoading) return <div>Loading...</div>
 
-  console.log(me)
-
   return isAuth?.success === false ? <Navigate to="/signin" /> : <Outlet />
 }
 
@@ -58,9 +51,5 @@ const router = createBrowserRouter([
 ])
 
 export const Router = () => {
-  /*  const { isLoading } = useGetMeQuery()
-
-  isLoading && <div>Loading...</div> */
-
   return <RouterProvider router={router} />
 }
