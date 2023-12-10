@@ -21,8 +21,6 @@ export type FormValues = {
 export const LoginForm = () => {
   const { data: me } = useGetMeQuery()
 
-  // console.log(me)
-
   const [logIn] = useLogInMutation()
 
   const SignUpSchema = z.object({
@@ -46,7 +44,7 @@ export const LoginForm = () => {
   if (me && me?.success !== false) return <Navigate to={'/decks'} />
 
   return (
-    <Card>
+    <Card className={s.card}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <DevTool control={control} />
         <h2 className={s.form__title}> Sign In</h2>
@@ -71,17 +69,6 @@ export const LoginForm = () => {
           {...register('password')}
           label={'password'}
         />
-        {/* <ControlledInput
-          className={s.form__input}
-          isSearch={false}
-          placeholder={'Type your password'}
-          type={'password'}
-          error={errors.password?.message}
-          isDisabled={false}
-          {...register('password')}
-          label={'password'}
-          control={control}
-        /> */}
 
         <ControlledCheckbox
           className={s.form__checkbox}

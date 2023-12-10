@@ -1,0 +1,54 @@
+.dropdown {
+    width: 217px;
+    height: 147px;
+    padding: 12px;
+    background: #171717;
+
+    &__item {
+       all: unset;
+
+        &:nth-child(2) {
+            display: flex;
+            gap: 6px;
+
+            padding: 12px 0;
+
+            border-top: #808080 1px solid;
+            border-bottom: #808080 1px solid;
+        }
+
+        &:nth-child(3) {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            padding-top: 12px;
+        }
+
+        &_profile {
+            margin-top: 2px;
+        }
+    }
+
+    .user {
+        display: flex;
+        gap: 8px;
+        padding-bottom: 12px;
+
+        &__info {
+            &_name {
+                margin: 0;
+            }
+
+            &_email {
+                margin: 0;
+                color: #808080;
+            }
+        }
+
+        img {
+            width: 36px;
+            height: 36px;
+            border-radius: 100%;
+        }
+    }
+}
