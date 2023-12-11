@@ -36,7 +36,7 @@ const Decks = () => {
     name: deckNameValue,
     currentPage: currentPage,
   })
-  //const [addDeck] = useAddDeckMutation()
+
   const [deleteDeck] = useDeleteDeckMutation()
 
   const onTabValueChange = (value: TabValue) => setTabValue(value)
@@ -64,8 +64,6 @@ const Decks = () => {
         </Button>
       </header>
 
-      {/* <button onClick={() => addDeck({ name: '55556' })}>add</button> */}
-
       <div className={s.filters}>
         <Input
           isSearch={true}
@@ -74,16 +72,9 @@ const Decks = () => {
           value={deckNameValue}
           onValueChange={onInputValueChange}
         />
-        <Tabs
-          tabValue={tabValue}
-          onTabValueChange={onTabValueChange}
-          //className={s.filters__tabs}
-        />
+        <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
 
-        <EditableSlider
-          value={sliderValue}
-          callback={changeSliderValue} /* className={s.filters__slider} */
-        />
+        <EditableSlider value={sliderValue} callback={changeSliderValue} />
 
         <Button className={s.clear}>Clear Filter</Button>
       </div>

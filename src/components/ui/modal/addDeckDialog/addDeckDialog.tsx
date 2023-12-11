@@ -47,44 +47,54 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
     resolver: zodResolver(schema),
   })
 
-  function text2Binary(input: string) {
-    let binaryResult = ''
+  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
+    const reader = new FileReader()
 
-    for (let i = 0; i < input.length; i++) {
-      const charCode = input.charCodeAt(i)
-      let binaryValue = ''
+    reader.onloadend = () => {
+      const file64 = reader.result as string
 
-      for (let j = 7; j >= 0; j--) {
-        binaryValue += (charCode >> j) & 1
-      }
-
-      binaryResult += binaryValue + ' '
+      callBack(file64)
     }
-
-    return binaryResult.trim()
-  }
-
-  function convertToBase64(string: string) {
-    // Convert string to Base64
-    var base64String = btoa(string)
-
-    return base64String
+    reader.readAsDataURL(file)
   }
 
   const onSubmit: SubmitHandler<AddDeckInputs> = data => {
     const { name, isPrivate, cover } = data
 
-    addDeck({ name, isPrivate, cover: convertToBase64(cover) })
+    // console.log(cover)
+
+    const formData: any = new FormData()
+
+    formData.append('name', name)
+    formData.append('isPrivate', isPrivate)
+    formData.append('cover', cover)
+
+    addDeck(formData)
     reset()
     callBack(false)
   }
 
-  const handleUploadedFile = (event: any) => {
-    const file = event.target.files[0]
+  const handleUploadedFile = (e: any) => {
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0]
 
-    const urlImage = URL.createObjectURL(file)
+      if (file.size < 4000000) {
+        convertFileToBase64(file, (file64: string) => {
+          /* setPreview(file64)
 
-    setPreview(urlImage)
+          return file64 */
+
+          setValue('cover', file64, {
+            shouldDirty: true,
+            shouldTouch: true,
+          })
+
+          setPreview(file64)
+        })
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
   }
 
   /*  const onChangeHandler = handleSubmit((data: Form) => {
@@ -99,7 +109,7 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
 
   const imageSrc = getValues().cover /* ?.[0] */
 
-  // console.log(preview)
+  //console.log(imageSrc)
 
   return (
     <Modal isOpen={isOpen} callBack={callBack}>
@@ -129,11 +139,12 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
                   {
                     onChange: e => {
                       handleUploadedFile(e)
+                      /* 
                       e.target.files &&
                         setValue('cover', URL.createObjectURL(e.target.files[0]), {
                           shouldDirty: true,
                           shouldTouch: true,
-                        })
+                        }) */
                     },
                   })}
                   type={'file'}
