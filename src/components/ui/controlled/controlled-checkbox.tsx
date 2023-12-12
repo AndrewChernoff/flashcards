@@ -22,8 +22,6 @@ const ControlledCheckbox = <T extends FormValues | AddDeckInputs>({
     control,
   })
 
-  console.log(value)
-
   return (
     <CheckboxDemo
       className={className}

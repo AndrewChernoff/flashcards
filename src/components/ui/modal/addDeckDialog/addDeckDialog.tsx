@@ -1,3 +1,5 @@
+import { format } from 'path'
+
 import { ChangeEvent, useState } from 'react'
 
 import { DevTool } from '@hookform/devtools'
@@ -26,14 +28,14 @@ type AddDeckDialogType = {
 
 const schema = z.object({
   name: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
-  cover: z.string() /* instanceof(FileList) */,
+  cover: z.instanceof(File),
   isPrivate: z.boolean(),
 })
 
 const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
   const [addDeck] = useAddDeckMutation()
 
-  const [preview, setPreview] = useState<string>()
+  //const [preview, setPreview] = useState<string>()
 
   const {
     register,
@@ -47,65 +49,15 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
     resolver: zodResolver(schema),
   })
 
-  const convertFileToBase64 = (file: File, callBack: (value: string) => void) => {
-    const reader = new FileReader()
-
-    reader.onloadend = () => {
-      const file64 = reader.result as string
-
-      callBack(file64)
-    }
-    reader.readAsDataURL(file)
-  }
-
-  const onSubmit: SubmitHandler<AddDeckInputs> = data => {
-    const { name, isPrivate, cover } = data
-
-    // console.log(cover)
-
+  const onSubmit: any = handleSubmit(data => {
     const formData: any = new FormData()
 
-    formData.append('name', name)
-    formData.append('isPrivate', isPrivate)
-    formData.append('cover', cover)
-
+    console.log(data)
+    formData.append('name', data.name)
+    formData.append('cover', data.cover)
+    formData.append('isPrivate', data.isPrivate)
     addDeck(formData)
-    reset()
-    callBack(false)
-  }
-
-  const handleUploadedFile = (e: any) => {
-    if (e.target.files && e.target.files.length) {
-      const file = e.target.files[0]
-
-      if (file.size < 4000000) {
-        convertFileToBase64(file, (file64: string) => {
-          /* setPreview(file64)
-
-          return file64 */
-
-          setValue('cover', file64, {
-            shouldDirty: true,
-            shouldTouch: true,
-          })
-
-          setPreview(file64)
-        })
-      } else {
-        console.error('Error: ', 'Файл слишком большого размера')
-      }
-    }
-  }
-
-  /*  const onChangeHandler = handleSubmit((data: Form) => {
-    const form = new FormData()
-
-    form.append('avatar', data.avatar ?? '')
-    form.append('name', me?.name ?? '')
-    updateAvatar(form)
-  }) */
-
-  //logic to close the modal when clicked outside
+  })
 
   const imageSrc = getValues().cover /* ?.[0] */
 
@@ -113,7 +65,7 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
 
   return (
     <Modal isOpen={isOpen} callBack={callBack}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={onSubmit}>
         <DevTool control={control} />
 
         <div className={s.form__header}>
@@ -135,18 +87,14 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
               </label>
               {
                 <input
-                  {...(register('cover'),
-                  {
-                    onChange: e => {
-                      handleUploadedFile(e)
-                      /* 
-                      e.target.files &&
-                        setValue('cover', URL.createObjectURL(e.target.files[0]), {
-                          shouldDirty: true,
-                          shouldTouch: true,
-                        }) */
-                    },
-                  })}
+                  {...register('cover')}
+                  onChange={e => {
+                    e.target.files &&
+                      setValue('cover', e.target.files[0], {
+                        shouldDirty: true,
+                        shouldTouch: true,
+                      })
+                  }}
                   type={'file'}
                   className={s.file__input}
                   id={'cover'}
