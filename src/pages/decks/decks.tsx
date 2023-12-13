@@ -1,5 +1,6 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
+import defaultCover from '../../common/imgs/default-cover.png'
 import Delete from '../../common/svg/delete'
 import Edit from '../../common/svg/edit'
 import PlayCircle from '../../common/svg/play-circle'
@@ -81,6 +82,7 @@ const Decks = () => {
       <Table.Root className={s.table}>
         <Table.Head>
           <Table.Row className={s.row}>
+            <Table.HeadCell className={s.headCell}>Cover</Table.HeadCell>
             <Table.HeadCell className={s.headCell}>Name</Table.HeadCell>
             <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
             <Table.HeadCell className={s.headCell}>
@@ -97,9 +99,9 @@ const Decks = () => {
             return (
               <Table.Row className={s.dataRow} key={deck.id}>
                 <Table.DataCell className={s.dataCell}>
-                  <img className={s.dataCell__img} src={deck.cover} />
-                  {deck.name}
+                  <img className={s.dataCell__img} src={deck.cover || defaultCover} />
                 </Table.DataCell>
+                <Table.DataCell className={s.dataCell}>{deck.name}</Table.DataCell>
                 <Table.DataCell className={s.dataCell}>{deck.cardsCount}</Table.DataCell>
                 <Table.DataCell className={s.dataCell}>{formatDate(deck.updated)}</Table.DataCell>
                 <Table.DataCell className={`${s.dataCell} ${s.decks__createdBy}`}>
