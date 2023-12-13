@@ -1,10 +1,6 @@
-import { format } from 'path'
-
-import { ChangeEvent, useState } from 'react'
-
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
 import { useAddDeckMutation } from '../../../../services/decks/decks'
@@ -17,7 +13,7 @@ import s from './addDeckDialog.module.scss'
 
 export type AddDeckInputs = {
   name: string
-  cover?: /* File */ any
+  cover?: any
   isPrivate: boolean
 }
 
@@ -35,8 +31,6 @@ const schema = z.object({
 const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
   const [addDeck] = useAddDeckMutation()
 
-  //const [preview, setPreview] = useState<string>()
-
   const {
     register,
     handleSubmit,
@@ -52,16 +46,13 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
   const onSubmit: any = handleSubmit(data => {
     const formData: any = new FormData()
 
-    console.log(data)
     formData.append('name', data.name)
     formData.append('cover', data.cover)
     formData.append('isPrivate', data.isPrivate)
     addDeck(formData)
   })
 
-  const imageSrc = getValues().cover /* ?.[0] */
-
-  //console.log(imageSrc)
+  const imageSrc = getValues().cover
 
   return (
     <Modal isOpen={isOpen} callBack={callBack}>
@@ -76,8 +67,8 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
           <div className={s.form__functionality_cover}>
             <img
               src={
-                imageSrc /* preview */
-                  ? imageSrc /* preview */
+                imageSrc
+                  ? imageSrc
                   : 'https://s3-alpha-sig.figma.com/img/796f/62d9/8f77a51611a552cfd42b1ec2f4c1e4c6?Expires=1702252800&Signature=amS~V9x15hbUXhFxc4pxLLvHRa55nPRumUmBmoSTkwdhhfb1xOQYo6GNPg5Vrl4mXJDaYFyuRTIdTf0425TzOT7W6h1wzednx75E46r1b8qY1K503DKSvLSzfPWyaSPUYLAuPP8IX5F9~chJgjnsm4fZfUB0cy0BDBh-Y6fqnVS3z5BMMnNq1o5-QZ-m33Kk6kMnl2vmsolV-Xha4P~3ZxbsmDkZU~LZDOWbzkoCmVnVL-NrRZkxvYp9SgXee~wqT94Xkrq~p7A8~MpqzTHW4slalSg29Lqu~jVOsPuYS3-GEvYP2qszfUxExY7UEy2HX9tHaxIn-X2y~v8amb7XjQ__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4'
               }
             />
