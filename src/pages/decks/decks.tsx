@@ -129,7 +129,7 @@ const Decks = () => {
           pageSize={10}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
-          className={'smt'} /////////////!!!!!!!!!
+          className={s.decks__pagination} /////////////!!!!!!!!!
         />
       )}
       <AddDeckDialog isOpen={isOpen} callBack={(value: boolean) => setIsOpen(value)} />

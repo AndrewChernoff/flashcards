@@ -3,7 +3,6 @@ import classnames from 'classnames'
 import { getMultiplesOfTen } from '../../..//common/utils/pagination-utils'
 import { PaginationType, usePagination, DOTS } from '../../../common/hooks/usePagination'
 import SelectDemo from '../select/select'
-import { Select } from '../select/select.stories'
 
 import s from './pagination.module.scss'
 
@@ -15,8 +14,6 @@ type PropsType = PaginationType & {
 
 const Pagination = (props: PropsType) => {
   const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props
-
-  console.log(siblingCount)
 
   const paginationRange: any = usePagination({
     currentPage,
@@ -51,8 +48,8 @@ const Pagination = (props: PropsType) => {
   const arr = getMultiplesOfTen(totalCount) ////function for getting the first and each 10th element
 
   return (
-    <div className={s.pagination}>
-      <ul className={classnames(s.pagination__container, { [className]: className })}>
+    <div className={classnames(s.pagination, className)}>
+      <ul className={s.pagination__container}>
         <button
           className={classnames(s.pagination__item, {
             disabled: currentPage === 1,
@@ -104,13 +101,13 @@ const Pagination = (props: PropsType) => {
       </ul>
 
       <div className={s.pagination__select}>
-        <div>Показать</div>
+        <p>Показать</p>
         <SelectDemo
           className={s.pagination__select_tab}
           callback={getValueFromSelect}
           items={arr}
         />
-        <div>на странице</div>
+        <p>на странице</p>
       </div>
     </div>
   )
