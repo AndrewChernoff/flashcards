@@ -59,6 +59,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           Change Cover
         </label>
         <input
+          tabIndex={0}
           disabled={isDisabled}
           type={inputType}
           className={s.file__input}

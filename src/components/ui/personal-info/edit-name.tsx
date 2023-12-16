@@ -1,20 +1,29 @@
+import { forwardRef, useEffect } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 
+import { usePatchMeMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Input from '../input/input'
 
 import s from './edit-name.module.scss'
 
-type FormValues = {
-  nickname: string
+type EditNameProps = {
+  onInputNameBlur: () => void
 }
 
-const EditName = () => {
+type FormValues = {
+  name: string
+}
+
+const EditName = forwardRef<HTMLInputElement, EditNameProps>(({ onInputNameBlur }, ref) => {
+  const [patchMe] = usePatchMeMutation()
+
   const SignUpSchema = z.object({
-    nickname: z.string().min(2).max(20),
+    name: z.string() /* .min(3).max(20) */,
   })
 
   const {
@@ -25,8 +34,15 @@ const EditName = () => {
   } = useForm<FormValues>({ resolver: zodResolver(SignUpSchema) })
 
   const onSubmit = (data: FormValues) => {
-    alert(JSON.stringify(data))
+    patchMe(data)
+    onInputNameBlur()
   }
+
+  useEffect(() => {
+    if (ref && 'current' in ref) {
+      ref && ref.current?.focus()
+    }
+  }, [])
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
@@ -40,15 +56,21 @@ const EditName = () => {
         isSearch={false}
         placeholder={''}
         type={'text'}
-        error={errors.nickname?.message}
+        error={errors.name?.message}
         isDisabled={false}
-        {...register('nickname')}
+        {
+          ...register('name') /* ,
+        {
+          onBlur: () => onInputNameBlur(),
+        } */
+        }
         label={'Nickname'}
+        //ref={ref}
       />
 
       <Button
         type="submit"
-        //callBack={changeToEdit}
+        // callBack={onInputNameBlur}
         variant={'secondary'}
         className={s.form__button}
         fullWidth={true}
@@ -57,6 +79,6 @@ const EditName = () => {
       </Button>
     </form>
   )
-}
+})
 
 export default EditName
