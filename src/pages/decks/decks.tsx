@@ -134,7 +134,7 @@ const Decks = () => {
           className={s.decks__pagination} /////////////!!!!!!!!!
         />
       )}
-      <AddDeckDialog isOpen={isOpen} callBack={(value: boolean) => setIsOpen(value)} />
+      <AddDeckDialog isOpen={isOpen} closeDialog={(value: boolean) => setIsOpen(value)} />
     </div>
   )
 }

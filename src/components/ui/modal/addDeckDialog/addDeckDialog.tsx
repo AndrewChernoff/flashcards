@@ -19,7 +19,7 @@ export type AddDeckInputs = {
 
 type AddDeckDialogType = {
   isOpen: boolean
-  callBack: (value: boolean) => void
+  closeDialog: (value: boolean) => void
 }
 
 const schema = z.object({
@@ -28,7 +28,7 @@ const schema = z.object({
   isPrivate: z.boolean(),
 })
 
-const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
+const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
   const [addDeck] = useAddDeckMutation()
 
   const {
@@ -55,13 +55,13 @@ const AddDeckDialog = ({ isOpen, callBack }: AddDeckDialogType) => {
   const imageSrc = getValues().cover
 
   return (
-    <Modal isOpen={isOpen} callBack={callBack}>
+    <Modal isOpen={isOpen} callBack={closeDialog}>
       <form onSubmit={onSubmit}>
         <DevTool control={control} />
 
         <div className={s.form__header}>
           <h3>Add New Pack</h3>
-          <button onClick={() => callBack(false)}>X</button>
+          <button onClick={() => closeDialog(false)}>X</button>
         </div>
         <div className={s.form__functionality}>
           <div className={s.form__functionality_cover}>

@@ -54,8 +54,23 @@ const authApi = baseApi.injectEndpoints({
           }
         },
       }),
+      patchMe: builder.mutation<any, any /* { avatar: File; name: string; email: string } */>({
+        query(data) {
+          return {
+            url: `v1/auth/me`,
+            method: 'PATCH',
+            body: data,
+          }
+        },
+      }),
     }
   },
 })
 
-export const { useLogInMutation, useSignupMutation, useGetMeQuery, useLogOutMutation } = authApi
+export const {
+  useLogInMutation,
+  useSignupMutation,
+  useGetMeQuery,
+  useLogOutMutation,
+  usePatchMeMutation,
+} = authApi

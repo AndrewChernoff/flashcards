@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import { LoginForm } from './components/ui/login-form/login-form'
 import SignUp from './components/ui/sign-up/sign-up'
 import Decks from './pages/decks/decks'
-import PaginationPage from './pages/paginationPage/paginationPage'
+import Profile from './pages/profile/profile'
 import { useGetMeQuery } from './services/auth/auth'
 
 const privateRoutes = [
@@ -15,6 +15,10 @@ const privateRoutes = [
     path: '/decks',
     element: <Decks />,
   },
+  {
+    path: '/profile',
+    element: <Profile />,
+  },
 ]
 
 const publicRoutes = [
@@ -25,10 +29,6 @@ const publicRoutes = [
   {
     path: '/signup',
     element: <SignUp />,
-  },
-  {
-    path: '/pagination',
-    element: <PaginationPage />,
   },
 ]
 

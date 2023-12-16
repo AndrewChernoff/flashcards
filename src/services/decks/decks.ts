@@ -16,13 +16,6 @@ const decksApi = baseApi.injectEndpoints({
         providesTags: ['Decks'],
       }),
       addDeck: builder.mutation<any, { name: string; cover?: File; isPrivate?: boolean }>({
-        /* query(name) {
-          return {
-            url: `v1/decks`,
-            method: 'POST',
-            body: { name },
-          }
-        }, */
         query: data => ({
           url: `v1/decks`,
           method: 'POST',

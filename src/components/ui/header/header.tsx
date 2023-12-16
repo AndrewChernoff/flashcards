@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { Link } from 'react-router-dom'
+
 import logo from '../../../common/imgs/logo.png'
 import noava from '../../../common/imgs/noAvaUser.png'
 import { Button } from '../button'
@@ -44,13 +46,7 @@ function Header({ user }: HeaderProps) {
     <header className={s.header}>
       <img src={logo} alt="incubator logo" />
       {user && isSuccess(user) ? (
-        <Button
-          //className="purple"
-          as="a"
-          href={path}
-          variant="purple"
-          className={s.header__link}
-        >
+        <Button as="a" href={path} variant="purple" className={s.header__link}>
           {path === '/signin' ? 'Sign Up' : path === '/signup' && 'Sign in'}
         </Button>
       ) : (

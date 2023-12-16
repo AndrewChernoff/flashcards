@@ -1,7 +1,8 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 
 import { Button } from '../button'
 import Card from '../card/card'
+import { H2 } from '../typography/typography'
 
 import EditName from './edit-name'
 import s from './personal-info.module.scss'
@@ -12,22 +13,32 @@ interface Props {
 }
 
 const PersonalInfo = ({ name, email }: Props) => {
-  const [edit, setEdit] = useState<boolean>(false)
+  const [editName, setEditName] = useState<boolean>(false)
+  const inputName = useRef<HTMLInputElement>(null)
 
-  const changeToEdit = () => setEdit(!edit)
+  const changeToEdit = () => {
+    setEditName(!editName)
+  }
+
+  const onInputNameBlur = () => {
+    setEditName(false)
+  }
 
   return (
-    <Card>
-      {!edit ? (
+    <Card className={s.card}>
+      {!editName ? (
         <div className={s.info}>
-          <h2 className={s.info__title}>Personal Information</h2>
+          <H2 className={s.info__title}>Personal Information</H2>
 
-          <div className={s.info__imgBlock} onClick={changeToEdit}>
+          <div className={s.info__imgBlock}>
             <img src="https://avatars.githubusercontent.com/u/79928353?v=4" />
             <EditButton />
           </div>
           <h3>
-            {name} <EditButton />
+            {name}{' '}
+            <button onClick={changeToEdit}>
+              <EditButton />
+            </button>
           </h3>
           <h4>{email}</h4>
           <Button
@@ -43,7 +54,7 @@ const PersonalInfo = ({ name, email }: Props) => {
           </Button>
         </div>
       ) : (
-        <EditName />
+        <EditName onInputNameBlur={onInputNameBlur} ref={inputName} />
       )}
     </Card>
   )

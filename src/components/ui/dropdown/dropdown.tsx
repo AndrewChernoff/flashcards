@@ -35,7 +35,9 @@ const Dropdown = ({ children, img, email, name }: DropdownProps) => {
           </DropdownMenu.Item>
           <DropdownMenu.Item className={s.dropdown__item}>
             <ProfileImg />
-            <Caption className={s.dropdown__item_profile}>My profile</Caption>
+            <Caption className={s.dropdown__item_profile}>
+              <a href="/profile">My profile</a>
+            </Caption>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={s.dropdown__item}>
             <button onClick={() => logOut()}>
