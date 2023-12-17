@@ -24,7 +24,7 @@ type AddDeckDialogType = {
 
 const schema = z.object({
   name: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
-  cover: z.instanceof(File),
+  cover: z.instanceof(File).optional(), ///not setting it optional, need to fix it
   isPrivate: z.boolean(),
 })
 
@@ -50,6 +50,8 @@ const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
     formData.append('cover', data.cover)
     formData.append('isPrivate', data.isPrivate)
     addDeck(formData)
+    reset()
+    closeDialog(false)
   })
 
   const imageSrc = getValues().cover
