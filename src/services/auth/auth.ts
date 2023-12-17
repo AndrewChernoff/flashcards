@@ -53,8 +53,9 @@ const authApi = baseApi.injectEndpoints({
             body: signUpObj,
           }
         },
+        invalidatesTags: ['Me'], ///added this stuff
       }),
-      patchMe: builder.mutation<any, any /* { avatar: File; name: string; email: string } */>({
+      patchMe: builder.mutation<{ avatar?: File; name?: string; email?: string }, any>({
         query(data) {
           return {
             url: `v1/auth/me`,

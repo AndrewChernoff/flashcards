@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 
 import noUserAva from '../../../common/imgs/noAvaUser.png'
+import { useLogOutMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import { H2 } from '../typography/typography'
@@ -19,12 +20,13 @@ const PersonalInfo = ({ name, email, ava }: Props) => {
   const [editName, setEditName] = useState<boolean>(false)
   const [editPhoto, setEditPhoto] = useState<boolean>(false)
   const inputName = useRef<HTMLInputElement>(null)
+  const [logOut] = useLogOutMutation()
 
   const changeToEditName = () => {
     setEditName(!editName)
   }
 
-  const changeToEditPhoto = () => {
+  const changeEditPhoto = () => {
     setEditPhoto(!editPhoto)
   }
 
@@ -39,7 +41,7 @@ const PersonalInfo = ({ name, email, ava }: Props) => {
           <div className={s.info}>
             <H2 className={s.info__title}>Personal Information</H2>
 
-            <div className={s.info__imgBlock} onClick={changeToEditPhoto}>
+            <div className={s.info__imgBlock} onClick={changeEditPhoto}>
               <img src={ava || noUserAva} alt="user ava" />
               <EditButton />
             </div>
@@ -54,6 +56,7 @@ const PersonalInfo = ({ name, email, ava }: Props) => {
               type="submit"
               variant={'secondary'}
               className={s.info__button}
+              callBack={() => logOut()}
               fullWidth={false}
             >
               <LogoutIcon /> <p>Logout</p>
@@ -70,37 +73,9 @@ const PersonalInfo = ({ name, email, ava }: Props) => {
           />
         )}
 
-      {!editName && editPhoto && <EditPhoto userAva={ava || noUserAva} />}
-      {/* {!editName && !editPhoto ? (
-        <div className={s.info}>
-          <H2 className={s.info__title}>Personal Information</H2>
-
-          <div className={s.info__imgBlock}>
-            <img src={ava || noUserAva} alt="user ava" />
-            <EditButton />
-          </div>
-          <h3>
-            {name}
-            <button onClick={changeToEdit}>
-              <EditButton />
-            </button>
-          </h3>
-          <h4>{email}</h4>
-          <Button type="submit" variant={'secondary'} className={s.info__button} fullWidth={false}>
-            <LogoutIcon /> <p>Logout</p>
-          </Button>
-        </div>
-      ) : (
-        editName &&
-        !editPhoto && (
-          <EditName
-            onInputNameBlur={onInputNameBlur}
-            ref={inputName}
-            name={name}
-            ava={ava || noUserAva}
-          />
-        )
-      )} */}
+      {!editName && editPhoto && (
+        <EditPhoto userAva={ava || noUserAva} changeEditPhoto={changeEditPhoto} />
+      )}
     </Card>
   )
 }

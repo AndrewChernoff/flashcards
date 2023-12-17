@@ -1,7 +1,7 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { any, z } from 'zod'
+import { z } from 'zod'
 
 import { usePatchMeMutation } from '../../../../services/auth/auth'
 import { Button } from '../../button'
@@ -11,11 +11,12 @@ import s from './edit-photo.module.scss'
 
 type EditPhotoPropsType = {
   userAva: string
+  changeEditPhoto: () => void
 }
 type FormValues = {
   avatar: File
 }
-const EditPhoto = ({ userAva }: EditPhotoPropsType) => {
+const EditPhoto = ({ userAva, changeEditPhoto }: EditPhotoPropsType) => {
   const [patchMe] = usePatchMeMutation()
 
   const SignUpSchema = z.object({
@@ -26,20 +27,19 @@ const EditPhoto = ({ userAva }: EditPhotoPropsType) => {
     register,
     control,
 
-    formState: { errors },
+    /* formState: { errors }, */
     handleSubmit,
   } = useForm<FormValues>({
     resolver: zodResolver(SignUpSchema),
   })
 
   const onSubmit = (data: any) => {
-    console.log('Form submitted!', data)
     const formData = new FormData()
 
     formData.append('avatar', data.avatar[0])
-    console.log(formData)
 
     patchMe(formData)
+    changeEditPhoto()
   }
 
   return (
@@ -67,10 +67,20 @@ const EditPhoto = ({ userAva }: EditPhotoPropsType) => {
           />
         </label>
       }
-
-      <Button type="submit" variant={'purple'} className={s.form__button} fullWidth={true}>
-        Save Changes
-      </Button>
+      <div className={s.form__buttons}>
+        <Button
+          type="button"
+          variant={'secondary'}
+          className={s.form__button}
+          callBack={changeEditPhoto}
+          fullWidth={false}
+        >
+          Cancel
+        </Button>
+        <Button type="submit" variant={'purple'} className={s.form__button} fullWidth={false}>
+          Save
+        </Button>
+      </div>
     </form>
   )
 }

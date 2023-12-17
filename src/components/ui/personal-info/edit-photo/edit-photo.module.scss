@@ -37,7 +37,14 @@
         border-radius: 100%
     }
 
-    &__button {
-        text-align: center;
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            width: 40%;
+            text-align: center;
+        }
     }
+
   }
