@@ -1,11 +1,10 @@
 import PersonalInfo from '../../components/ui/personal-info/personal-info'
+import { useGetMeQuery } from '../../services/auth/auth'
 
-interface Props {}
+const Profile = () => {
+  const { data: me } = useGetMeQuery()
 
-function Profile(props: Props) {
-  const {} = props
-
-  return <PersonalInfo name={'fdsd '} email={'fdghf@mail.ru'} />
+  return <PersonalInfo name={me.name} email={me.email} ava={me.avatar} />
 }
 
 export default Profile
