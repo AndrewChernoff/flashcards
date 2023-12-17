@@ -1,23 +1,31 @@
 import { useRef, useState } from 'react'
 
+import noUserAva from '../../../common/imgs/noAvaUser.png'
 import { Button } from '../button'
 import Card from '../card/card'
 import { H2 } from '../typography/typography'
 
-import EditName from './edit-name'
+import EditName from './edit-name/edit-name'
+import EditPhoto from './edit-photo/edit-photo'
 import s from './personal-info.module.scss'
 
 interface Props {
   name: string
   email: string
+  ava: string | null
 }
 
-const PersonalInfo = ({ name, email }: Props) => {
+const PersonalInfo = ({ name, email, ava }: Props) => {
   const [editName, setEditName] = useState<boolean>(false)
+  const [editPhoto, setEditPhoto] = useState<boolean>(false)
   const inputName = useRef<HTMLInputElement>(null)
 
-  const changeToEdit = () => {
+  const changeToEditName = () => {
     setEditName(!editName)
+  }
+
+  const changeToEditPhoto = () => {
+    setEditPhoto(!editPhoto)
   }
 
   const onInputNameBlur = () => {
@@ -26,36 +34,73 @@ const PersonalInfo = ({ name, email }: Props) => {
 
   return (
     <Card className={s.card}>
-      {!editName ? (
+      {!editName &&
+        !editPhoto && ( ///if we don't edit anything
+          <div className={s.info}>
+            <H2 className={s.info__title}>Personal Information</H2>
+
+            <div className={s.info__imgBlock} onClick={changeToEditPhoto}>
+              <img src={ava || noUserAva} alt="user ava" />
+              <EditButton />
+            </div>
+            <h3>
+              {name}
+              <button onClick={changeToEditName}>
+                <EditButton />
+              </button>
+            </h3>
+            <h4>{email}</h4>
+            <Button
+              type="submit"
+              variant={'secondary'}
+              className={s.info__button}
+              fullWidth={false}
+            >
+              <LogoutIcon /> <p>Logout</p>
+            </Button>
+          </div>
+        )}
+      {editName && /// if we edit name
+        !editPhoto && (
+          <EditName
+            onInputNameBlur={onInputNameBlur}
+            ref={inputName}
+            name={name}
+            ava={ava || noUserAva}
+          />
+        )}
+
+      {!editName && editPhoto && <EditPhoto userAva={ava || noUserAva} />}
+      {/* {!editName && !editPhoto ? (
         <div className={s.info}>
           <H2 className={s.info__title}>Personal Information</H2>
 
           <div className={s.info__imgBlock}>
-            <img src="https://avatars.githubusercontent.com/u/79928353?v=4" />
+            <img src={ava || noUserAva} alt="user ava" />
             <EditButton />
           </div>
           <h3>
-            {name}{' '}
+            {name}
             <button onClick={changeToEdit}>
               <EditButton />
             </button>
           </h3>
           <h4>{email}</h4>
-          <Button
-            type="submit"
-            //callBack={changeToEdit}
-            variant={'secondary'}
-            className={s.info__button}
-            fullWidth={false}
-          >
-            <div>
-              <LogoutIcon /> Logout
-            </div>
+          <Button type="submit" variant={'secondary'} className={s.info__button} fullWidth={false}>
+            <LogoutIcon /> <p>Logout</p>
           </Button>
         </div>
       ) : (
-        <EditName onInputNameBlur={onInputNameBlur} ref={inputName} />
-      )}
+        editName &&
+        !editPhoto && (
+          <EditName
+            onInputNameBlur={onInputNameBlur}
+            ref={inputName}
+            name={name}
+            ava={ava || noUserAva}
+          />
+        )
+      )} */}
     </Card>
   )
 }

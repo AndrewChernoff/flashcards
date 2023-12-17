@@ -1,5 +1,5 @@
 .card {
-    margin: 0 auto;
+    margin: 36px auto 0;
 }
 
 .info {
@@ -12,15 +12,18 @@
     &__imgBlock {
         position: relative;
         max-width: 96px;
-        margin: 27px auto 12px;
+        margin: 27px auto 12px;     
 
-        img {     
+
+        img {
             display: block;
             width: 100%;
             border-radius: 100%;
         }
 
         svg {
+            cursor: pointer;
+
             position: absolute;
             right: 10%;
             bottom: 0;
@@ -37,7 +40,10 @@
     }
 
     h3 {
+        cursor: pointer;
+
         margin: 0;
+
         font-size: 20px;
         font-weight: 700;
         text-align: center;
@@ -52,14 +58,14 @@
         text-align: center;
     }
 
-    /* &__input {
-        margin-top: 12px;
-    } */
-
     &__button {
-        display: block;
+        cursor: pointer;
+
+        display: flex;
+        gap: 10px;
         align-items: center;
-        justify-content: space-around;
+        justify-content: center;
+
 
         width: 122px;
         height: 36px;
@@ -68,6 +74,7 @@
 
         font-size: 14px;
         font-weight: 700;
+        text-align: center;
 
         border-radius: 4px;
         outline: none;

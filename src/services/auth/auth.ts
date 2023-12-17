@@ -62,6 +62,7 @@ const authApi = baseApi.injectEndpoints({
             body: data,
           }
         },
+        invalidatesTags: ['Me'],
       }),
     }
   },
