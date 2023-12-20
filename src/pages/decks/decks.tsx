@@ -1,13 +1,9 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
-import defaultCover from '../../common/imgs/default-cover.png'
-import Delete from '../../common/svg/delete'
-import Edit from '../../common/svg/edit'
-import PlayCircle from '../../common/svg/play-circle'
-import { formatDate } from '../../common/utils/time-transfering'
 import { Button } from '../../components/ui/button'
 import Input from '../../components/ui/input/input'
 import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
+import DeleteDeckDialog from '../../components/ui/modal/deleteDeckDialog/deleteDeckDialog'
 import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
@@ -15,6 +11,7 @@ import Tabs from '../../components/ui/tabs/tabs'
 import { useGetMeQuery } from '../../services/auth/auth'
 import { useDeleteDeckMutation, useGetDecksQuery } from '../../services/decks/decks'
 
+import DeckItem from './deckItem/deckItem'
 import s from './decks.module.scss'
 
 export type TabValue = 'All cards' | 'My cards'
@@ -24,8 +21,9 @@ const Decks = () => {
   const [tabValue, setTabValue] = useState<TabValue>('All cards') ////tabs for decks
   const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
   const [currentPage, setCurrentPage] = useState<number>(1) /// for pagination
-  const [activeIndex, setActiveIndex] = useState<string[]>([]) /// flag for disabling button on delete request
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
+  const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false)
+  const [deleteDeckId, setDeleteDeckId] = useState<string | null>(null)
 
   const { data: me } = useGetMeQuery()
 
@@ -45,22 +43,30 @@ const Decks = () => {
   const changeSliderValue = (value: number[]) => setSliderValue(value)
 
   const onInputValueChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setDeckNameValue(e.currentTarget.value),
+    (e: ChangeEvent<HTMLInputElement>) => setDeckNameValue(e.currentTarget.value), ////searching input
     []
   )
 
-  const onDeleteDeckHandler = (id: string) => {
-    setActiveIndex(oldArray => [...oldArray, id])
-    deleteDeck({ id })
+  const handleAddDeckDialog = () => setIsNewPackDialogOpen(!isNewPackDialodOpen)
+  const handleDeleteDeckDialog = (id: string) => {
+    /*when open dialog we get id from there for deleting deck from dialog window */
+    setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
+    setDeleteDeckId(id)
   }
 
-  const handleDialogWindow = () => setIsOpen(!isOpen)
+  const handleDeleteDeck = () => {
+    if (deleteDeckId) {
+      deleteDeck({ id: deleteDeckId })
+      setDeleteDeckId(null)
+      setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
+    }
+  }
 
   return (
     <div className={s.decks}>
       <header>
         <h1>Packs list</h1>
-        <Button variant="purple" callBack={handleDialogWindow}>
+        <Button variant="purple" callBack={handleAddDeckDialog}>
           Add New Pack
         </Button>
       </header>
@@ -97,30 +103,12 @@ const Decks = () => {
         <Table.Body>
           {decks?.items.map((deck: any) => {
             return (
-              <Table.Row className={s.dataRow} key={deck.id}>
-                <Table.DataCell className={s.dataCell}>
-                  <img className={s.dataCell__img} src={deck.cover || defaultCover} />
-                </Table.DataCell>
-                <Table.DataCell className={s.dataCell}>{deck.name}</Table.DataCell>
-                <Table.DataCell className={s.dataCell}>{deck.cardsCount}</Table.DataCell>
-                <Table.DataCell className={s.dataCell}>{formatDate(deck.updated)}</Table.DataCell>
-                <Table.DataCell className={`${s.dataCell} ${s.decks__createdBy}`}>
-                  {deck.author.name}
-
-                  <div className={s.decks__createdBy_buttons}>
-                    <PlayCircle />
-                    <Edit />
-                    {deck.author.id === me.id && (
-                      <button
-                        disabled={activeIndex.some(el => el === deck.id)}
-                        onClick={() => onDeleteDeckHandler(deck.id)}
-                      >
-                        <Delete />
-                      </button>
-                    )}
-                  </div>
-                </Table.DataCell>
-              </Table.Row>
+              <DeckItem
+                myId={me.id}
+                deck={deck}
+                key={deck.id}
+                openDialog={handleDeleteDeckDialog}
+              />
             )
           })}
         </Table.Body>
@@ -134,7 +122,15 @@ const Decks = () => {
           className={s.decks__pagination} /////////////!!!!!!!!!
         />
       )}
-      <AddDeckDialog isOpen={isOpen} closeDialog={(value: boolean) => setIsOpen(value)} />
+      <AddDeckDialog
+        isOpen={isNewPackDialodOpen}
+        closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
+      />
+      <DeleteDeckDialog
+        isOpen={isDeletePackDialodOpen}
+        closeDialog={() => setIsDeletePackDialogOpen(false)}
+        deleteDeck={handleDeleteDeck}
+      />
     </div>
   )
 }

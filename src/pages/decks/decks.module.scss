@@ -75,6 +75,10 @@
 
         &_buttons {
             display: flex;
+
+            button[disabled] {
+                background-color: rgb(61 54 54);
+            }
         }
     }
 

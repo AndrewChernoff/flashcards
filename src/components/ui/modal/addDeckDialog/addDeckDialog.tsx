@@ -7,6 +7,7 @@ import { useAddDeckMutation } from '../../../../services/decks/decks'
 import { Button } from '../../button'
 import ControlledCheckbox from '../../controlled/controlled-checkbox'
 import Input from '../../input/input'
+import { H2 } from '../../typography/typography'
 import Modal from '../modal'
 
 import s from './addDeckDialog.module.scss'
@@ -62,7 +63,7 @@ const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
         <DevTool control={control} />
 
         <div className={s.form__header}>
-          <h3>Add New Pack</h3>
+          <H2>Add New Pack</H2>
           <button onClick={() => closeDialog(false)}>X</button>
         </div>
         <div className={s.form__functionality}>
