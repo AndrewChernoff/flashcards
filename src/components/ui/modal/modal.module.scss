@@ -2,13 +2,14 @@
 @import '../../../common/styles/colors.module';
 
 .modal {
-    position: absolute;
-    top: 3%;
+    position: fixed;
+    top: 10%;
     left: 50%;
     transform: translateX(-50%);
 
     width: 33%;
-    min-height: 55%;
+
+    // min-height: 55%;
     margin: 0 auto;
 
     background: $dialogs-color;

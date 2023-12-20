@@ -1,0 +1,39 @@
+.dialog {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+
+        margin: 0;
+        padding: 18px 24px;
+
+        border-bottom: 1px solid #4C4C4C;
+
+        button {
+            cursor: pointer;
+        }
+     }
+
+     &__content {
+        padding: 24px 24px 36px;
+     }
+
+     &__buttons {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 24px 36px;
+
+
+        &_cancel {
+            width: 100px;
+            height: 36px;
+            text-align: center;
+        }
+
+        &_add {
+           // background-color: $purple;
+           width: 148px;
+           height: 36px;
+           text-align: center;
+        }
+    }
+}
