@@ -1,5 +1,8 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
+import { Link } from 'react-router-dom'
+
+import WrapperHeader from '../../common/component/wrapper-header'
 import { Button } from '../../components/ui/button'
 import Input from '../../components/ui/input/input'
 import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
@@ -63,75 +66,77 @@ const Decks = () => {
   }
 
   return (
-    <div className={s.decks}>
-      <header>
-        <h1>Packs list</h1>
-        <Button variant="purple" callBack={handleAddDeckDialog}>
-          Add New Pack
-        </Button>
-      </header>
+    <WrapperHeader>
+      <div className={s.decks}>
+        <header>
+          <h1>Packs list</h1>
+          <Button variant="purple" callBack={handleAddDeckDialog}>
+            Add New Pack
+          </Button>
+        </header>
 
-      <div className={s.filters}>
-        <Input
-          isSearch={true}
-          placeholder="Search"
-          type="text"
-          value={deckNameValue}
-          onValueChange={onInputValueChange}
-        />
-        <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
+        <div className={s.filters}>
+          <Input
+            isSearch={true}
+            placeholder="Search"
+            type="text"
+            value={deckNameValue}
+            onValueChange={onInputValueChange}
+          />
+          <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
 
-        <EditableSlider value={sliderValue} callback={changeSliderValue} />
+          <EditableSlider value={sliderValue} callback={changeSliderValue} />
 
-        <Button className={s.clear}>Clear Filter</Button>
-      </div>
-      <Table.Root className={s.table}>
-        <Table.Head>
-          <Table.Row className={s.row}>
-            <Table.HeadCell className={s.headCell}>Cover</Table.HeadCell>
-            <Table.HeadCell className={s.headCell}>Name</Table.HeadCell>
-            <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
-            <Table.HeadCell className={s.headCell}>
-              Updated
-              {/* <button onClick={filterDirection}>
+          <Button className={s.clear}>Clear Filter</Button>
+        </div>
+        <Table.Root className={s.table}>
+          <Table.Head>
+            <Table.Row className={s.row}>
+              <Table.HeadCell className={s.headCell}>Cover</Table.HeadCell>
+              <Table.HeadCell className={s.headCell}>Name</Table.HeadCell>
+              <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
+              <Table.HeadCell className={s.headCell}>
+                Updated
+                {/* <button onClick={filterDirection}>
                 <Arrow />
               </button> */}
-            </Table.HeadCell>
-            <Table.HeadCell className={s.headCell}>Created By</Table.HeadCell>
-          </Table.Row>
-        </Table.Head>
-        <Table.Body>
-          {decks?.items.map((deck: any) => {
-            return (
-              <DeckItem
-                myId={me.id}
-                deck={deck}
-                key={deck.id}
-                openDialog={handleDeleteDeckDialog}
-              />
-            )
-          })}
-        </Table.Body>
-      </Table.Root>
-      {decks && (
-        <Pagination
-          totalCount={decks.pagination.totalItems}
-          pageSize={10}
-          currentPage={currentPage}
-          onPageChange={setCurrentPage}
-          className={s.decks__pagination} /////////////!!!!!!!!!
+              </Table.HeadCell>
+              <Table.HeadCell className={s.headCell}>Created By</Table.HeadCell>
+            </Table.Row>
+          </Table.Head>
+          <Table.Body>
+            {decks?.items.map((deck: any) => {
+              return (
+                <DeckItem
+                  myId={me.id}
+                  deck={deck}
+                  key={deck.id}
+                  openDialog={handleDeleteDeckDialog}
+                />
+              )
+            })}
+          </Table.Body>
+        </Table.Root>
+        {decks && (
+          <Pagination
+            totalCount={decks.pagination.totalItems}
+            pageSize={10}
+            currentPage={currentPage}
+            onPageChange={setCurrentPage}
+            className={s.decks__pagination} /////////////!!!!!!!!!
+          />
+        )}
+        <AddDeckDialog
+          isOpen={isNewPackDialodOpen}
+          closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
         />
-      )}
-      <AddDeckDialog
-        isOpen={isNewPackDialodOpen}
-        closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
-      />
-      <DeleteDeckDialog
-        isOpen={isDeletePackDialodOpen}
-        closeDialog={() => setIsDeletePackDialogOpen(false)}
-        deleteDeck={handleDeleteDeck}
-      />
-    </div>
+        <DeleteDeckDialog
+          isOpen={isDeletePackDialodOpen}
+          closeDialog={() => setIsDeletePackDialogOpen(false)}
+          deleteDeck={handleDeleteDeck}
+        />
+      </div>
+    </WrapperHeader>
   )
 }
 
