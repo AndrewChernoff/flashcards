@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
+import { Link } from 'react-router-dom'
 
 import { Caption, Subtitle2 } from '../typography/typography'
 
@@ -20,7 +21,7 @@ const Dropdown = ({ children, img, email, name }: DropdownProps) => {
   const [logOut] = useLogOutMutation()
 
   return (
-    <DropdownMenu.Root /*need to fix open property on blur */>
+    <DropdownMenu.Root>
       <DropdownMenu.Trigger>{children}</DropdownMenu.Trigger>
       <DropdownMenu.Portal>
         <DropdownMenu.Content className={s.dropdown}>
@@ -36,7 +37,7 @@ const Dropdown = ({ children, img, email, name }: DropdownProps) => {
           <DropdownMenu.Item className={s.dropdown__item}>
             <ProfileImg />
             <Caption className={s.dropdown__item_profile}>
-              <a href="/profile">My profile</a>
+              <Link to="/profile">My profile</Link>
             </Caption>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={s.dropdown__item}>
