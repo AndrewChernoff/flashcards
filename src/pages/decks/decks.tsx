@@ -1,7 +1,5 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
-import { Link } from 'react-router-dom'
-
 import WrapperHeader from '../../common/component/wrapper-header'
 import { Button } from '../../components/ui/button'
 import Input from '../../components/ui/input/input'

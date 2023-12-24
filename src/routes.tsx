@@ -3,7 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import { LoginForm } from './components/ui/login-form/login-form'
 import SignUp from './components/ui/sign-up/sign-up'
 import Decks from './pages/decks/decks'
-import Profile from './pages/profile/profile'
+import Profile from './components/ui/profile/profile'
 import { useGetMeQuery } from './services/auth/auth'
 
 const privateRoutes = [

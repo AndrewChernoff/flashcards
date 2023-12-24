@@ -44,42 +44,44 @@ const EditPhoto = ({ userAva, changeEditPhoto }: EditPhotoPropsType) => {
 
   return (
     <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-      <H2>Personal Information</H2>
+      <div className={s.container}>
+        <H2>Personal Information</H2>
 
-      <img src={userAva} alt="user ava" className={s.form__img} />
-      <DevTool control={control} />
-      {
-        <label htmlFor={'avatar'} className={s.file__label}>
-          Change Cover
-          <input
-            {...register('avatar')}
-            /* onChange={e => {
+        <img src={userAva} alt="user ava" className={s.form__img} />
+        <DevTool control={control} />
+        {
+          <label htmlFor={'avatar'} className={s.file__label}>
+            Change Cover
+            <input
+              {...register('avatar')}
+              /* onChange={e => {
               e.target.files &&
                 setValue('avatar', e.target.files[0], {
                   shouldDirty: true,
                   shouldTouch: true,
                 })
             }} */
-            type={'file'}
-            className={s.file__input}
-            id={'avatar'}
-            name="avatar"
-          />
-        </label>
-      }
-      <div className={s.form__buttons}>
-        <Button
-          type="button"
-          variant={'secondary'}
-          className={s.form__button}
-          callBack={changeEditPhoto}
-          fullWidth={false}
-        >
-          Cancel
-        </Button>
-        <Button type="submit" variant={'purple'} className={s.form__button} fullWidth={false}>
-          Save
-        </Button>
+              type={'file'}
+              className={s.file__input}
+              id={'avatar'}
+              name="avatar"
+            />
+          </label>
+        }
+        <div className={s.form__buttons}>
+          <Button
+            type="button"
+            variant={'secondary'}
+            className={s.form__button}
+            callBack={changeEditPhoto}
+            fullWidth={false}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant={'purple'} className={s.form__button} fullWidth={false}>
+            Save
+          </Button>
+        </div>
       </div>
     </form>
   )

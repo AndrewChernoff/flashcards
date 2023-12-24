@@ -3,7 +3,6 @@ import { useRef, useState } from 'react'
 import noUserAva from '../../../common/imgs/noAvaUser.png'
 import { useLogOutMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
-import Card from '../card/card'
 import { H2 } from '../typography/typography'
 
 import EditName from './edit-name/edit-name'
@@ -35,7 +34,7 @@ const PersonalInfo = ({ name, email, ava }: Props) => {
   }
 
   return (
-    <Card className={s.card}>
+    <div className={s.card}>
       {!editName &&
         !editPhoto && ( ///if we don't edit anything
           <div className={s.info}>
@@ -76,7 +75,7 @@ const PersonalInfo = ({ name, email, ava }: Props) => {
       {!editName && editPhoto && (
         <EditPhoto userAva={ava || noUserAva} changeEditPhoto={changeEditPhoto} />
       )}
-    </Card>
+    </div>
   )
 }
 
