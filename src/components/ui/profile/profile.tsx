@@ -1,5 +1,5 @@
-import PersonalInfo from '../../components/ui/personal-info/personal-info'
-import { useGetMeQuery } from '../../services/auth/auth'
+import { useGetMeQuery } from '../../../services/auth/auth'
+import PersonalInfo from '../personal-info/personal-info'
 
 const Profile = () => {
   const { data: me } = useGetMeQuery()

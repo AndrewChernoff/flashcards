@@ -6,6 +6,7 @@ import { Button } from '../button'
 import Dropdown from '../dropdown/dropdown'
 
 import s from './header.module.scss'
+import ProfileDialog from './profileDialog/profileDialog'
 
 type UserData = {
   avatar: string | null
@@ -29,6 +30,7 @@ function isSuccess(user: UserData | IsSuccess): user is IsSuccess {
 
 function Header({ user }: HeaderProps) {
   const [path, setPath] = useState<string>('/signin')
+  const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
 
   useEffect(() => {
     const pathName = window.location.pathname
@@ -40,26 +42,36 @@ function Header({ user }: HeaderProps) {
     }
   }, [])
 
+  const openProfileDialogHandler = () => setIsProfileOpen(!isProfileOpen)
+
   return (
-    <header className={s.header}>
-      <img src={logo} alt="incubator logo" />
-      {user && isSuccess(user) ? (
-        <Button as="a" href={path} variant="purple" className={s.header__link}>
-          {path === '/signin' ? 'Sign Up' : path === '/signup' && 'Sign in'}
-        </Button>
-      ) : (
-        <div className={s.header__info}>
-          {user && 'avatar' in user && (
-            <Dropdown name={user.name} email={user.email} img={!user.avatar ? noava : user.avatar}>
-              <div className={s.header__info_user}>
-                <p>{user.name}</p>
-                <img src={!user.avatar ? noava : user.avatar} alt="user ava" />
-              </div>
-            </Dropdown>
-          )}
-        </div>
-      )}
-    </header>
+    <>
+      <header className={s.header}>
+        <img src={logo} alt="incubator logo" />
+        {user && isSuccess(user) ? (
+          <Button as="a" href={path} variant="purple" className={s.header__link}>
+            {path === '/signin' ? 'Sign Up' : path === '/signup' && 'Sign in'}
+          </Button>
+        ) : (
+          <div className={s.header__info}>
+            {user && 'avatar' in user && (
+              <Dropdown
+                name={user.name}
+                email={user.email}
+                img={!user.avatar ? noava : user.avatar}
+                openProfileDialog={openProfileDialogHandler}
+              >
+                <div className={s.header__info_user}>
+                  <p>{user.name}</p>
+                  <img src={!user.avatar ? noava : user.avatar} alt="user ava" />
+                </div>
+              </Dropdown>
+            )}
+          </div>
+        )}
+      </header>
+      <ProfileDialog isOpen={isProfileOpen} openDialog={openProfileDialogHandler} />
+    </>
   )
 }
 

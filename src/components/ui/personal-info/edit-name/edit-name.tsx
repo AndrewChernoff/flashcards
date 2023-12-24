@@ -61,37 +61,39 @@ const EditName = forwardRef<HTMLInputElement, EditNameProps>(
 
     return (
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <H2 className={s.form__title}>Personal Information</H2>
+        <div className={s.container}>
+          <H2 className={s.form__title}>Personal Information</H2>
 
-        <div /* className={s.info__imgBlock}  */>
-          <img src={ava} alt="user ava" />
-        </div>
-        <DevTool control={control} />
-        <Input
-          isSearch={false}
-          placeholder={''}
-          type={'text'}
-          error={errors.name?.message}
-          isDisabled={false}
-          {
-            ...register('name') /* ,
+          <div /* className={s.info__imgBlock}  */>
+            <img src={ava} alt="user ava" />
+          </div>
+          <DevTool control={control} />
+          <Input
+            isSearch={false}
+            placeholder={''}
+            type={'text'}
+            error={errors.name?.message}
+            isDisabled={false}
+            {
+              ...register('name') /* ,
         {
           onBlur: () => onInputNameBlur(),
         } */
-          }
-          label={'Nickname'}
-          //ref={ref}
-        />
+            }
+            label={'Nickname'}
+            //ref={ref}
+          />
 
-        <Button
-          type="submit"
-          // callBack={onInputNameBlur}
-          variant={'secondary'}
-          className={s.form__button}
-          fullWidth={true}
-        >
-          Save Changes
-        </Button>
+          <Button
+            type="submit"
+            // callBack={onInputNameBlur}
+            variant={'secondary'}
+            className={s.form__button}
+            fullWidth={true}
+          >
+            Save Changes
+          </Button>
+        </div>
       </form>
     )
   }

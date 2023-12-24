@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
-import { Link } from 'react-router-dom'
 
 import { Caption, Subtitle2 } from '../typography/typography'
 
@@ -15,9 +14,10 @@ type DropdownProps = {
   img: string
   name: string
   email: string
+  openProfileDialog: () => void
 }
 
-const Dropdown = ({ children, img, email, name }: DropdownProps) => {
+const Dropdown = ({ children, img, email, name, openProfileDialog }: DropdownProps) => {
   const [logOut] = useLogOutMutation()
 
   return (
@@ -34,11 +34,9 @@ const Dropdown = ({ children, img, email, name }: DropdownProps) => {
               </div>
             </div>
           </DropdownMenu.Item>
-          <DropdownMenu.Item className={s.dropdown__item}>
+          <DropdownMenu.Item className={s.dropdown__item} onClick={openProfileDialog}>
             <ProfileImg />
-            <Caption className={s.dropdown__item_profile}>
-              <Link to="/profile">My profile</Link>
-            </Caption>
+            <Caption className={s.dropdown__item_profile}>My profile</Caption>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={s.dropdown__item}>
             <button onClick={() => logOut()}>
