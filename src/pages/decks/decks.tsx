@@ -23,8 +23,10 @@ const Decks = () => {
   const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
   const [currentPage, setCurrentPage] = useState<number>(1) /// for pagination
   const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
-  const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false)
+  const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false) ///delete deck functionality
   const [deleteDeckId, setDeleteDeckId] = useState<string | null>(null)
+  const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false) ///update deck functionality
+  const [updateDeckId, setUpdateDeckId] = useState<string | null>(null)
 
   const { data: me } = useGetMeQuery()
 
@@ -121,7 +123,7 @@ const Decks = () => {
             pageSize={10}
             currentPage={currentPage}
             onPageChange={setCurrentPage}
-            className={s.decks__pagination} /////////////!!!!!!!!!
+            className={s.decks__pagination}
           />
         )}
         <AddDeckDialog

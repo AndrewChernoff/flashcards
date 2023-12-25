@@ -9,13 +9,13 @@ import EditName from './edit-name/edit-name'
 import EditPhoto from './edit-photo/edit-photo'
 import s from './personal-info.module.scss'
 
-interface Props {
+type PersonalInfoProps = {
   name: string
   email: string
   ava: string | null
 }
 
-const PersonalInfo = ({ name, email, ava }: Props) => {
+const PersonalInfo = ({ name, email, ava }: PersonalInfoProps) => {
   const [editName, setEditName] = useState<boolean>(false)
   const [editPhoto, setEditPhoto] = useState<boolean>(false)
   const inputName = useRef<HTMLInputElement>(null)

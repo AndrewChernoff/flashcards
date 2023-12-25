@@ -19,7 +19,7 @@ type UserData = {
 }
 
 type HeaderProps = {
-  user: UserData | IsSuccess
+  user: UserData | IsSuccess | null
 }
 
 type IsSuccess = { success: boolean }
@@ -28,7 +28,9 @@ function isSuccess(user: UserData | IsSuccess): user is IsSuccess {
   return (user as IsSuccess).success === false
 }
 
-function Header({ user }: HeaderProps) {
+/* this component is wrapped with WrapperHeader component from 'common' folder*/
+
+const Header = ({ user }: HeaderProps) => {
   const [path, setPath] = useState<string>('/signin')
   const [isProfileOpen, setIsProfileOpen] = useState<boolean>(false)
 

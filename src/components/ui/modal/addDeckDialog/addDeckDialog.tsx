@@ -25,7 +25,7 @@ type AddDeckDialogType = {
 
 const schema = z.object({
   name: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
-  cover: z.instanceof(File).optional(), ///not setting it optional, need to fix it
+  cover: z.any().optional(),
   isPrivate: z.boolean(),
 })
 

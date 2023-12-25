@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
-import { useAppDispatch } from '../../../common/hooks/redux-hooks'
 import { useLogOutMutation } from '../../../services/auth/auth'
 import { Caption, Subtitle2 } from '../typography/typography'
 
@@ -17,7 +16,6 @@ type DropdownProps = {
 }
 
 const Dropdown = ({ children, img, email, name, openProfileDialog }: DropdownProps) => {
-  const dispatch = useAppDispatch()
   const [logOut] = useLogOutMutation()
 
   const onLogoutHandler = () => {
