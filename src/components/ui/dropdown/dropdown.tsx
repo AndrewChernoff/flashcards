@@ -2,12 +2,11 @@ import { ReactNode } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
+import { useAppDispatch } from '../../../common/hooks/redux-hooks'
+import { useLogOutMutation } from '../../../services/auth/auth'
 import { Caption, Subtitle2 } from '../typography/typography'
 
 import s from './dropdown.module.scss'
-
-// eslint-disable-next-line import/no-unresolved
-import { useLogOutMutation } from '@/services/auth/auth'
 
 type DropdownProps = {
   children: ReactNode
@@ -18,7 +17,12 @@ type DropdownProps = {
 }
 
 const Dropdown = ({ children, img, email, name, openProfileDialog }: DropdownProps) => {
+  const dispatch = useAppDispatch()
   const [logOut] = useLogOutMutation()
+
+  const onLogoutHandler = () => {
+    logOut()
+  }
 
   return (
     <DropdownMenu.Root>
@@ -39,7 +43,7 @@ const Dropdown = ({ children, img, email, name, openProfileDialog }: DropdownPro
             <Caption className={s.dropdown__item_profile}>My profile</Caption>
           </DropdownMenu.Item>
           <DropdownMenu.Item className={s.dropdown__item}>
-            <button onClick={() => logOut()}>
+            <button onClick={onLogoutHandler}>
               <SignOutImg />
               <Caption className={s.dropdown__item_profile}>Sign Out</Caption>
             </button>

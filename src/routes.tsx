@@ -1,10 +1,13 @@
+import { useEffect } from 'react'
+
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 
+import { useAppDispatch } from './common/hooks/redux-hooks'
 import { LoginForm } from './components/ui/login-form/login-form'
 import SignUp from './components/ui/sign-up/sign-up'
 import Decks from './pages/decks/decks'
-import Profile from './components/ui/profile/profile'
 import { useGetMeQuery } from './services/auth/auth'
+import { getUserData } from './services/auth/auth-slice'
 
 const privateRoutes = [
   {
@@ -14,10 +17,6 @@ const privateRoutes = [
   {
     path: '/decks',
     element: <Decks />,
-  },
-  {
-    path: '/profile',
-    element: <Profile />,
   },
 ]
 
@@ -33,9 +32,14 @@ const publicRoutes = [
 ]
 
 const PrivateRoute = () => {
+  const dispatch = useAppDispatch()
   const { data: me, isLoading: isMeLoading } = useGetMeQuery()
 
   const isAuth = me
+
+  useEffect(() => {
+    dispatch(getUserData(me))
+  }, [me])
 
   if (isMeLoading) return <div>Loading...</div>
 
