@@ -4,7 +4,7 @@ type SignInType = {
   rememberMe?: boolean
 }
 
-type User = {
+export type User = {
   avatar: string
   id: string
   email: string
