@@ -1,10 +1,14 @@
-import { useGetMeQuery } from '../../../services/auth/auth'
+import { useAppSelector } from '../../../common/hooks/redux-hooks'
 import PersonalInfo from '../personal-info/personal-info'
 
 const Profile = () => {
-  const { data: me } = useGetMeQuery()
+  const me = useAppSelector(state => state.auth.user)
 
-  return <PersonalInfo name={me.name} email={me.email} ava={me.avatar} />
+  if (me === null) {
+    return
+  }
+
+  return <PersonalInfo name={me?.name} email={me?.email} ava={me?.avatar} />
 }
 
 export default Profile

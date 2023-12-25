@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
 
 import Header from '../../components/ui/header/header'
-import { useGetMeQuery } from '../../services/auth/auth'
+import { useAppSelector } from '../hooks/redux-hooks'
 
 const WrapperHeader = ({ children }: { children: ReactNode }) => {
-  const { data: me } = useGetMeQuery()
+  const me = useAppSelector(state => state.auth.user)
 
   return (
     <>

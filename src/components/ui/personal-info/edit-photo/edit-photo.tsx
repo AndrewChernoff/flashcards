@@ -54,13 +54,6 @@ const EditPhoto = ({ userAva, changeEditPhoto }: EditPhotoPropsType) => {
             Change Cover
             <input
               {...register('avatar')}
-              /* onChange={e => {
-              e.target.files &&
-                setValue('avatar', e.target.files[0], {
-                  shouldDirty: true,
-                  shouldTouch: true,
-                })
-            }} */
               type={'file'}
               className={s.file__input}
               id={'avatar'}
