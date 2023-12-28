@@ -41,3 +41,5 @@ export type DecksParams = {
   currentPage?: number
   itemsPerPage?: number
 } | void
+
+export type Deck = { name: string; cover?: File; isPrivate?: boolean }

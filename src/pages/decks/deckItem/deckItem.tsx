@@ -9,11 +9,13 @@ import s from '../decks.module.scss'
 type DeckItemProps = {
   deck: any
   myId: string
-  openDialog: (id: string) => void
+  openDeleteDialog: (id: string) => void
+  openEditDialog: (id: string) => void
 }
 
-const DeckItem = ({ deck, myId, openDialog }: DeckItemProps) => {
-  const handleDelete = (id: string) => openDialog(id)
+const DeckItem = ({ deck, myId, openDeleteDialog, openEditDialog }: DeckItemProps) => {
+  const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
+  const openEditDialogHandler = (id: string) => openEditDialog(id)
 
   return (
     <Table.Row className={s.dataRow} key={deck.id}>
@@ -28,11 +30,16 @@ const DeckItem = ({ deck, myId, openDialog }: DeckItemProps) => {
 
         <div className={s.decks__createdBy_buttons}>
           <PlayCircle />
-          <Edit />
+
           {deck.author.id === myId && (
-            <button onClick={() => handleDelete(deck.id)}>
-              <Delete />
-            </button>
+            <>
+              <button onClick={() => openEditDialogHandler(deck.id)}>
+                <Edit />
+              </button>
+              <button onClick={() => openDeleteDialogHandler(deck.id)}>
+                <Delete />
+              </button>
+            </>
           )}
         </div>
       </Table.DataCell>

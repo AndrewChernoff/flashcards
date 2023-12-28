@@ -3,7 +3,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { useAddDeckMutation } from '../../../../services/decks/decks'
 import { Button } from '../../button'
 import ControlledCheckbox from '../../controlled/controlled-checkbox'
 import Input from '../../input/input'
@@ -21,6 +20,9 @@ export type AddDeckInputs = {
 type AddDeckDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
+  title: string
+  callback: (obj: AddDeckInputs) => void //// callback updates or adds deck depending on parametrs from parent component
+  btnDescription: string
 }
 
 const schema = z.object({
@@ -29,9 +31,13 @@ const schema = z.object({
   isPrivate: z.boolean(),
 })
 
-const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
-  const [addDeck] = useAddDeckMutation()
-
+const AddDeckDialog = ({
+  isOpen,
+  closeDialog,
+  title,
+  callback,
+  btnDescription,
+}: AddDeckDialogType) => {
   const {
     register,
     handleSubmit,
@@ -50,7 +56,7 @@ const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
     formData.append('name', data.name)
     formData.append('cover', data.cover)
     formData.append('isPrivate', data.isPrivate)
-    addDeck(formData)
+    callback(formData)
     reset()
     closeDialog(false)
   })
@@ -63,7 +69,7 @@ const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
         <DevTool control={control} />
 
         <div className={s.form__header}>
-          <H2>Add New Pack</H2>
+          <H2>{title}</H2>
           <button onClick={() => closeDialog(false)}>X</button>
         </div>
         <div className={s.form__functionality}>
@@ -126,7 +132,7 @@ const AddDeckDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
             Cancel
           </Button>
           <Button className={s.form__buttons_add} variant="tertiary">
-            Add New Pack
+            {btnDescription}
           </Button>
         </div>
       </form>
