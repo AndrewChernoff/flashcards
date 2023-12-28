@@ -43,7 +43,7 @@ const decksApi = baseApi.injectEndpoints({
         }),
         async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
-            decksApi.util.updateQueryData('getDecks', undefined, draft => {
+            decksApi.util.updateQueryData('getDecks', undefined, (draft: { items: any[] }) => {
               draft.items = draft.items.filter(el => el.id !== id)
             })
           )
@@ -80,6 +80,15 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+      getDeckById: builder.query<any, string>({
+        query: id => {
+          return {
+            url: `v1/decks/${id}`,
+            method: 'GET',
+          }
+        },
+        providesTags: ['Decks'],
+      }),
     }
   },
 })
@@ -89,4 +98,5 @@ export const {
   useDeleteDeckMutation,
   useAddDeckMutation,
   useUpdateDeckMutation,
+  useGetDeckByIdQuery,
 } = decksApi
