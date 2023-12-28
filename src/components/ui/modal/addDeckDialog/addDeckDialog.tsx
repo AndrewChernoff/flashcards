@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -25,12 +27,6 @@ type AddDeckDialogType = {
   btnDescription: string
 }
 
-const schema = z.object({
-  name: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
-  cover: z.any().optional(),
-  isPrivate: z.boolean(),
-})
-
 const AddDeckDialog = ({
   isOpen,
   closeDialog,
@@ -38,6 +34,12 @@ const AddDeckDialog = ({
   callback,
   btnDescription,
 }: AddDeckDialogType) => {
+  const schema = z.object({
+    name: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+    cover: z.any().optional(),
+    isPrivate: z.boolean(),
+  })
+
   const {
     register,
     handleSubmit,

@@ -1,7 +1,9 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
 import WrapperHeader from '../../common/component/wrapper-header'
+import { useAppSelector } from '../../common/hooks/redux-hooks'
 import { Button } from '../../components/ui/button'
+import DeckItem from '../../components/ui/deckItem/deckItem'
 import Input from '../../components/ui/input/input'
 import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
 import DeleteDeckDialog from '../../components/ui/modal/deleteDeckDialog/deleteDeckDialog'
@@ -9,7 +11,6 @@ import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
-import { useGetMeQuery } from '../../services/auth/auth'
 import {
   useAddDeckMutation,
   useDeleteDeckMutation,
@@ -17,7 +18,6 @@ import {
   useUpdateDeckMutation,
 } from '../../services/decks/decks'
 
-import DeckItem from './deckItem/deckItem'
 import s from './decks.module.scss'
 
 export type TabValue = 'All cards' | 'My cards'
@@ -35,11 +35,12 @@ const Decks = () => {
   const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false)
   const [updateDeckId, setUpdateDeckId] = useState<string | null>(null)
 
-  const { data: me } = useGetMeQuery()
+  const me = useAppSelector(state => state.auth.user)
+  //const { data: me } = useGetMeQuery()
 
   const { data: decks } = useGetDecksQuery({
     itemsPerPage: 10,
-    authorId: tabValue === 'My cards' && me.id ? me.id : '',
+    authorId: tabValue === 'My cards' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
     maxCardsCount: String(sliderValue[1]),
     name: deckNameValue,
@@ -137,7 +138,7 @@ const Decks = () => {
             {decks?.items.map((deck: any) => {
               return (
                 <DeckItem
-                  myId={me.id}
+                  myId={me?.id}
                   deck={deck}
                   key={deck.id}
                   openDeleteDialog={handleDeleteDeckDialog}

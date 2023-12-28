@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import { useAppDispatch } from './common/hooks/redux-hooks'
 import { LoginForm } from './components/ui/login-form/login-form'
 import SignUp from './components/ui/sign-up/sign-up'
+import DeckItem from './pages/decks/deckItemPath/deckItem'
 import Decks from './pages/decks/decks'
 import { useGetMeQuery } from './services/auth/auth'
 import { getUserData } from './services/auth/auth-slice'
@@ -17,6 +18,10 @@ const privateRoutes = [
   {
     path: '/decks',
     element: <Decks />,
+  },
+  {
+    path: '/decks/:id',
+    element: <DeckItem />,
   },
 ]
 
