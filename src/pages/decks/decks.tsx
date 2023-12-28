@@ -10,7 +10,12 @@ import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
 import { useGetMeQuery } from '../../services/auth/auth'
-import { useDeleteDeckMutation, useGetDecksQuery } from '../../services/decks/decks'
+import {
+  useAddDeckMutation,
+  useDeleteDeckMutation,
+  useGetDecksQuery,
+  useUpdateDeckMutation,
+} from '../../services/decks/decks'
 
 import DeckItem from './deckItem/deckItem'
 import s from './decks.module.scss'
@@ -23,9 +28,11 @@ const Decks = () => {
   const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
   const [currentPage, setCurrentPage] = useState<number>(1) /// for pagination
   const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
-  const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false) ///delete deck functionality
+  /*delete deck functionality */
+  const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false)
   const [deleteDeckId, setDeleteDeckId] = useState<string | null>(null)
-  const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false) ///update deck functionality
+  /*update deck functionality */
+  const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false)
   const [updateDeckId, setUpdateDeckId] = useState<string | null>(null)
 
   const { data: me } = useGetMeQuery()
@@ -39,7 +46,11 @@ const Decks = () => {
     currentPage: currentPage,
   })
 
+  const [addDeck] = useAddDeckMutation()
+
   const [deleteDeck] = useDeleteDeckMutation()
+
+  const [updateDeck] = useUpdateDeckMutation()
 
   const onTabValueChange = (value: TabValue) => setTabValue(value)
 
@@ -51,9 +62,11 @@ const Decks = () => {
   )
 
   const handleAddDeckDialog = () => setIsNewPackDialogOpen(!isNewPackDialodOpen)
+
+  /*Delete deck dialog functions */
   const handleDeleteDeckDialog = (id: string) => {
     /*when open dialog we get id from there for deleting deck from dialog window */
-    setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
+    setIsDeletePackDialogOpen(!isDeletePackDialodOpen) //need to rename
     setDeleteDeckId(id)
   }
 
@@ -62,6 +75,22 @@ const Decks = () => {
       deleteDeck({ id: deleteDeckId })
       setDeleteDeckId(null)
       setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
+    }
+  }
+
+  /*Update deck dialog functions */
+  const handleUpdateDeckDialog = (id: string) => {
+    setIsUpdatePackDialodOpen(!isUpdatePackDialodOpen) //need to rename
+    setUpdateDeckId(id)
+  }
+
+  const handleUpdateDeck = (obj: any) => {
+    //console.log(obj)
+
+    if (updateDeckId) {
+      updateDeck({ id: updateDeckId, data: obj })
+      setUpdateDeckId(null)
+      setIsUpdatePackDialodOpen(!isUpdatePackDialodOpen)
     }
   }
 
@@ -111,7 +140,8 @@ const Decks = () => {
                   myId={me.id}
                   deck={deck}
                   key={deck.id}
-                  openDialog={handleDeleteDeckDialog}
+                  openDeleteDialog={handleDeleteDeckDialog}
+                  openEditDialog={handleUpdateDeckDialog}
                 />
               )
             })}
@@ -127,8 +157,18 @@ const Decks = () => {
           />
         )}
         <AddDeckDialog
+          title={'Add New Pack'}
           isOpen={isNewPackDialodOpen}
           closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
+          callback={addDeck}
+          btnDescription={'Add New Pack'}
+        />
+        <AddDeckDialog //update
+          title={'Edit New Pack'}
+          isOpen={isUpdatePackDialodOpen}
+          closeDialog={(value: boolean) => setIsUpdatePackDialodOpen(value)}
+          callback={handleUpdateDeck}
+          btnDescription={'Edit pack'}
         />
         <DeleteDeckDialog
           isOpen={isDeletePackDialodOpen}

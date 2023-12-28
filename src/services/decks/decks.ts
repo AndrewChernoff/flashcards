@@ -1,6 +1,6 @@
 import { baseApi } from '../base-api'
 
-import { DeckResponse, DecksParams } from './types'
+import { Deck, DeckResponse, DecksParams } from './types'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -15,7 +15,7 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Decks'],
       }),
-      addDeck: builder.mutation<any, { name: string; cover?: File; isPrivate?: boolean }>({
+      addDeck: builder.mutation<any, Deck>({
         query: data => ({
           url: `v1/decks`,
           method: 'POST',
@@ -44,7 +44,7 @@ const decksApi = baseApi.injectEndpoints({
         async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
             decksApi.util.updateQueryData('getDecks', undefined, draft => {
-              /*  draft.items = */ draft.items.filter(el => el.id !== id)
+              draft.items = draft.items.filter(el => el.id !== id)
             })
           )
 
@@ -57,8 +57,36 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
+      updateDeck: builder.mutation<any, { id: string; data: Deck }>({
+        query(obj) {
+          return {
+            url: `v1/decks/${obj.id}`,
+            method: 'PATCH',
+            body: obj.data,
+          }
+        },
+        async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            decksApi.util.updateQueryData('getDecks', undefined, draft => {
+              Object.assign(draft, patch)
+            })
+          )
+
+          try {
+            await queryFulfilled
+          } catch {
+            patchResult.undo()
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
     }
   },
 })
 
-export const { useGetDecksQuery, useDeleteDeckMutation, useAddDeckMutation } = decksApi
+export const {
+  useGetDecksQuery,
+  useDeleteDeckMutation,
+  useAddDeckMutation,
+  useUpdateDeckMutation,
+} = decksApi
