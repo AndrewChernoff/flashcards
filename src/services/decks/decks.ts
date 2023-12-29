@@ -1,3 +1,5 @@
+import { omit } from 'remeda'
+
 import { baseApi } from '../base-api'
 
 import { Deck, DeckResponse, DecksParams } from './types'
@@ -80,14 +82,15 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      getDeckById: builder.query<any, string>({
-        query: id => {
+      getCardsDeckById: builder.query<any, { id: string; question: string }>({
+        query: params => {
           return {
-            url: `v1/decks/${id}`,
+            url: `v1/decks/${params.id}/cards`,
             method: 'GET',
+            params: omit(params, ['id']) || {},
           }
         },
-        providesTags: ['Decks'],
+        providesTags: ['Cards'],
       }),
     }
   },
@@ -98,5 +101,5 @@ export const {
   useDeleteDeckMutation,
   useAddDeckMutation,
   useUpdateDeckMutation,
-  useGetDeckByIdQuery,
+  useGetCardsDeckByIdQuery,
 } = decksApi

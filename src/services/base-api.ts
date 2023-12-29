@@ -4,7 +4,7 @@ import { baseQueryWithReauth } from './basequerywithreauth'
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
-  tagTypes: ['Decks', 'Me'],
+  tagTypes: ['Decks', 'Me', 'Cards'],
   baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
 })

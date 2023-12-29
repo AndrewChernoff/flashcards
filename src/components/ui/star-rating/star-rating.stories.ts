@@ -1,18 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import EditableSlider from './slider'
+import StarRating from './star-rating'
 
 const meta = {
-  title: 'Components/Slider',
-  component: EditableSlider,
+  title: 'Components/StarRating',
+  component: StarRating,
   tags: ['autodocs'],
-} satisfies Meta<typeof EditableSlider>
+} satisfies Meta<typeof StarRating>
 
 export default meta
 type Story = StoryObj<typeof meta>
 
 export const Slider: Story = {
-  args: {
-    value: [25, 75],
-  },
+  args: { grade: 3 },
 }
