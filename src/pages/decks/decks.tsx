@@ -67,7 +67,7 @@ const Decks = () => {
   /*Delete deck dialog functions */
   const handleDeleteDeckDialog = (id: string) => {
     /*when open dialog we get id from there for deleting deck from dialog window */
-    setIsDeletePackDialogOpen(!isDeletePackDialodOpen) //need to rename
+    setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
     setDeleteDeckId(id)
   }
 
@@ -81,13 +81,11 @@ const Decks = () => {
 
   /*Update deck dialog functions */
   const handleUpdateDeckDialog = (id: string) => {
-    setIsUpdatePackDialodOpen(!isUpdatePackDialodOpen) //need to rename
+    setIsUpdatePackDialodOpen(!isUpdatePackDialodOpen)
     setUpdateDeckId(id)
   }
 
   const handleUpdateDeck = (obj: any) => {
-    //console.log(obj)
-
     if (updateDeckId) {
       updateDeck({ id: updateDeckId, data: obj })
       setUpdateDeckId(null)

@@ -5,12 +5,13 @@ interface Pagination {
   totalItems: number
 }
 
+/// decks
 interface Author {
   id: string
   name: string
 }
 
-interface Item {
+interface DeckItem {
   id: string
   userId: string
   name: string
@@ -29,7 +30,7 @@ interface Item {
 export interface DeckResponse {
   maxCardsCount: number
   pagination: Pagination
-  items: Item[]
+  items: DeckItem[]
 }
 
 export type DecksParams = {
@@ -43,3 +44,24 @@ export type DecksParams = {
 } | void
 
 export type Deck = { name: string; cover?: File; isPrivate?: boolean }
+
+///cards from deck
+interface CardItem {
+  id: string
+  deckId: string
+  userId: string
+  question: string
+  answer: string
+  shots: number
+  answerImg: string
+  questionImg: string
+  questionVideo: string
+  answerVideo: string
+  created: string
+  updated: string
+}
+
+interface CardsResponse {
+  items: CardItem[]
+  pagination: Pagination
+}
