@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 
 import { useAppDispatch } from './common/hooks/redux-hooks'
 import { LoginForm } from './components/ui/login-form/login-form'
+import NotFound from './components/ui/not-found/not-found'
 import SignUp from './components/ui/sign-up/sign-up'
 import DeckItem from './pages/decks/cards/cards'
 import Decks from './pages/decks/decks'
@@ -33,6 +34,10 @@ const publicRoutes = [
   {
     path: '/signup',
     element: <SignUp />,
+  },
+  {
+    path: '/*',
+    element: <NotFound />,
   },
 ]
 
