@@ -16,14 +16,15 @@ import { useGetCardsDeckByIdQuery } from '../../../services/decks/decks'
 import s from './cards.module.scss'
 
 const Cards = () => {
+  const { id: deckId } = useParams()
+
   const [title, setTitle] = useState<string>('')
   const me = useAppSelector(state => state.auth.user)
-
-  const { id: deckId } = useParams()
 
   if (!deckId) {
     return <div>Invalid deck ID</div>
   }
+
   const { data: cards, isLoading } = useGetCardsDeckByIdQuery({
     id: deckId,
     question: title,

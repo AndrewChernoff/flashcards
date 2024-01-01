@@ -92,6 +92,15 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Cards'],
       }),
+      getCardById: builder.query<any, string>({
+        query: id => {
+          return {
+            url: `v1/decks/${id}/learn`,
+            method: 'GET',
+          }
+        },
+        providesTags: ['Cards'],
+      }),
     }
   },
 })
@@ -102,4 +111,5 @@ export const {
   useAddDeckMutation,
   useUpdateDeckMutation,
   useGetCardsDeckByIdQuery,
+  useGetCardByIdQuery,
 } = decksApi
