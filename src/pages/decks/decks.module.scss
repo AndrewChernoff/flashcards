@@ -76,8 +76,12 @@
         &_buttons {
             display: flex;
 
-            button[disabled] {
+            button {
+                cursor: pointer;
+
+                &:disabled {
                 background-color: rgb(61 54 54);
+            }
             }
         }
     }

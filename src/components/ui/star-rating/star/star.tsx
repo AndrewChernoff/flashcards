@@ -1,13 +1,15 @@
 import s from './star.module.scss'
 
-const Star = ({ count, value, inactiveColor, size = 24, activeColor, onChange }: any) => {
-  // short trick
-  const stars = Array.from({ length: count }, () => '🟊')
+type StarProps = {
+  count: number
+  value: number
+  inactiveColor: string
+  size?: number
+  activeColor: string
+}
 
-  // Internal handle change function
-  const handleChange = (value: any) => {
-    onChange(value + 1)
-  }
+const Star = ({ count, value, inactiveColor, size = 24, activeColor }: StarProps) => {
+  const stars = Array.from({ length: count }, () => '🟊')
 
   return (
     <div>
@@ -23,7 +25,6 @@ const Star = ({ count, value, inactiveColor, size = 24, activeColor, onChange }:
             className={s.star}
             key={index}
             style={{ color: style, width: size, height: size, fontSize: size }}
-            onClick={() => handleChange(index)}
           >
             {star}
           </span>

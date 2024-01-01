@@ -1,11 +1,13 @@
 import { Link } from 'react-router-dom'
 
+import { useAppDispatch } from '../../../common/hooks/redux-hooks'
 import defaultCover from '../../../common/imgs/default-cover.png'
 import Delete from '../../../common/svg/delete'
 import Edit from '../../../common/svg/edit'
 import PlayCircle from '../../../common/svg/play-circle'
 import { formatDate } from '../../../common/utils/time-transfering'
 import s from '../../../pages/decks/decks.module.scss'
+import { getDeckdId } from '../../../services/decks/cards-slice'
 import { Table } from '../table/table'
 
 type DeckItemProps = {
@@ -13,11 +15,25 @@ type DeckItemProps = {
   myId?: string | null
   openDeleteDialog: (id: string) => void
   openEditDialog: (id: string) => void
+  openCardDialog: () => void
 }
 
-const DeckItem = ({ deck, myId, openDeleteDialog, openEditDialog }: DeckItemProps) => {
+const DeckItem = ({
+  deck,
+  myId,
+  openDeleteDialog,
+  openEditDialog,
+  openCardDialog,
+}: DeckItemProps) => {
+  const dispatch = useAppDispatch()
   const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
   const openEditDialogHandler = (id: string) => openEditDialog(id)
+
+  const getCardIdHandler = (id: string) => dispatch(getDeckdId(id))
+  const openCardDialogHandler = (id: string) => {
+    getCardIdHandler(id)
+    openCardDialog()
+  }
 
   return (
     <Table.Row className={s.dataRow} key={deck.id}>
@@ -33,8 +49,9 @@ const DeckItem = ({ deck, myId, openDeleteDialog, openEditDialog }: DeckItemProp
         {deck.author.name}
 
         <div className={s.decks__createdBy_buttons}>
-          <PlayCircle />
-
+          <button onClick={() => openCardDialogHandler(deck.id)}>
+            <PlayCircle />
+          </button>
           {deck.author.id === myId && (
             <>
               <button onClick={() => openEditDialogHandler(deck.id)}>
