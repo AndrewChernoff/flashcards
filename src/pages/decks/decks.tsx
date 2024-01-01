@@ -52,12 +52,10 @@ const Decks = () => {
   })
 
   /* calling dialog for learning cards  */
-  const deckId = useAppSelector(state => state.card.deckId)
+  const deckId = useAppSelector(state => state.card.deck?.id)
 
   /*@ts-ignore */
   const { data: card } = useGetCardByIdQuery(deckId, { skip: !deckId })
-
-  console.log(card)
 
   const openCardDialog = () => setIsCardDialogOpen(!isCardDialogOpen)
 
@@ -191,7 +189,11 @@ const Decks = () => {
           deleteDeck={handleDeleteDeck}
         />
 
-        <CardDialog isOpen={isCardDialogOpen} closeDialog={() => setIsCardDialogOpen(false)} />
+        <CardDialog
+          isOpen={isCardDialogOpen}
+          card={card}
+          closeDialog={() => setIsCardDialogOpen(false)}
+        />
       </div>
     </WrapperHeader>
   )

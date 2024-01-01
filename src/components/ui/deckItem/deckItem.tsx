@@ -7,7 +7,8 @@ import Edit from '../../../common/svg/edit'
 import PlayCircle from '../../../common/svg/play-circle'
 import { formatDate } from '../../../common/utils/time-transfering'
 import s from '../../../pages/decks/decks.module.scss'
-import { getDeckdId } from '../../../services/decks/cards-slice'
+import { getDeckd } from '../../../services/decks/cards-slice'
+import { DeckItemType } from '../../../services/decks/types'
 import { Table } from '../table/table'
 
 type DeckItemProps = {
@@ -29,9 +30,9 @@ const DeckItem = ({
   const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
   const openEditDialogHandler = (id: string) => openEditDialog(id)
 
-  const getCardIdHandler = (id: string) => dispatch(getDeckdId(id))
-  const openCardDialogHandler = (id: string) => {
-    getCardIdHandler(id)
+  const getCardIdHandler = (deck: DeckItemType) => dispatch(getDeckd(deck))
+  const openCardDialogHandler = (deck: DeckItemType) => {
+    getCardIdHandler(deck)
     openCardDialog()
   }
 
@@ -49,7 +50,7 @@ const DeckItem = ({
         {deck.author.name}
 
         <div className={s.decks__createdBy_buttons}>
-          <button onClick={() => openCardDialogHandler(deck.id)}>
+          <button onClick={() => openCardDialogHandler(deck)}>
             <PlayCircle />
           </button>
           {deck.author.id === myId && (

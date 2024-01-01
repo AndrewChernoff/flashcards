@@ -2,7 +2,7 @@ import { omit } from 'remeda'
 
 import { baseApi } from '../base-api'
 
-import { Deck, DeckResponse, DecksParams } from './types'
+import { CardItem, CardsResponse, Deck, DeckResponse, DecksParams } from './types'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -82,7 +82,7 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      getCardsDeckById: builder.query<any, { id: string; question: string }>({
+      getCardsDeckById: builder.query<CardsResponse, { id: string; question: string }>({
         query: params => {
           return {
             url: `v1/decks/${params.id}/cards`,
@@ -92,7 +92,7 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Cards'],
       }),
-      getCardById: builder.query<any, string>({
+      getCardById: builder.query<CardItem, string>({
         query: id => {
           return {
             url: `v1/decks/${id}/learn`,
