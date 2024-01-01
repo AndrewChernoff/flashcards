@@ -1,24 +1,26 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
+import { DeckItemType } from './types'
+
 type State = {
-  deckId: string | null
+  deck: DeckItemType | null
 }
 /*for getting card to learn we need to determine deckID firstly */
 const initialState: State = {
-  deckId: null,
+  deck: null,
 }
 
 export const cardSlice = createSlice({
-  name: 'card',
+  name: 'deck',
   initialState,
   reducers: {
-    getDeckdId: (state, action: PayloadAction<string>) => {
-      state.deckId = action.payload
+    getDeckd: (state, action: PayloadAction<DeckItemType>) => {
+      state.deck = action.payload
     },
   },
 })
 
-export const { getDeckdId } = cardSlice.actions
+export const { getDeckd } = cardSlice.actions
 
 export default cardSlice.reducer
