@@ -1,17 +1,19 @@
 import { ChangeEvent, useState } from 'react'
 
-import { useLocation, useParams } from 'react-router-dom'
+import { useLocation, useParams, Link } from 'react-router-dom'
 
 import WrapperHeader from '../../../common/component/wrapper-header'
 import { useAppSelector } from '../../../common/hooks/redux-hooks'
 import Delete from '../../../common/svg/delete'
 import Edit from '../../../common/svg/edit'
+import LeftArrow from '../../../common/svg/left-arrow'
 import { formatDate } from '../../../common/utils/time-transfering'
 import { Button } from '../../../components/ui/button'
+import EmptyDeck from '../../../components/ui/empty-deck/empty-deck'
 import Input from '../../../components/ui/input/input'
 import StarRating from '../../../components/ui/star-rating/star-rating'
 import { Table } from '../../../components/ui/table/table'
-import { Body1, H1 } from '../../../components/ui/typography/typography'
+import { H1 } from '../../../components/ui/typography/typography'
 import { useGetCardsDeckByIdQuery } from '../../../services/decks/decks'
 import { CardItem } from '../../../services/decks/types'
 
@@ -41,35 +43,32 @@ const Cards = () => {
   const deckName = deckProps.state.deckName
   const deckUserId = deckProps.state.userId
 
-  console.log(me?.id, deckUserId)
-
   return (
     <WrapperHeader>
-      {me?.id === deckUserId && cards?.items.length === 0 ? (
-        <div className={s.cards}>
-          <header>
+      <div className={s.cards}>
+        <header className={s.cards__header}>
+          <div className={s.cards__header_title}>
+            <Link to="/decks" className={s.link}>
+              <LeftArrow />
+              <p> Back to Packs List</p>
+            </Link>
             <H1>{deckName}</H1>
-          </header>
-          <div>
-            <Body1>This pack is empty. Click add new card to fill this pack</Body1>
-          </div>
-        </div>
-      ) : (
-        <div className={s.cards}>
-          <header>
-            <h1>{deckName}</h1>
-            <Button variant="purple">Learn to Pack</Button>
-          </header>
-          <div className={s.filters}>
-            <Input
-              isSearch={true}
-              placeholder="Search"
-              type="text"
-              value={title}
-              onValueChange={onInputTitleChange}
-            />
           </div>
 
+          <Button variant="purple">Learn to Pack</Button>
+        </header>
+        <div className={s.filters}>
+          <Input
+            isSearch={true}
+            placeholder="Search"
+            type="text"
+            value={title}
+            onValueChange={onInputTitleChange}
+          />
+        </div>
+        {cards?.items.length === 0 ? (
+          <EmptyDeck myId={me?.id} deckUserId={deckUserId} />
+        ) : (
           <Table.Root className={s.table}>
             <Table.Head>
               <Table.Row className={s.row}>
@@ -115,8 +114,8 @@ const Cards = () => {
               })}
             </Table.Body>
           </Table.Root>
-        </div>
-      )}
+        )}
+      </div>
     </WrapperHeader>
   )
 }

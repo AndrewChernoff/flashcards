@@ -24,11 +24,9 @@ const Tabs = ({ tabValue, onTabValueChange }: SwitcherProps) => {
       <Tab.List className={s.TabsList}>
         {qwert.map(el => {
           return (
-            <>
-              <Tab.Trigger className={s.TabsTrigger} value={el.name}>
-                {el.name}
-              </Tab.Trigger>
-            </>
+            <Tab.Trigger className={s.TabsTrigger} value={el.name} key={`${el.id} tab`}>
+              {el.name}
+            </Tab.Trigger>
           )
         })}
       </Tab.List>
