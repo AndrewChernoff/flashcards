@@ -57,63 +57,66 @@ const Cards = () => {
 
           <Button variant="purple">Learn to Pack</Button>
         </header>
-        <div className={s.filters}>
-          <Input
-            isSearch={true}
-            placeholder="Search"
-            type="text"
-            value={title}
-            onValueChange={onInputTitleChange}
-          />
-        </div>
+
         {cards?.items.length === 0 ? (
           <EmptyDeck myId={me?.id} deckUserId={deckUserId} />
         ) : (
-          <Table.Root className={s.table}>
-            <Table.Head>
-              <Table.Row className={s.row}>
-                <Table.HeadCell className={s.headCell}>Question</Table.HeadCell>
-                <Table.HeadCell className={s.headCell}>Answer</Table.HeadCell>
-                <Table.HeadCell className={s.headCell}>
-                  Updated
-                  {/* <button onClick={filterDirection}>
+          <>
+            <div className={s.filters}>
+              <Input
+                isSearch={true}
+                placeholder="Search"
+                type="text"
+                value={title}
+                onValueChange={onInputTitleChange}
+              />
+            </div>
+            <Table.Root className={s.table}>
+              <Table.Head>
+                <Table.Row className={s.row}>
+                  <Table.HeadCell className={s.headCell}>Question</Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>Answer</Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>
+                    Updated
+                    {/* <button onClick={filterDirection}>
                 <Arrow />
               </button> */}
-                </Table.HeadCell>
-                <Table.HeadCell className={s.headCell}>Grade</Table.HeadCell>
-              </Table.Row>
-            </Table.Head>
-            <Table.Body>
-              {cards?.items.map((card: CardItem) => {
-                return (
-                  <Table.Row className={s.dataRow} key={card.id}>
-                    <Table.DataCell className={s.dataCell}>{card.question}</Table.DataCell>
-                    <Table.DataCell className={s.dataCell}>{card.answer}</Table.DataCell>
-                    <Table.DataCell className={s.dataCell}>
-                      {formatDate(card.updated)}
-                    </Table.DataCell>
-                    <Table.DataCell className={s.dataCell}>
-                      <StarRating grade={card.grade} />
-                    </Table.DataCell>
-                    {card.userId === me?.id && (
-                      <Table.DataCell className={`${s.dataCell}`}>
-                        <div className={s.decks__createdBy_buttons}>
-                          <>
-                            <button /* onClick={() => openEditDialogHandler(deck.id)} */>
-                              <Edit />
-                            </button>
-                            <button /* onClick={() => openDeleteDialogHandler(deck.id)} */>
-                              <Delete />
-                            </button>
-                          </>
-                        </div>
+                  </Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>Grade</Table.HeadCell>
+                </Table.Row>
+              </Table.Head>
+              <Table.Body>
+                {cards?.items.map((card: CardItem) => {
+                  return (
+                    <Table.Row className={s.dataRow} key={card.id}>
+                      <Table.DataCell className={s.dataCell}>{card.question}</Table.DataCell>
+                      <Table.DataCell className={s.dataCell}>{card.answer}</Table.DataCell>
+                      <Table.DataCell className={s.dataCell}>
+                        {formatDate(card.updated)}
                       </Table.DataCell>
-                    )}
-                  </Table.Row>
-                )
-              })}
-            </Table.Body>
-          </Table.Root>
+                      <Table.DataCell className={s.dataCell}>
+                        <StarRating grade={card.grade} />
+                      </Table.DataCell>
+                      {card.userId === me?.id && (
+                        <Table.DataCell className={`${s.dataCell}`}>
+                          <div className={s.decks__createdBy_buttons}>
+                            <>
+                              <button /* onClick={() => openEditDialogHandler(deck.id)} */>
+                                <Edit />
+                              </button>
+                              <button /* onClick={() => openDeleteDialogHandler(deck.id)} */>
+                                <Delete />
+                              </button>
+                            </>
+                          </div>
+                        </Table.DataCell>
+                      )}
+                    </Table.Row>
+                  )
+                })}
+              </Table.Body>
+            </Table.Root>
+          </>
         )}
       </div>
     </WrapperHeader>
