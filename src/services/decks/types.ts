@@ -59,6 +59,7 @@ export interface CardItem {
   answerVideo: string
   created: string
   updated: string
+  grade: number
 }
 
 export interface CardsResponse {

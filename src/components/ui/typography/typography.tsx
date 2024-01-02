@@ -26,3 +26,7 @@ export const Subtitle2 = ({ children, className }: TypographyProps) => {
 export const Caption = ({ children, className }: TypographyProps) => {
   return <p className={`${s.caption} ${className}`}>{children}</p>
 }
+
+export const Body1 = ({ children, className }: TypographyProps) => {
+  return <p className={`${s.body1} ${className}`}>{children}</p>
+}
