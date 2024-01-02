@@ -21,7 +21,7 @@ const privateRoutes = [
     element: <Decks />,
   },
   {
-    path: '/decks/:id',
+    path: '/decks/:id/cards',
     element: <DeckItem />,
   },
 ]

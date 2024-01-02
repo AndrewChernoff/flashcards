@@ -7,7 +7,7 @@ import Edit from '../../../common/svg/edit'
 import PlayCircle from '../../../common/svg/play-circle'
 import { formatDate } from '../../../common/utils/time-transfering'
 import s from '../../../pages/decks/decks.module.scss'
-import { getDeckd } from '../../../services/decks/cards-slice'
+import { getDeck } from '../../../services/decks/cards-slice'
 import { DeckItemType } from '../../../services/decks/types'
 import { Table } from '../table/table'
 
@@ -30,7 +30,7 @@ const DeckItem = ({
   const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
   const openEditDialogHandler = (id: string) => openEditDialog(id)
 
-  const getCardIdHandler = (deck: DeckItemType) => dispatch(getDeckd(deck))
+  const getCardIdHandler = (deck: DeckItemType) => dispatch(getDeck(deck))
   const openCardDialogHandler = (deck: DeckItemType) => {
     getCardIdHandler(deck)
     openCardDialog()
@@ -39,7 +39,7 @@ const DeckItem = ({
   return (
     <Table.Row className={s.dataRow} key={deck.id}>
       <Table.DataCell className={s.dataCell}>
-        <Link to={`/decks/${deck.id}`}>
+        <Link to={`/decks/${deck.id}/cards`} state={{ deckName: deck.name, userId: deck.userId }}>
           <img className={s.dataCell__img} src={deck.cover || defaultCover} />
         </Link>
       </Table.DataCell>

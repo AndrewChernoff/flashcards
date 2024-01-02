@@ -15,12 +15,12 @@ export const cardSlice = createSlice({
   name: 'deck',
   initialState,
   reducers: {
-    getDeckd: (state, action: PayloadAction<DeckItemType>) => {
+    getDeck: (state, action: PayloadAction<DeckItemType | null>) => {
       state.deck = action.payload
     },
   },
 })
 
-export const { getDeckd } = cardSlice.actions
+export const { getDeck } = cardSlice.actions
 
 export default cardSlice.reducer

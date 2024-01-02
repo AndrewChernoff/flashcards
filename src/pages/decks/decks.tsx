@@ -52,7 +52,7 @@ const Decks = () => {
   })
 
   /* calling dialog for learning cards  */
-  const deckId = useAppSelector(state => state.card.deck?.id)
+  const deckId = useAppSelector(state => state.deck.deck?.id)
 
   /*@ts-ignore */
   const { data: card } = useGetCardByIdQuery(deckId, { skip: !deckId })
