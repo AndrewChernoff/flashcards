@@ -23,9 +23,18 @@ const CardDialog = ({ isOpen, closeDialog }: AddDeckDialogType) => {
 
   return (
     <Modal isOpen={isOpen} callBack={handleClose}>
-      <div className={s.form__header}>
-        <H2>Learn {deck?.name}</H2>
-        <button onClick={handleClose}>X</button>
+      <div className={s.card}>
+        <div className={s.card__container}>
+          <div className={s.card__header}>
+            <H2>Learn &#34;{deck?.name}&#34;</H2>
+            {deck?.cardsCount === 0 ? (
+              <p>There is no cards. Go back to decks list and learn another one</p>
+            ) : (
+              <p> Some question in Future</p>
+            )}
+            {/* <button onClick={handleClose}>X</button> */}
+          </div>
+        </div>
       </div>
     </Modal>
   )
