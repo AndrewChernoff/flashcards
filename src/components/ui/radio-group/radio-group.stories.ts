@@ -14,12 +14,5 @@ type Story = StoryObj<typeof meta>
 export const RadioGroupDemo: Story = {
   args: {
     isDisabled: false,
-    items: [
-      { title: 'HTML', id: 1 },
-      { title: 'CSS', id: 2 },
-      { title: 'JS', id: 3 },
-      { title: 'React', id: 4 },
-      { title: 'Redux', id: 5 },
-    ],
   },
 }

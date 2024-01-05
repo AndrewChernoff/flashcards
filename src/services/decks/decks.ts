@@ -101,6 +101,19 @@ const decksApi = baseApi.injectEndpoints({
         },
         providesTags: ['Cards'],
       }),
+      rateCard: builder.mutation<any, { grade: string; cardId: string; deckId: string }>({
+        query: params => {
+          return {
+            url: `v1/decks/${params.deckId}/learn`,
+            method: 'POST',
+            body: {
+              grade: Number(params.grade),
+              cardId: params.cardId,
+            },
+          }
+        },
+        //providesTags: ['Cards'],
+      }),
     }
   },
 })
@@ -113,4 +126,5 @@ export const {
   useGetCardsDeckByIdQuery,
   //useGetCardByIdQuery,
   useLazyGetCardByIdQuery,
+  useRateCardMutation,
 } = decksApi

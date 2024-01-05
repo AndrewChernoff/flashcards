@@ -29,7 +29,7 @@ const Cards = () => {
 
   const { data: cards, isLoading } = useGetCardsDeckByIdQuery({
     id: deckId,
-    question: title,
+    question: title.trim(),
   })
 
   if (isLoading) {

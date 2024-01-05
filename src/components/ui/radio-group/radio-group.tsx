@@ -4,59 +4,45 @@ import s from './radio-group.module.scss'
 
 type RadioProps = {
   isDisabled?: boolean
-  items: any[]
+  callBack: (value: string) => void
 }
 
-const RadioGroup = ({ isDisabled, items }: RadioProps) => (
-  <form className={s.radio__group}>
-    <Radio.Root
-      className={s.radio__group_root}
-      aria-label="View density"
-      onValueChange={e => console.log(e)}
-    >
-      {items.map((el: any) => {
-        return (
-          <div key={el.id} className={s.radio}>
-            <Radio.Item
-              className={s.radio__group_item}
-              value={el.title}
-              id={el.title}
-              disabled={isDisabled}
-            >
-              <Radio.Indicator className={s.radio__group_indicator} />
-            </Radio.Item>
-            <label className={s.label} htmlFor={el.title}>
-              {el.title}
-            </label>
-          </div>
-        )
-      })}
-      {/* <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Radio.Item className={s.RadioGroupItem} value="default" id="r1" disabled={isDisabled}>
-          <Radio.Indicator className={s.RadioGroupIndicator} />
-        </Radio.Item>
-        <label className={s.Label} htmlFor="r1">
-          Default
-        </label>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Radio.Item className={s.RadioGroupItem} value="comfortable" id="r2" disabled={isDisabled}>
-          <Radio.Indicator className={s.RadioGroupIndicator} />
-        </Radio.Item>
-        <label className={s.Label} htmlFor="r2">
-          Comfortable
-        </label>
-      </div>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <Radio.Item className={s.RadioGroupItem} value="compact" id="r3" disabled={isDisabled}>
-          <Radio.Indicator className={s.RadioGroupIndicator} />
-        </Radio.Item>
-        <label className={s.Label} htmlFor="r3">
-          Compact
-        </label>
-      </div> */}
-    </Radio.Root>
-  </form>
-)
+const RadioGroup = ({ isDisabled, callBack }: RadioProps) => {
+  const items = [
+    { title: 'Did not know', value: '1' },
+    { title: 'Forgot', value: '2' },
+    { title: 'A lot of thoughts', value: '3' },
+    { title: 'Confused', value: '4' },
+    { title: 'Knew the answer', value: '5' },
+  ]
+
+  return (
+    <form className={s.radio__group}>
+      <Radio.Root
+        className={s.radio__group_root}
+        aria-label="View density"
+        onValueChange={e => callBack(e)}
+      >
+        {items.map((el: any) => {
+          return (
+            <div key={el.value + el.title} className={s.radio}>
+              <Radio.Item
+                className={s.radio__group_item}
+                value={el.value}
+                id={el.title}
+                disabled={isDisabled}
+              >
+                <Radio.Indicator className={s.radio__group_indicator} />
+              </Radio.Item>
+              <label className={s.label} htmlFor={el.title}>
+                {el.title}
+              </label>
+            </div>
+          )
+        })}
+      </Radio.Root>
+    </form>
+  )
+}
 
 export default RadioGroup
