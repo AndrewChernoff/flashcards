@@ -4,19 +4,16 @@ import { useLocation, useParams, Link } from 'react-router-dom'
 
 import WrapperHeader from '../../../common/component/wrapper-header'
 import { useAppSelector } from '../../../common/hooks/redux-hooks'
-import Delete from '../../../common/svg/delete'
-import Edit from '../../../common/svg/edit'
 import LeftArrow from '../../../common/svg/left-arrow'
-import { formatDate } from '../../../common/utils/time-transfering'
 import { Button } from '../../../components/ui/button'
 import EmptyDeck from '../../../components/ui/empty-deck/empty-deck'
 import Input from '../../../components/ui/input/input'
-import StarRating from '../../../components/ui/star-rating/star-rating'
 import { Table } from '../../../components/ui/table/table'
 import { H1 } from '../../../components/ui/typography/typography'
 import { useGetCardsDeckByIdQuery } from '../../../services/decks/decks'
 import { CardItem } from '../../../services/decks/types'
 
+import Card from './cardItem/cardItem'
 import s from './cards.module.scss'
 
 const Cards = () => {
@@ -87,32 +84,7 @@ const Cards = () => {
               </Table.Head>
               <Table.Body>
                 {cards?.items.map((card: CardItem) => {
-                  return (
-                    <Table.Row className={s.dataRow} key={card.id}>
-                      <Table.DataCell className={s.dataCell}>{card.question}</Table.DataCell>
-                      <Table.DataCell className={s.dataCell}>{card.answer}</Table.DataCell>
-                      <Table.DataCell className={s.dataCell}>
-                        {formatDate(card.updated)}
-                      </Table.DataCell>
-                      <Table.DataCell className={s.dataCell}>
-                        <StarRating grade={card.grade} />
-                      </Table.DataCell>
-                      {card.userId === me?.id && (
-                        <Table.DataCell className={`${s.dataCell}`}>
-                          <div className={s.decks__createdBy_buttons}>
-                            <>
-                              <button /* onClick={() => openEditDialogHandler(deck.id)} */>
-                                <Edit />
-                              </button>
-                              <button /* onClick={() => openDeleteDialogHandler(deck.id)} */>
-                                <Delete />
-                              </button>
-                            </>
-                          </div>
-                        </Table.DataCell>
-                      )}
-                    </Table.Row>
-                  )
+                  return <Card card={card} myId={me?.id} key={card.id} />
                 })}
               </Table.Body>
             </Table.Root>
