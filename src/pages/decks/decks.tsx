@@ -193,6 +193,7 @@ const Decks = () => {
           isOpen={isCardDialogOpen}
           card={card}
           closeDialog={() => setIsCardDialogOpen(false)}
+          requestCard={trigger}
         />
       </div>
     </WrapperHeader>
