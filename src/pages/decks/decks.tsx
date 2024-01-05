@@ -15,7 +15,7 @@ import Tabs from '../../components/ui/tabs/tabs'
 import {
   useAddDeckMutation,
   useDeleteDeckMutation,
-  useGetCardByIdQuery,
+  useLazyGetCardByIdQuery,
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '../../services/decks/decks'
@@ -52,10 +52,9 @@ const Decks = () => {
   })
 
   /* calling dialog for learning cards  */
-  const deckId = useAppSelector(state => state.deck.deck?.id)
+  /// const deckId = useAppSelector(state => state.deck.deck?.id) remove
 
-  /*@ts-ignore */
-  const { data: card } = useGetCardByIdQuery(deckId, { skip: !deckId })
+  const [trigger, { data: card }] = useLazyGetCardByIdQuery() /// get card on request
 
   const openCardDialog = () => setIsCardDialogOpen(!isCardDialogOpen)
 
@@ -149,6 +148,7 @@ const Decks = () => {
             {decks?.items.map((deck: any) => {
               return (
                 <DeckItem
+                  requestForCards={trigger}
                   openCardDialog={openCardDialog}
                   myId={me?.id}
                   deck={deck}

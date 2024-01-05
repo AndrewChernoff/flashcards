@@ -3,4 +3,31 @@
         width: 90%;
         margin: 33px auto 48px;
     }
+
+    h2 {
+        text-align: center;
+    }
+
+   /*  &__header {
+        display: flex;
+        justify-content: space-between;
+
+        button {
+            cursor: pointer;
+        }
+    } */
+    &__question {
+        font-size: 16px;
+        font-weight: 700;
+        font-style: normal;
+        line-height: 24px; 
+    }
+
+    &__shots {
+        color: #808080;
+    }
+
+    &__showAnswer_btn {
+        margin: 48px 0 8px;
+    }
 }
