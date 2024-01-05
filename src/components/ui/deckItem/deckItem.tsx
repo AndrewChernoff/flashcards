@@ -17,6 +17,7 @@ type DeckItemProps = {
   openDeleteDialog: (id: string) => void
   openEditDialog: (id: string) => void
   openCardDialog: () => void
+  requestForCards: (value: string) => void
 }
 
 const DeckItem = ({
@@ -25,14 +26,15 @@ const DeckItem = ({
   openDeleteDialog,
   openEditDialog,
   openCardDialog,
+  requestForCards,
 }: DeckItemProps) => {
   const dispatch = useAppDispatch()
   const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
   const openEditDialogHandler = (id: string) => openEditDialog(id)
 
-  const getCardIdHandler = (deck: DeckItemType) => dispatch(getDeck(deck))
+  const getCardHandler = (deck: DeckItemType) => dispatch(getDeck(deck))
   const openCardDialogHandler = (deck: DeckItemType) => {
-    getCardIdHandler(deck)
+    getCardHandler(deck)
     openCardDialog()
   }
 
@@ -50,7 +52,12 @@ const DeckItem = ({
         {deck.author.name}
 
         <div className={s.decks__createdBy_buttons}>
-          <button onClick={() => openCardDialogHandler(deck)}>
+          <button
+            onClick={() => {
+              openCardDialogHandler(deck)
+              requestForCards(deck.id)
+            }}
+          >
             <PlayCircle />
           </button>
           {deck.author.id === myId && (

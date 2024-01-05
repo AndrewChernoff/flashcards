@@ -30,3 +30,7 @@ export const Caption = ({ children, className }: TypographyProps) => {
 export const Body1 = ({ children, className }: TypographyProps) => {
   return <p className={`${s.body1} ${className}`}>{children}</p>
 }
+
+export const Body2 = ({ children, className }: TypographyProps) => {
+  return <p className={`${s.body2} ${className}`}>{children}</p>
+}

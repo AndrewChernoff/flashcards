@@ -111,5 +111,6 @@ export const {
   useAddDeckMutation,
   useUpdateDeckMutation,
   useGetCardsDeckByIdQuery,
-  useGetCardByIdQuery,
+  //useGetCardByIdQuery,
+  useLazyGetCardByIdQuery,
 } = decksApi
