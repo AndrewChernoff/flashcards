@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -20,7 +22,7 @@ export type AddDeckInputs = {
 type AddDeckDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
-  callback: (obj: AddDeckInputs) => void //// callback updates or adds deck depending on parametrs from parent component
+  callback: (obj: AddDeckInputs) => void //// callback updates adds a deck depending on parametrs from parent component
   btnDescription: string
 }
 
@@ -37,11 +39,12 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
     control,
     setValue,
     reset,
-    getValues,
     formState: { errors },
   } = useForm<AddDeckInputs>({
     resolver: zodResolver(schema),
   })
+
+  const [preview, setPriview] = useState<string | null>(null)
 
   const onSubmit: any = handleSubmit(data => {
     const formData: any = new FormData()
@@ -54,7 +57,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
     closeDialog(false)
   })
 
-  const imageSrc = getValues().cover
+  const imageSrc = preview
 
   return (
     <Modal isOpen={isOpen} callBack={closeDialog}>
@@ -82,6 +85,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
                 <input
                   {...register('cover')}
                   onChange={e => {
+                    e.target.files && setPriview(URL.createObjectURL(e.target.files[0]))
                     e.target.files &&
                       setValue('cover', e.target.files[0], {
                         shouldDirty: true,

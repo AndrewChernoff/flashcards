@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -20,7 +22,7 @@ export type UpdateDeckInputs = {
 type UpdateDeckDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
-  callback: (obj: UpdateDeckInputs) => void //// callback updates or adds deck depending on parametrs from parent component
+  callback: (obj: UpdateDeckInputs) => void //// callback updates the deck depending on parametrs from parent component
   btnDescription: string
 }
 
@@ -31,9 +33,12 @@ const UpdateDeckDialog = ({
   btnDescription,
 }: UpdateDeckDialogType) => {
   const schema = z.object({
-    name: z.string().optional(), ////make min 3 symbols
+    name: z
+      .string()
+      .min(3, { message: 'name must be longer than or equal to 3 characters' })
+      .optional(),
     cover: z.any().optional(),
-    isPrivate: z.boolean(),
+    isPrivate: z.boolean().optional(),
   })
 
   const {
@@ -42,24 +47,31 @@ const UpdateDeckDialog = ({
     control,
     setValue,
     reset,
-    getValues,
     formState: { errors },
   } = useForm<UpdateDeckInputs>({
     resolver: zodResolver(schema),
   })
 
+  const [preview, setPriview] = useState<string | null>(null)
+
   const onSubmit: any = handleSubmit(data => {
     const formData: any = new FormData()
 
-    formData.append('name', data.name)
-    formData.append('cover', data.cover)
-    formData.append('isPrivate', data.isPrivate)
+    data.name && formData.append('name', data.name)
+    data.cover && formData.append('cover', data.cover)
+    data.isPrivate && formData.append('isPrivate', data.isPrivate)
     callback(formData)
     reset()
     closeDialog(false)
   })
 
-  const imageSrc = getValues().cover
+  const closeDialogHandler = () => {
+    closeDialog(false)
+    setPriview(null)
+    reset()
+  }
+
+  const imageSrc = preview
 
   return (
     <Modal isOpen={isOpen} callBack={closeDialog}>
@@ -68,7 +80,7 @@ const UpdateDeckDialog = ({
 
         <div className={s.form__header}>
           <H2>Edit Pack</H2>
-          <button onClick={() => closeDialog(false)}>X</button>
+          <button onClick={closeDialogHandler}>X</button>
         </div>
         <div className={s.form__functionality}>
           <div className={s.form__functionality_cover}>
@@ -87,6 +99,7 @@ const UpdateDeckDialog = ({
                 <input
                   {...register('cover')}
                   onChange={e => {
+                    e.target.files && setPriview(URL.createObjectURL(e.target.files[0]))
                     e.target.files &&
                       setValue('cover', e.target.files[0], {
                         shouldDirty: true,
