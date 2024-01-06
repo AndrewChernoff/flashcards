@@ -9,24 +9,29 @@ import Input from '../../input/input'
 import { H2 } from '../../typography/typography'
 import Modal from '../modal'
 
-import s from './addDeckDialog.module.scss'
+import s from './../addDeckDialog/addDeckDialog.module.scss'
 
-export type AddDeckInputs = {
+export type UpdateDeckInputs = {
   name: string
   cover?: any
   isPrivate: boolean
 }
 
-type AddDeckDialogType = {
+type UpdateDeckDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
-  callback: (obj: AddDeckInputs) => void //// callback updates or adds deck depending on parametrs from parent component
+  callback: (obj: UpdateDeckInputs) => void //// callback updates or adds deck depending on parametrs from parent component
   btnDescription: string
 }
 
-const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDeckDialogType) => {
+const UpdateDeckDialog = ({
+  isOpen,
+  closeDialog,
+  callback,
+  btnDescription,
+}: UpdateDeckDialogType) => {
   const schema = z.object({
-    name: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+    name: z.string().optional(), ////make min 3 symbols
     cover: z.any().optional(),
     isPrivate: z.boolean(),
   })
@@ -39,7 +44,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
     reset,
     getValues,
     formState: { errors },
-  } = useForm<AddDeckInputs>({
+  } = useForm<UpdateDeckInputs>({
     resolver: zodResolver(schema),
   })
 
@@ -62,7 +67,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
         <DevTool control={control} />
 
         <div className={s.form__header}>
-          <H2>Add New Pack</H2>
+          <H2>Edit Pack</H2>
           <button onClick={() => closeDialog(false)}>X</button>
         </div>
         <div className={s.form__functionality}>
@@ -133,4 +138,4 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
   )
 }
 
-export default AddDeckDialog
+export default UpdateDeckDialog

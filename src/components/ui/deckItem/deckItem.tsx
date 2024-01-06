@@ -36,9 +36,9 @@ const DeckItem = ({
   const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
   const openEditDialogHandler = (id: string) => openEditDialog(id)
 
-  const getCardHandler = (deck: DeckItemType) => dispatch(getDeck(deck))
   const openCardDialogHandler = (deck: DeckItemType) => {
-    getCardHandler(deck)
+    ///retrieving random card from deck to learn
+    dispatch(getDeck(deck))
     setIsCardDialogOpen(true)
   }
 
@@ -80,6 +80,8 @@ const DeckItem = ({
           </div>
         </Table.DataCell>
       </Table.Row>
+
+      {/*Dialogs */}
       <CardDialog
         isOpen={isCardDialogOpen}
         card={card}

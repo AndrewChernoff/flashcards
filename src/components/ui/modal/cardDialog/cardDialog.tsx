@@ -19,7 +19,7 @@ type AddDeckDialogType = {
 }
 
 const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogType) => {
-  const deck = useAppSelector(state => state.deck.deck)
+  const deck = useAppSelector(state => state.deck?.deck)
   const dispatch = useAppDispatch()
   const [isAnswerShown, setIsAnswerShown] = useState<boolean>(false)
 
