@@ -25,6 +25,7 @@ const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogTyp
 
   const handleClose = () => {
     dispatch(getDeck(null))
+    setIsAnswerShown(false)
     closeDialog(false)
   }
 

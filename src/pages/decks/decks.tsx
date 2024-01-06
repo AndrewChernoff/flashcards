@@ -6,7 +6,6 @@ import { Button } from '../../components/ui/button'
 import DeckItem from '../../components/ui/deckItem/deckItem'
 import Input from '../../components/ui/input/input'
 import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
-import CardDialog from '../../components/ui/modal/cardDialog/cardDialog'
 import DeleteDeckDialog from '../../components/ui/modal/deleteDeckDialog/deleteDeckDialog'
 import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
@@ -15,7 +14,6 @@ import Tabs from '../../components/ui/tabs/tabs'
 import {
   useAddDeckMutation,
   useDeleteDeckMutation,
-  useLazyGetCardByIdQuery,
   useGetDecksQuery,
   useUpdateDeckMutation,
 } from '../../services/decks/decks'
@@ -37,8 +35,6 @@ const Decks = () => {
   /*update deck functionality */
   const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false)
   const [updateDeckId, setUpdateDeckId] = useState<string | null>(null)
-  /*open card dialog functionality */
-  const [isCardDialogOpen, setIsCardDialogOpen] = useState<boolean>(false)
 
   const me = useAppSelector(state => state.auth.user)
 
@@ -50,13 +46,6 @@ const Decks = () => {
     name: deckNameValue,
     currentPage: currentPage,
   })
-
-  /* calling dialog for learning cards  */
-  /// const deckId = useAppSelector(state => state.deck.deck?.id) remove
-
-  const [trigger, { data: card }] = useLazyGetCardByIdQuery() /// get card on request
-
-  const openCardDialog = () => setIsCardDialogOpen(!isCardDialogOpen)
 
   /* deck manipulations */
   const [addDeck] = useAddDeckMutation()
@@ -148,8 +137,6 @@ const Decks = () => {
             {decks?.items.map((deck: any) => {
               return (
                 <DeckItem
-                  requestForCards={trigger}
-                  openCardDialog={openCardDialog}
                   myId={me?.id}
                   deck={deck}
                   key={deck.id}
@@ -187,13 +174,6 @@ const Decks = () => {
           isOpen={isDeletePackDialodOpen}
           closeDialog={() => setIsDeletePackDialogOpen(false)}
           deleteDeck={handleDeleteDeck}
-        />
-
-        <CardDialog
-          isOpen={isCardDialogOpen}
-          card={card}
-          closeDialog={() => setIsCardDialogOpen(false)}
-          requestCard={trigger}
         />
       </div>
     </WrapperHeader>
