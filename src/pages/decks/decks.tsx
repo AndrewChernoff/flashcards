@@ -6,18 +6,11 @@ import { Button } from '../../components/ui/button'
 import DeckItem from '../../components/ui/deckItem/deckItem'
 import Input from '../../components/ui/input/input'
 import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
-import DeleteDeckDialog from '../../components/ui/modal/deleteDeckDialog/deleteDeckDialog'
-import UpdateDeckDialog from '../../components/ui/modal/updateDeckDialog/updateDeckDialog'
 import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
-import {
-  useAddDeckMutation,
-  useDeleteDeckMutation,
-  useGetDecksQuery,
-  useUpdateDeckMutation,
-} from '../../services/decks/decks'
+import { useAddDeckMutation, useGetDecksQuery } from '../../services/decks/decks'
 
 import s from './decks.module.scss'
 
@@ -29,13 +22,6 @@ const Decks = () => {
   const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
   const [currentPage, setCurrentPage] = useState<number>(1) /// for pagination
   const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
-
-  /*delete deck functionality */
-  const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false)
-  const [deleteDeckId, setDeleteDeckId] = useState<string | null>(null)
-  /*update deck functionality */
-  const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false)
-  const [updateDeckId, setUpdateDeckId] = useState<string | null>(null)
 
   const me = useAppSelector(state => state.auth?.user)
 
@@ -51,9 +37,9 @@ const Decks = () => {
   /* deck manipulations */
   const [addDeck] = useAddDeckMutation()
 
-  const [deleteDeck] = useDeleteDeckMutation()
+  /*  const [deleteDeck] = useDeleteDeckMutation()
 
-  const [updateDeck] = useUpdateDeckMutation()
+  const [updateDeck] = useUpdateDeckMutation() */
 
   const onTabValueChange = (value: TabValue) => setTabValue(value)
 
@@ -65,35 +51,6 @@ const Decks = () => {
   )
   /*Add deck dialog functionality */
   const handleAddDeckDialog = () => setIsNewPackDialogOpen(!isNewPackDialodOpen)
-
-  /*Delete deck dialog functions */
-  const handleDeleteDeckDialog = (id: string) => {
-    ///when open dialog we get id from there for deleting deck from dialog window
-    setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
-    setDeleteDeckId(id)
-  }
-
-  const handleDeleteDeck = () => {
-    if (deleteDeckId) {
-      deleteDeck({ id: deleteDeckId })
-      setDeleteDeckId(null)
-      setIsDeletePackDialogOpen(!isDeletePackDialodOpen)
-    }
-  }
-
-  /*Update deck dialog functions */
-  const handleUpdateDeckDialog = (id: string) => {
-    setIsUpdatePackDialodOpen(!isUpdatePackDialodOpen)
-    setUpdateDeckId(id)
-  }
-
-  const handleUpdateDeck = (obj: any) => {
-    if (updateDeckId) {
-      updateDeck({ id: updateDeckId, data: obj })
-      setUpdateDeckId(null)
-      setIsUpdatePackDialodOpen(!isUpdatePackDialodOpen)
-    }
-  }
 
   return (
     <WrapperHeader>
@@ -136,15 +93,7 @@ const Decks = () => {
           </Table.Head>
           <Table.Body>
             {decks?.items.map((deck: any) => {
-              return (
-                <DeckItem
-                  myId={me?.id}
-                  deck={deck}
-                  key={deck.id}
-                  openDeleteDialog={handleDeleteDeckDialog}
-                  openEditDialog={handleUpdateDeckDialog}
-                />
-              )
+              return <DeckItem myId={me?.id} deck={deck} key={deck.id} />
             })}
           </Table.Body>
         </Table.Root>
@@ -162,17 +111,6 @@ const Decks = () => {
           closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
           callback={addDeck}
           btnDescription={'Add New Pack'}
-        />
-        <UpdateDeckDialog
-          isOpen={isUpdatePackDialodOpen}
-          closeDialog={(value: boolean) => setIsUpdatePackDialodOpen(value)}
-          callback={handleUpdateDeck}
-          btnDescription={'Edit pack'}
-        />
-        <DeleteDeckDialog
-          isOpen={isDeletePackDialodOpen}
-          closeDialog={() => setIsDeletePackDialogOpen(false)}
-          deleteDeck={handleDeleteDeck}
         />
       </div>
     </WrapperHeader>
