@@ -7,6 +7,7 @@ import DeckItem from '../../components/ui/deckItem/deckItem'
 import Input from '../../components/ui/input/input'
 import AddDeckDialog from '../../components/ui/modal/addDeckDialog/addDeckDialog'
 import DeleteDeckDialog from '../../components/ui/modal/deleteDeckDialog/deleteDeckDialog'
+import UpdateDeckDialog from '../../components/ui/modal/updateDeckDialog/updateDeckDialog'
 import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
@@ -36,7 +37,7 @@ const Decks = () => {
   const [isUpdatePackDialodOpen, setIsUpdatePackDialodOpen] = useState<boolean>(false)
   const [updateDeckId, setUpdateDeckId] = useState<string | null>(null)
 
-  const me = useAppSelector(state => state.auth.user)
+  const me = useAppSelector(state => state.auth?.user)
 
   const { data: decks } = useGetDecksQuery({
     itemsPerPage: 10,
@@ -157,14 +158,12 @@ const Decks = () => {
           />
         )}
         <AddDeckDialog
-          title={'Add New Pack'}
           isOpen={isNewPackDialodOpen}
           closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
           callback={addDeck}
           btnDescription={'Add New Pack'}
         />
-        <AddDeckDialog //update
-          title={'Edit New Pack'}
+        <UpdateDeckDialog
           isOpen={isUpdatePackDialodOpen}
           closeDialog={(value: boolean) => setIsUpdatePackDialodOpen(value)}
           callback={handleUpdateDeck}
