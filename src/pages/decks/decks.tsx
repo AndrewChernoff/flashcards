@@ -10,7 +10,9 @@ import Pagination from '../../components/ui/pagination/pagination'
 import EditableSlider from '../../components/ui/slider/slider'
 import { Table } from '../../components/ui/table/table'
 import Tabs from '../../components/ui/tabs/tabs'
+import { H2 } from '../../components/ui/typography/typography'
 import { useAddDeckMutation, useGetDecksQuery } from '../../services/decks/decks'
+import { DeckItemType } from '../../services/decks/types'
 
 import s from './decks.module.scss'
 
@@ -76,36 +78,41 @@ const Decks = () => {
 
           <Button className={s.clear}>Clear Filter</Button>
         </div>
-        <Table.Root className={s.table}>
-          <Table.Head>
-            <Table.Row className={s.row}>
-              <Table.HeadCell className={s.headCell}>Cover</Table.HeadCell>
-              <Table.HeadCell className={s.headCell}>Name</Table.HeadCell>
-              <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
-              <Table.HeadCell className={s.headCell}>
-                Updated
-                {/* <button onClick={filterDirection}>
+        {decks && decks?.items.length > 0 ? (
+          <>
+            <Table.Root className={s.table}>
+              <Table.Head>
+                <Table.Row className={s.row}>
+                  <Table.HeadCell className={s.headCell}>Cover</Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>Name</Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>
+                    Updated
+                    {/* <button onClick={filterDirection}>
                 <Arrow />
               </button> */}
-              </Table.HeadCell>
-              <Table.HeadCell className={s.headCell}>Created By</Table.HeadCell>
-            </Table.Row>
-          </Table.Head>
-          <Table.Body>
-            {decks?.items.map((deck: any) => {
-              return <DeckItem myId={me?.id} deck={deck} key={deck.id} />
-            })}
-          </Table.Body>
-        </Table.Root>
-        {decks && (
-          <Pagination
-            totalCount={decks.pagination.totalItems}
-            pageSize={10}
-            currentPage={currentPage}
-            onPageChange={setCurrentPage}
-            className={s.decks__pagination}
-          />
+                  </Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>Created By</Table.HeadCell>
+                </Table.Row>
+              </Table.Head>
+              <Table.Body>
+                {decks?.items.map((deck: DeckItemType) => {
+                  return <DeckItem myId={me?.id} deck={deck} key={deck.id} />
+                })}
+              </Table.Body>
+            </Table.Root>
+            <Pagination
+              totalCount={decks.pagination.totalItems}
+              pageSize={10}
+              currentPage={currentPage}
+              onPageChange={setCurrentPage}
+              className={s.decks__pagination}
+            />
+          </>
+        ) : (
+          <H2>No Decks Here</H2>
         )}
+
         <AddDeckDialog
           isOpen={isNewPackDialodOpen}
           closeDialog={(value: boolean) => setIsNewPackDialogOpen(value)}
