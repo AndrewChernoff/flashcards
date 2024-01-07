@@ -1,10 +1,10 @@
-type SignInType = {
+export type SignInType = {
   password: string
   email: string
   rememberMe?: boolean
 }
 
-export type User = {
+export type UserType = {
   avatar: string
   id: string
   email: string
