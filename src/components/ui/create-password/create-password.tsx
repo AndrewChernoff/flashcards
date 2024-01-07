@@ -40,7 +40,6 @@ const CreatePassword = () => {
           isDisabled={false}
           {...register('password')}
           label={'Password'}
-          name={'password'}
         />
 
         <h3 className={s.form__subtitle}>

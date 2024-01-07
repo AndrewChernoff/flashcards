@@ -18,7 +18,6 @@ type Story = StoryObj<typeof meta>
 
 export const SimpleInput: Story = {
   args: {
-    name: 'email',
     isSearch: false,
     type: 'text',
     label: 'email',
@@ -29,7 +28,6 @@ export const SimpleInput: Story = {
 }
 export const SearchInput: Story = {
   args: {
-    name: 'password',
     isSearch: true,
     type: 'text',
     label: 'password',
@@ -42,7 +40,6 @@ export const SearchInput: Story = {
 
 export const ErrorInput: Story = {
   args: {
-    name: 'email',
     isSearch: true,
     type: 'text',
     label: 'email',
@@ -54,7 +51,6 @@ export const ErrorInput: Story = {
 
 export const DisabledInput: Story = {
   args: {
-    name: 'email',
     isSearch: true,
     type: 'text',
     label: 'email',
