@@ -39,10 +39,6 @@ const Decks = () => {
   /* deck manipulations */
   const [addDeck] = useAddDeckMutation()
 
-  /*  const [deleteDeck] = useDeleteDeckMutation()
-
-  const [updateDeck] = useUpdateDeckMutation() */
-
   const onTabValueChange = (value: TabValue) => setTabValue(value)
 
   const changeSliderValue = (value: number[]) => setSliderValue(value)
