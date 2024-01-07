@@ -1,5 +1,7 @@
 import { baseApi } from '../base-api'
 
+import { SignInType, UserType } from './types'
+
 const authApi = baseApi.injectEndpoints({
   endpoints: builder => {
     return {
@@ -18,13 +20,6 @@ const authApi = baseApi.injectEndpoints({
           return { data: result.data as any }
         },
         providesTags: ['Me'],
-        /* query() {
-          return {
-            url: `v1/auth/me`,
-            method: 'GET',
-          }
-        },
-        providesTags: ['Me'], */
       }),
       logIn: builder.mutation<SignInType, any>({
         query(signInObj) {
@@ -45,7 +40,7 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
-      signup: builder.mutation<User, any>({
+      signup: builder.mutation<UserType, any>({
         query(signUpObj) {
           return {
             url: `v1/auth/sign-up`,
