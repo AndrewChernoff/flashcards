@@ -77,7 +77,7 @@ const UpdateDeckDialog = ({ isOpen, closeDialog, callback }: UpdateDeckDialogTyp
           <button onClick={closeDialogHandler}>X</button>
         </div>
         <div className={s.form__functionality}>
-          <div className={s.form__functionality_cover}>
+          {/*  <div className={s.form__functionality_cover}>
             <img
               src={
                 imageSrc
@@ -108,7 +108,7 @@ const UpdateDeckDialog = ({ isOpen, closeDialog, callback }: UpdateDeckDialogTyp
                 />
               }
             </div>
-          </div>
+          </div> */}
 
           <Input
             isSearch={false}
