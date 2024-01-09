@@ -6,7 +6,7 @@ import { DeckItemType } from './types'
 type State = {
   deck: DeckItemType | null
 }
-/*for getting card to learn we need to determine deckID firstly */
+/*for getting card to learn we need to determine deckId firstly */
 const initialState: State = {
   deck: null,
 }

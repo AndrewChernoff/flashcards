@@ -22,7 +22,9 @@ const Decks = () => {
   const [sliderValue, setSliderValue] = useState<number[]>([0, 50]) ////slider range
   const [tabValue, setTabValue] = useState<TabValue>('All cards') ////tabs for decks
   const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
-  const [currentPage, setCurrentPage] = useState<number>(1) /// for pagination
+
+  const currentPage = useAppSelector(state => state.pagination.currentPage) // for pagination
+
   const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
 
   const me = useAppSelector(state => state.auth?.user)
@@ -100,8 +102,6 @@ const Decks = () => {
             <Pagination
               totalCount={decks.pagination.totalItems}
               pageSize={10}
-              currentPage={currentPage}
-              onPageChange={setCurrentPage}
               className={s.decks__pagination}
             />
           </>

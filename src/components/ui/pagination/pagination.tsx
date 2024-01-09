@@ -1,19 +1,28 @@
 import classnames from 'classnames'
 
-import { getMultiplesOfTen } from '../../..//common/utils/pagination-utils'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/redux-hooks'
 import { PaginationType, usePagination, DOTS } from '../../../common/hooks/usePagination'
+import { getMultiplesOfTen } from '../../../common/utils/pagination-utils'
+import { setCurrentPage } from '../../../services/pagination/pagination-slice'
 import SelectDemo from '../select/select'
 
 import s from './pagination.module.scss'
 
-type PropsType = PaginationType & {
-  onPageChange: (value: number) => void
+type PropsType = Omit<PaginationType, 'currentPage'> & {
   className?: string
   totalCount: number
 }
 
 const Pagination = (props: PropsType) => {
-  const { onPageChange, totalCount, siblingCount = 1, currentPage, pageSize, className } = props
+  const {
+    /* onPageChange, */ totalCount,
+    siblingCount = 1,
+    /* currentPage, */ pageSize,
+    className,
+  } = props
+
+  const currentPage = useAppSelector(state => state.pagination.currentPage)
+  const dispatch = useAppDispatch()
 
   const paginationRange: any = usePagination({
     currentPage,
@@ -27,23 +36,16 @@ const Pagination = (props: PropsType) => {
   }
 
   const onNext = () => {
-    onPageChange(currentPage + 1)
+    dispatch(setCurrentPage(currentPage + 1))
   }
 
   const onPrevious = () => {
-    onPageChange(currentPage - 1)
+    dispatch(setCurrentPage(currentPage - 1))
   }
 
-  const getValueFromSelect = (value: string) => onPageChange(Number(value))
+  const getValueFromSelect = (value: string) => dispatch(setCurrentPage(Number(value)))
 
   let lastPage = paginationRange[paginationRange.length - 1]
-
-  //console.log(totalCount)
-
-  //const arr = totalCount.map((el: number) => el.toString())
-  /* const arr = Array.from({ length: totalCount }, (_, index) => index + 1).map((el: any) =>
-    String(el)
-  ) */
 
   const arr = getMultiplesOfTen(totalCount) ////function for getting the first and each 10th element
 
@@ -83,7 +85,7 @@ const Pagination = (props: PropsType) => {
                   ? `${s.pagination__item_selected} ${s.pagination__item}`
                   : s.pagination__item
               }
-              onClick={() => onPageChange(pageNumber)}
+              onClick={() => dispatch(setCurrentPage(pageNumber)) /* onPageChange(pageNumber) */}
             >
               {pageNumber}
             </li>
