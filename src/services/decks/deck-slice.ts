@@ -11,7 +11,7 @@ const initialState: State = {
   deck: null,
 }
 
-export const cardSlice = createSlice({
+export const deckSlice = createSlice({
   name: 'deck',
   initialState,
   reducers: {
@@ -21,6 +21,6 @@ export const cardSlice = createSlice({
   },
 })
 
-export const { getDeck } = cardSlice.actions
+export const { getDeck } = deckSlice.actions
 
-export default cardSlice.reducer
+export default deckSlice.reducer

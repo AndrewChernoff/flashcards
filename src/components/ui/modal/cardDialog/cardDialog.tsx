@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/redux-hooks'
-import { getDeck } from '../../../../services/decks/cards-slice'
+import { getDeck } from '../../../../services/decks/deck-slice'
 import { useRateCardMutation } from '../../../../services/decks/decks'
 import { CardItem, DeckItemType } from '../../../../services/decks/types'
 import { Button } from '../../button'
@@ -41,7 +41,10 @@ const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogTyp
               <NoCards />
             ) : (
               <>
-                <p className={s.card__question}>Question: {card?.question} </p>
+                <p className={s.card__question}>Question: {card?.question}</p>
+                {card?.questionImg && (
+                  <img src={card?.questionImg} alt={'answer image'} className={s.card__img} />
+                )}
                 <Body2 className={s.card__shots}>
                   Количество попыток ответов на вопрос: {card?.shots}
                 </Body2>
@@ -91,7 +94,10 @@ const ShowAnswer = ({ isShown, card, showAnother }: any) => {
     return (
       <>
         <p>Answer: {card?.answer}</p>
-        Rate yourself:
+        {card?.answerImg && (
+          <img src={card?.answerImg} alt={'answer image'} className={s.card__img} />
+        )}
+        <p>Rate yourself:</p>
         <RadioGroup isDisabled={false} callBack={setCardRating} />
         <Button
           variant="purple"

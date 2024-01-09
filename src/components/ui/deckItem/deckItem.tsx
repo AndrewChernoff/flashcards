@@ -9,7 +9,7 @@ import Edit from '../../../common/svg/edit'
 import PlayCircle from '../../../common/svg/play-circle'
 import { formatDate } from '../../../common/utils/time-transfering'
 import s from '../../../pages/decks/decks.module.scss'
-import { getDeck } from '../../../services/decks/cards-slice'
+import { getDeck } from '../../../services/decks/deck-slice'
 import {
   useDeleteDeckMutation,
   useLazyGetCardByIdQuery,

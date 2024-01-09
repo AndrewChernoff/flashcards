@@ -2,15 +2,17 @@ import { configureStore } from '@reduxjs/toolkit'
 
 import authReducer from './auth/auth-slice'
 import { baseApi } from './base-api'
-import cardReducer from './decks/cards-slice'
+import cardsReducer from './cards/cards-slice'
+import deckReducer from './decks/deck-slice'
 import paginationReducer from './pagination/pagination-slice'
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authReducer,
-    deck: cardReducer,
+    deck: deckReducer,
     pagination: paginationReducer,
+    card: cardsReducer,
   },
   middleware: getDefaultMiddleware => getDefaultMiddleware().concat(baseApi.middleware),
 })
