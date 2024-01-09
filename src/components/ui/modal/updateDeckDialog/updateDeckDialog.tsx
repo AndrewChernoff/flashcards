@@ -23,15 +23,9 @@ type UpdateDeckDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
   callback: (obj: UpdateDeckInputs) => void //// callback updates the deck depending on parametrs from parent component
-  btnDescription: string
 }
 
-const UpdateDeckDialog = ({
-  isOpen,
-  closeDialog,
-  callback,
-  btnDescription,
-}: UpdateDeckDialogType) => {
+const UpdateDeckDialog = ({ isOpen, closeDialog, callback }: UpdateDeckDialogType) => {
   const schema = z.object({
     name: z
       .string()
@@ -110,6 +104,7 @@ const UpdateDeckDialog = ({
                   className={s.file__input}
                   id={'cover'}
                   name="cover"
+                  accept="image/png, image/jpeg, image/gif, image/webp"
                 />
               }
             </div>
@@ -143,7 +138,7 @@ const UpdateDeckDialog = ({
             Cancel
           </Button>
           <Button className={s.form__buttons_add} variant="tertiary">
-            {btnDescription}
+            Save Changes
           </Button>
         </div>
       </form>

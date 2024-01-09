@@ -82,6 +82,11 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
     setIsCardDialogOpen(true)
   }
 
+  const learnCardHandler = (deck: DeckItemType) => {
+    openCardDialogHandler(deck)
+    deck.cardsCount > 0 && trigger(deck.id)
+  }
+
   return (
     <>
       <Table.Row className={s.dataRow} key={deck.id}>
@@ -97,12 +102,7 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
           {deck.author.name}
 
           <div className={s.decks__createdBy_buttons}>
-            <button
-              onClick={() => {
-                openCardDialogHandler(deck)
-                trigger(deck.id)
-              }}
-            >
+            <button onClick={() => learnCardHandler(deck)}>
               <PlayCircle />
             </button>
             {deck.author.id === myId && (
@@ -130,7 +130,6 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
         isOpen={isUpdatePackDialodOpen}
         closeDialog={(value: boolean) => setIsUpdatePackDialodOpen(value)}
         callback={handleUpdateDeck}
-        btnDescription={'Edit pack'}
       />
       <DeleteDeckDialog
         isOpen={isDeletePackDialodOpen}
