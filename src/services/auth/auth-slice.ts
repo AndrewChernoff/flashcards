@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import type { PayloadAction, Slice } from '@reduxjs/toolkit'
 
 import { UserType } from './types'
 
@@ -11,7 +11,7 @@ const initialState: State = {
   user: null,
 }
 
-export const authSlice = createSlice({
+export const authSlice: Slice<State> = createSlice({
   name: 'auth',
   initialState,
   reducers: {

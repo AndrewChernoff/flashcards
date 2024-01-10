@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { Slice, createSlice } from '@reduxjs/toolkit'
 
 type State = {
   isOpen: boolean
@@ -7,7 +7,7 @@ const initialState: State = {
   isOpen: false,
 }
 
-export const cardsSlice = createSlice({
+export const cardsSlice: Slice<State> = createSlice({
   name: 'card',
   initialState,
   reducers: {

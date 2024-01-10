@@ -14,12 +14,7 @@ type PropsType = Omit<PaginationType, 'currentPage'> & {
 }
 
 const Pagination = (props: PropsType) => {
-  const {
-    /* onPageChange, */ totalCount,
-    siblingCount = 1,
-    /* currentPage, */ pageSize,
-    className,
-  } = props
+  const { totalCount, siblingCount = 1, pageSize, className } = props
 
   const currentPage = useAppSelector(state => state.pagination.currentPage)
   const dispatch = useAppDispatch()

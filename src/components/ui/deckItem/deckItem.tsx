@@ -44,9 +44,6 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
   const [deleteDeck] = useDeleteDeckMutation()
   const [updateDeck] = useUpdateDeckMutation()
 
-  /* const openDeleteDialogHandler = (id: string) => openDeleteDialog(id)
-  const openEditDialogHandler = (id: string) => openEditDialog(id)
- */
   /*Delete deck dialog functions */
   const handleDeleteDeckDialog = (id: string) => {
     ///when open dialog we get id from there for deleting deck from dialog window
@@ -91,7 +88,10 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
     <>
       <Table.Row className={s.dataRow} key={deck.id}>
         <Table.DataCell className={s.dataCell}>
-          <Link to={`/decks/${deck.id}/cards`} state={{ deckName: deck.name, userId: deck.userId }}>
+          <Link
+            to={`/decks/${deck.id}/cards`}
+            state={{ deckName: deck.name, userId: deck.author.id }}
+          >
             <img className={s.dataCell__img} src={deck.cover || defaultCover} />
           </Link>
         </Table.DataCell>

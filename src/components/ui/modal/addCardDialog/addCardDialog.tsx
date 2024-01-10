@@ -1,10 +1,9 @@
-import { useState } from 'react'
-
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 
+import { useAddCardMutation } from '../../../../services/decks/decks'
 import { Button } from '../../button'
 import Input from '../../input/input'
 import { H2 } from '../../typography/typography'
@@ -22,46 +21,42 @@ export type AddDeckInputs = {
 type AddCardDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
-  callback: (obj: AddDeckInputs) => void //// callback updates adds a deck depending on parametrs from parent component
+  deckId: string
 }
 
-const AddDeckDialog = ({ isOpen, closeDialog, callback }: AddCardDialogType) => {
+const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   const schema = z.object({
-    question: z.string(),
-    answer: z.string(),
-    questionImg: z.string(),
-    answerImg: z.string(),
+    question: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+    answer: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+    /* questionImg: z.string(),
+    answerImg: z.string(), */
   })
 
   const {
     register,
     handleSubmit,
     control,
-    setValue,
     reset,
     formState: { errors },
   } = useForm<AddDeckInputs>({
     resolver: zodResolver(schema),
   })
 
-  const [preview, setPriview] = useState<string | null>(null)
+  const [addCard] = useAddCardMutation()
 
-  const onSubmit: any = handleSubmit(data => {
-    const formData: any = new FormData()
+  const onSubmit: SubmitHandler<AddDeckInputs> = data => {
+    const formData = new FormData()
 
-    /* formData.append('name', data.name)
-    formData.append('cover', data.cover)
-    formData.append('isPrivate', data.isPrivate)
-     */ callback(formData)
+    formData.append('answer', data.answer)
+    formData.append('question', data.question)
+    addCard({ id: deckId, card: formData })
     reset()
     closeDialog(false)
-  })
-
-  //const imageSrc = preview
+  }
 
   return (
     <Modal isOpen={isOpen} callBack={closeDialog}>
-      <form onSubmit={onSubmit}>
+      <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <DevTool control={control} />
 
         <div className={s.form__header}>
@@ -69,22 +64,26 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback }: AddCardDialogType) => 
           <button onClick={() => closeDialog(false)}>X</button>
         </div>
 
-        <Input
-          isSearch={false}
-          placeholder={'Question'}
-          label={'Question'}
-          type={'text'}
-          error={errors.question && errors.question.message}
-          {...register('question')}
-        />
-        <Input
-          isSearch={false}
-          placeholder={'Answer'}
-          label={'Answer'}
-          type={'text'}
-          error={errors.answer && errors.answer.message}
-          {...register('answer')}
-        />
+        <div className={s.form__functionality}>
+          <Input
+            className={s.textField}
+            isSearch={false}
+            placeholder={'Question'}
+            label={'Question'}
+            type={'text'}
+            error={errors.question && errors.question.message}
+            {...register('question')}
+          />
+          <Input
+            className={s.textField}
+            isSearch={false}
+            placeholder={'Answer'}
+            label={'Answer'}
+            type={'text'}
+            error={errors.answer && errors.answer.message}
+            {...register('answer')}
+          />
+        </div>
 
         <div className={s.form__buttons}>
           <Button
@@ -95,7 +94,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback }: AddCardDialogType) => 
           >
             Cancel
           </Button>
-          <Button className={s.form__buttons_add} variant="tertiary">
+          <Button type="submit" className={s.form__buttons_add} variant="tertiary">
             Add New Card
           </Button>
         </div>

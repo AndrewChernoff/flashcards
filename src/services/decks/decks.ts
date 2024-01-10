@@ -29,6 +29,7 @@ const decksApi = baseApi.injectEndpoints({
 
             dispatch(
               decksApi.util.updateQueryData('getDecks', undefined, draft => {
+                /////
                 draft.items.push(res.data)
               })
             )
@@ -112,7 +113,28 @@ const decksApi = baseApi.injectEndpoints({
             },
           }
         },
-        //providesTags: ['Cards'],
+        invalidatesTags: ['Cards'],
+      }),
+      addCard: builder.mutation<any, any>({
+        query: ({ id, card }) => ({
+          url: `/v1/decks/${id}/cards`,
+          method: 'POST',
+          body: card,
+        }),
+        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+          try {
+            const { data: addedCard } = await queryFulfilled
+
+            /* const patchResult = */ dispatch(
+              decksApi.util.updateQueryData('getCardsDeckById', id, draft => {
+                Object.assign(draft, addedCard)
+              })
+            )
+          } catch {
+            console.log('shit')
+          }
+        },
+        invalidatesTags: ['Cards'],
       }),
     }
   },
@@ -124,7 +146,7 @@ export const {
   useAddDeckMutation,
   useUpdateDeckMutation,
   useGetCardsDeckByIdQuery,
-  //useGetCardByIdQuery,
   useLazyGetCardByIdQuery,
   useRateCardMutation,
+  useAddCardMutation,
 } = decksApi

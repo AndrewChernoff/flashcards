@@ -5,14 +5,14 @@ import { Button } from '../button'
 import AddCardDialog from '../modal/addCardDialog/addCardDialog'
 import { Body1 } from '../typography/typography'
 
-type EmptyDeckProps = { myId: string | null | undefined; deckUserId: string }
+type EmptyDeckProps = { myId: string | null | undefined; deckUserId: string; deckId: string }
 
-const EmptyDeck = ({ myId, deckUserId }: EmptyDeckProps) => {
+const EmptyDeck = ({ myId, deckUserId, deckId }: EmptyDeckProps) => {
   const dispatch = useAppDispatch()
   const isOpen = useAppSelector(state => state.card.isOpen)
 
-  const closeDialogHandler = () => dispatch(closeDialog())
-  const openDialogHandler = () => dispatch(openDialog())
+  const closeDialogHandler = () => dispatch(closeDialog({}))
+  const openDialogHandler = () => dispatch(openDialog({}))
 
   return (
     <>
@@ -26,13 +26,7 @@ const EmptyDeck = ({ myId, deckUserId }: EmptyDeckProps) => {
           </Button>
         )}
       </div>
-      <AddCardDialog
-        isOpen={isOpen}
-        closeDialog={closeDialogHandler}
-        callback={function (obj: any): void {
-          throw new Error('Function not implemented.')
-        }}
-      />
+      <AddCardDialog isOpen={isOpen} deckId={deckId} closeDialog={closeDialogHandler} />
     </>
   )
 }

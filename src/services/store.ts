@@ -6,7 +6,7 @@ import cardsReducer from './cards/cards-slice'
 import deckReducer from './decks/deck-slice'
 import paginationReducer from './pagination/pagination-slice'
 
-export const store = configureStore({
+export const store: any = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer,
     auth: authReducer,

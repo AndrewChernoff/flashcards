@@ -46,7 +46,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, callback, btnDescription }: AddDec
 
   const [preview, setPriview] = useState<string | null>(null)
 
-  const onSubmit: any = handleSubmit(data => {
+  const onSubmit = handleSubmit(data => {
     const formData: any = new FormData()
 
     formData.append('name', data.name)
