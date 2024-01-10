@@ -3,6 +3,7 @@ import Edit from '../../../../common/svg/edit'
 import { formatDate } from '../../../../common/utils/time-transfering'
 import StarRating from '../../../../components/ui/star-rating/star-rating'
 import { Table } from '../../../../components/ui/table/table'
+import { useDeleteCardMutation } from '../../../../services/decks/decks'
 import { CardItem } from '../../../../services/decks/types'
 import s from '../cards.module.scss'
 
@@ -13,6 +14,7 @@ interface CardItemProps {
 
 const Card = (props: CardItemProps) => {
   const { card, myId } = props
+  const [deleteCard] = useDeleteCardMutation()
 
   return (
     <Table.Row className={s.dataRow} key={card.id}>
@@ -26,7 +28,7 @@ const Card = (props: CardItemProps) => {
             <button /* onClick={() => openEditDialogHandler(deck.id)} */>
               <Edit />
             </button>
-            <button /* onClick={() => openDeleteDialogHandler(deck.id)} */>
+            <button onClick={() => deleteCard(card.id)}>
               <Delete />
             </button>
           </div>

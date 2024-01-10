@@ -28,8 +28,6 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   const schema = z.object({
     question: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
     answer: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
-    /* questionImg: z.string(),
-    answerImg: z.string(), */
   })
 
   const {
@@ -54,14 +52,19 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
     closeDialog(false)
   }
 
+  const closeDialogHandler = () => {
+    closeDialog(false)
+    reset()
+  }
+
   return (
-    <Modal isOpen={isOpen} callBack={closeDialog}>
+    <Modal isOpen={isOpen} callBack={closeDialogHandler}>
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
         <DevTool control={control} />
 
         <div className={s.form__header}>
           <H2>Add New Card</H2>
-          <button onClick={() => closeDialog(false)}>X</button>
+          <button onClick={closeDialogHandler}>X</button>
         </div>
 
         <div className={s.form__functionality}>

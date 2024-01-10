@@ -1,6 +1,6 @@
 @mixin table-datacell {
     min-width: 131px;
-    min-height: 68px;
+    min-height: 88px;
     padding: 6px 24px;
     border-bottom: 1px solid  #333;
   }
@@ -82,17 +82,14 @@
         .dataRow {
             gap: 10px;
             align-items: center;
+
             width:240px;
-            padding: 6px 24px;
+            min-height: 24px;
+            padding: 6px 24px
         }
 
         .dataCell {
             @include table-datacell;
-
-            &__img{
-                max-width: 261px;
-                height: 48px;
-            }
 
             &__withBtns {
                 @include table-datacell;

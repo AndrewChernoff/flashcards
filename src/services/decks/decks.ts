@@ -130,8 +130,28 @@ const decksApi = baseApi.injectEndpoints({
                 Object.assign(draft, addedCard)
               })
             )
+          } catch (e) {
+            console.log(e)
+          }
+        },
+        invalidatesTags: ['Cards'],
+      }),
+      deleteCard: builder.mutation<any, any>({
+        query: id => ({
+          url: `/v1/cards/${id}`,
+          method: 'DELETE',
+        }),
+        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+          const patchResult = dispatch(
+            decksApi.util.updateQueryData('getCardsDeckById', id, draft => {
+              draft.items = draft.items.filter(el => el.id !== id)
+            })
+          )
+
+          try {
+            await queryFulfilled
           } catch {
-            console.log('shit')
+            patchResult.undo()
           }
         },
         invalidatesTags: ['Cards'],
@@ -149,4 +169,5 @@ export const {
   useLazyGetCardByIdQuery,
   useRateCardMutation,
   useAddCardMutation,
+  useDeleteCardMutation,
 } = decksApi

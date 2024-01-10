@@ -6,9 +6,9 @@ type StarRatingProps = {
 
 const StarRating = ({ grade }: StarRatingProps) => {
   return (
-    <div>
+    <>
       <Star count={5} size={16} value={grade} activeColor={'gold'} inactiveColor={'#ddd'} />
-    </div>
+    </>
   )
 }
 
