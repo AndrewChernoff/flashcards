@@ -87,12 +87,7 @@ const Cards = () => {
                 <Table.Row className={s.row}>
                   <Table.HeadCell className={s.headCell}>Question</Table.HeadCell>
                   <Table.HeadCell className={s.headCell}>Answer</Table.HeadCell>
-                  <Table.HeadCell className={s.headCell}>
-                    Updated
-                    {/* <button onClick={filterDirection}>
-                <Arrow />
-              </button> */}
-                  </Table.HeadCell>
+                  <Table.HeadCell className={s.headCell}>Updated</Table.HeadCell>
                   <Table.HeadCell className={s.headCell}>Grade</Table.HeadCell>
                 </Table.Row>
               </Table.Head>

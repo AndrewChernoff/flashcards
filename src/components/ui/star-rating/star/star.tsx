@@ -8,7 +8,7 @@ type StarProps = {
   activeColor: string
 }
 
-const Star = ({ count, value, inactiveColor, size = 24, activeColor }: StarProps) => {
+const Star = ({ count, value, inactiveColor, size = 16, activeColor }: StarProps) => {
   const stars = Array.from({ length: count }, () => '🟊')
 
   return (

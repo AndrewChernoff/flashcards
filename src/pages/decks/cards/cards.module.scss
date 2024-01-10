@@ -1,4 +1,9 @@
-
+@mixin table-datacell {
+    min-width: 131px;
+    min-height: 68px;
+    padding: 6px 24px;
+    border-bottom: 1px solid  #333;
+  }
 
 .cards {
     width: 80%;
@@ -82,31 +87,36 @@
         }
 
         .dataCell {
-            gap: 10px;
-            align-items: center;
-
-            min-height: 68px;
-            padding: 6px 24px;
-
-            border-bottom: 1px solid  #333;
+            @include table-datacell;
 
             &__img{
                 max-width: 261px;
                 height: 48px;
             }
-        }
-    }
 
-    &__createdBy {
-        display: flex;
-        justify-content: space-between;
+            &__withBtns {
+                @include table-datacell;
+    
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
 
-        &_buttons {
-            display: flex;
+              
+            
+                    &_buttons {
+                        display: flex;
+                        justify-content: space-between;
+                        width: 20%;
 
-            button[disabled] {
-                background-color: rgb(61 54 54);
+                        button {
+                            cursor: pointer;
+                        }
+            
+                        button[disabled] {
+                            background-color: rgb(61 54 54);
+                        }
+                    }
             }
-        }
+        }  
     }
 }

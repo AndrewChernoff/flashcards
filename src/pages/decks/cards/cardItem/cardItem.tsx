@@ -19,12 +19,10 @@ const Card = (props: CardItemProps) => {
       <Table.DataCell className={s.dataCell}>{card.question}</Table.DataCell>
       <Table.DataCell className={s.dataCell}>{card.answer}</Table.DataCell>
       <Table.DataCell className={s.dataCell}>{formatDate(card.updated)}</Table.DataCell>
-      <Table.DataCell className={s.dataCell}>
+      <Table.DataCell className={s.dataCell__withBtns}>
         <StarRating grade={card.grade} />
-      </Table.DataCell>
-      {card.userId === myId && (
-        <Table.DataCell className={`${s.dataCell}`}>
-          <div className={s.decks__createdBy_buttons}>
+        {card.userId === myId && (
+          <div className={s.dataCell__withBtns_buttons}>
             <button /* onClick={() => openEditDialogHandler(deck.id)} */>
               <Edit />
             </button>
@@ -32,8 +30,8 @@ const Card = (props: CardItemProps) => {
               <Delete />
             </button>
           </div>
-        </Table.DataCell>
-      )}
+        )}
+      </Table.DataCell>
     </Table.Row>
   )
 }
