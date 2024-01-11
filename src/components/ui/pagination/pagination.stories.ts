@@ -18,14 +18,9 @@ type Story = StoryObj<typeof meta>
 
 export const SimplePagination: Story = {
   args: {
-    currentPage: 2,
     totalCount: 100,
     pageSize: 10,
     siblingCount: 2, // Add siblingCount property with a value
     className: 'pagination', // Add className property with a value
-    onPageChange: function (value) {
-      this.currentPage = value // Assign the new value to currentPage
-      console.log(this.currentPage)
-    },
   },
 }
