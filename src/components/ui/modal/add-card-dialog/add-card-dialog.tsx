@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -29,6 +29,7 @@ type AddCardDialogType = {
 
 const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   const [select, setSelect] = useState<string>('text') // should be 'text' or 'image'
+  const [questionImgPreview, setQuestionImgPreview] = useState<string | null>(null)
 
   const schema = z.object({
     question: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
@@ -65,6 +66,32 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   const closeDialogHandler = () => {
     closeDialog(false)
     reset()
+    setSelect('text')
+    setQuestionImgPreview(null)
+  }
+
+  const onQuestionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null
+
+    if (e.target.files && e.target.files.length) {
+      setValue('questionImg', e.target.files[0], {
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+
+      if (file && file.size < 4000000) {
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+          const file64 = reader.result as string
+
+          setQuestionImgPreview(file64)
+        }
+        reader.readAsDataURL(file)
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
   }
 
   return (
@@ -106,6 +133,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
             </>
           ) : (
             <>
+              {questionImgPreview && <img src={questionImgPreview} alt="" />}
               <div className={s.file}>
                 <label htmlFor={'questionImg'} className={s.file__label}>
                   Add Question Image
@@ -113,14 +141,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
                 {
                   <input
                     {...register('questionImg')}
-                    onChange={e => {
-                      //e.target.files && setPriview(URL.createObjectURL(e.target.files[0]))
-                      e.target.files &&
-                        setValue('questionImg', e.target.files[0], {
-                          shouldDirty: true,
-                          shouldTouch: true,
-                        })
-                    }}
+                    onChange={onQuestionImgChange}
                     type={'file'}
                     className={s.file__input}
                     id={'questionImg'}
