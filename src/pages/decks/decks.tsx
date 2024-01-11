@@ -55,12 +55,12 @@ const Decks = () => {
   return (
     <WrapperHeader>
       <div className={s.decks}>
-        <header>
+        <div className={s.header}>
           <h1>Packs list</h1>
           <Button variant="purple" callBack={handleAddDeckDialog}>
             Add New Pack
           </Button>
-        </header>
+        </div>
 
         <div className={s.filters}>
           <Input

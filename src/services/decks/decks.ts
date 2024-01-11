@@ -130,8 +130,8 @@ const decksApi = baseApi.injectEndpoints({
                 Object.assign(draft, addedCard)
               })
             )
-          } catch (e) {
-            console.log(e)
+          } catch (error) {
+            console.error(error)
           }
         },
         invalidatesTags: ['Cards'],

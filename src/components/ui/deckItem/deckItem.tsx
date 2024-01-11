@@ -136,7 +136,7 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
         title={'Delete Pack'}
         isOpen={isDeletePackDialodOpen}
         closeDialog={() => setIsDeletePackDialogOpen(false)}
-        deleteDeck={handleDeleteDeck}
+        deleteItem={handleDeleteDeck}
       />
     </>
   )
