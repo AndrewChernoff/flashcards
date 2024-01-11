@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from '../../../common/hooks/redux-hook
 import s from '../../../pages/decks/cards/cards.module.scss'
 import { closeDialog, openDialog } from '../../../services/cards/cards-slice'
 import { Button } from '../button'
-import AddCardDialog from '../modal/addCardDialog/addCardDialog'
+import AddCardDialog from '../modal/add-card-dialog/add-card-dialog'
 import { Body1 } from '../typography/typography'
 
 type EmptyDeckProps = { myId: string | null | undefined; deckUserId: string; deckId: string }

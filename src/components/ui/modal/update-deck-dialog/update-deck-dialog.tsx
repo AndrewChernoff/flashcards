@@ -9,7 +9,7 @@ import Input from '../../input/input'
 import { H2 } from '../../typography/typography'
 import Modal from '../modal'
 
-import s from './../addDeckDialog/addDeckDialog.module.scss'
+import s from './../add-deck-dialog/add-deck-dialog.module.scss'
 
 export type UpdateDeckInputs = {
   name: string

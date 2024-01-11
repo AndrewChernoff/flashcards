@@ -16,9 +16,9 @@ import {
   useUpdateDeckMutation,
 } from '../../../services/decks/decks'
 import { DeckItemType } from '../../../services/decks/types'
-import CardDialog from '../modal/cardDialog/cardDialog'
-import DeleteDeckDialog from '../modal/deleteDeckDialog/deleteDeckDialog'
-import UpdateDeckDialog from '../modal/updateDeckDialog/updateDeckDialog'
+import CardDialog from '../modal/card-dialog/card-dialog'
+import DeleteDeckDialog from '../modal/delete-dialog/delete-dialog'
+import UpdateDeckDialog from '../modal/update-deck-dialog/update-deck-dialog'
 import { Table } from '../table/table'
 
 type DeckItemProps = {
@@ -132,6 +132,8 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
         callback={handleUpdateDeck}
       />
       <DeleteDeckDialog
+        description={'Do you really want to remove Pack Name? All cards will be deleted.'}
+        title={'Delete Pack'}
         isOpen={isDeletePackDialodOpen}
         closeDialog={() => setIsDeletePackDialogOpen(false)}
         deleteDeck={handleDeleteDeck}

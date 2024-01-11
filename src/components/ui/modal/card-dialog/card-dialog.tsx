@@ -9,7 +9,7 @@ import RadioGroup from '../../radio-group/radio-group'
 import { Body2, H2, Subtitle1 } from '../../typography/typography'
 import Modal from '../modal'
 
-import s from './cardDialog.module.scss'
+import s from './card-dialog.module.scss'
 
 type AddDeckDialogType = {
   isOpen: boolean
@@ -17,6 +17,7 @@ type AddDeckDialogType = {
   card: CardItem | null | undefined
   requestCard: (id: string) => void
 }
+/*This Modal is for showing card when we to learn the cards from deck, question apeares in Card modal */
 
 const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogType) => {
   const deck = useAppSelector(state => state.deck?.deck)

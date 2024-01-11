@@ -9,7 +9,7 @@ import Input from '../../input/input'
 import { H2 } from '../../typography/typography'
 import Modal from '../modal'
 
-import s from './addNewCardDialog.module.scss'
+import s from './add-card-dialog.module.scss'
 
 export type AddDeckInputs = {
   question: string

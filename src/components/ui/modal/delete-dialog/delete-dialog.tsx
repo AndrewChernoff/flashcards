@@ -2,7 +2,7 @@ import { Button } from '../../button'
 import { H2 } from '../../typography/typography'
 import Modal from '../modal'
 
-import s from './deleteDeckDialog.module.scss'
+import s from './delete-dialog.module.scss'
 
 export type AddDeckInputs = {
   name: string
@@ -14,21 +14,27 @@ type AddDeckDialogType = {
   isOpen: boolean
   closeDialog: () => void
   deleteDeck: () => void
+  title: string
+  description: string
 }
 
-const DeleteDeckDialog = ({ isOpen, closeDialog, deleteDeck }: AddDeckDialogType) => {
+const DeleteDeckDialog = ({
+  isOpen,
+  closeDialog,
+  deleteDeck,
+  description,
+  title,
+}: AddDeckDialogType) => {
   const closeDialogHandler = () => closeDialog()
 
   return (
     <Modal isOpen={isOpen} callBack={closeDialog}>
       <div className={s.dialog}>
         <div className={s.dialog__header}>
-          <H2>Delete Pack</H2>
+          <H2>{title}</H2>
           <button onClick={closeDialogHandler}>X</button>
         </div>
-        <div className={s.dialog__content}>
-          Do you really want to remove Pack Name? All cards will be deleted.
-        </div>
+        <div className={s.dialog__content}>{description}</div>
         <div className={s.dialog__buttons}>
           <Button
             type="button"
