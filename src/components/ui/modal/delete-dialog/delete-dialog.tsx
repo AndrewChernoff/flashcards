@@ -13,7 +13,7 @@ export type AddDeckInputs = {
 type AddDeckDialogType = {
   isOpen: boolean
   closeDialog: () => void
-  deleteDeck: () => void
+  deleteItem: () => void
   title: string
   description: string
 }
@@ -21,7 +21,7 @@ type AddDeckDialogType = {
 const DeleteDeckDialog = ({
   isOpen,
   closeDialog,
-  deleteDeck,
+  deleteItem,
   description,
   title,
 }: AddDeckDialogType) => {
@@ -44,7 +44,7 @@ const DeleteDeckDialog = ({
           >
             Cancel
           </Button>
-          <Button className={s.dialog__buttons_add} callBack={deleteDeck} variant="tertiary">
+          <Button className={s.dialog__buttons_add} callBack={deleteItem} variant="tertiary">
             Delete Pack
           </Button>
         </div>
