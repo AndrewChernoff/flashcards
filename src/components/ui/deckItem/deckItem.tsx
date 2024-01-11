@@ -132,6 +132,7 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
         callback={handleUpdateDeck}
       />
       <DeleteDeckDialog
+        btnDescription="Delete Pack"
         description={'Do you really want to remove Pack Name? All cards will be deleted.'}
         title={'Delete Pack'}
         isOpen={isDeletePackDialodOpen}

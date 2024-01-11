@@ -43,6 +43,7 @@ const Card = ({ card, myId }: CardItemProps) => {
         </Table.DataCell>
       </Table.Row>
       <DeleteDeckDialog
+        btnDescription="Delete Card"
         isOpen={isOpen}
         closeDialog={() => setIsOen(false)}
         deleteItem={deleteCardHandler}

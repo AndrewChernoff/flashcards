@@ -16,6 +16,7 @@ type AddDeckDialogType = {
   deleteItem: () => void
   title: string
   description: string
+  btnDescription: string
 }
 
 const DeleteDeckDialog = ({
@@ -24,6 +25,7 @@ const DeleteDeckDialog = ({
   deleteItem,
   description,
   title,
+  btnDescription,
 }: AddDeckDialogType) => {
   const closeDialogHandler = () => closeDialog()
 
@@ -45,7 +47,7 @@ const DeleteDeckDialog = ({
             Cancel
           </Button>
           <Button className={s.dialog__buttons_add} callBack={deleteItem} variant="tertiary">
-            Delete Pack
+            {btnDescription}
           </Button>
         </div>
       </div>

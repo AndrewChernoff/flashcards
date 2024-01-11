@@ -3,6 +3,8 @@ import { forwardRef, useState } from 'react'
 import * as Select from '@radix-ui/react-select'
 import { styled } from '@stitches/react'
 
+import { Body2 } from '../typography/typography'
+
 import s from './select.module.scss'
 
 type SelectProps = {
@@ -23,7 +25,7 @@ const SelectDemo = ({ items, label, className, callback }: SelectProps) => {
 
   return (
     <div className={s.select}>
-      {label && <p className={s.select__label}>{label}</p>}
+      {label && <Body2 className={s.select__label}>{label}</Body2>}
       <Select.Root
         // open={true}
         defaultValue={items?.[0]}

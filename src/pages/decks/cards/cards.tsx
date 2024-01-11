@@ -51,7 +51,7 @@ const Cards = () => {
   return (
     <WrapperHeader>
       <div className={s.cards}>
-        <header className={s.cards__header}>
+        <div className={s.cards__header}>
           <div className={s.cards__header_title}>
             <Link to="/decks" className={s.link}>
               <LeftArrow />
@@ -67,7 +67,7 @@ const Cards = () => {
           ) : (
             <Button variant="purple">Learn to Pack</Button>
           )}
-        </header>
+        </div>
 
         {cards?.items.length === 0 ? (
           <EmptyDeck myId={me?.id} deckUserId={deckUserId} deckId={deckId} />

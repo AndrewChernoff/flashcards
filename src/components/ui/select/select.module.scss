@@ -8,8 +8,7 @@ button {
 .select {
   &__label {
     margin: 0;
-    font-size: 14px;
-    line-height: 24px;
+    color: #808080;
   }
 
   &__trigger {
@@ -46,6 +45,8 @@ button {
 }
 
 &__content {
+  z-index: 1;
+
   box-sizing: border-box;
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
@@ -59,6 +60,7 @@ button {
     background: #333;
 
   &:hover {
+    cursor: pointer;
     background: #382766;
     border: #808080 1px solid;
       }
