@@ -2,7 +2,7 @@ import { ChangeEvent, useState } from 'react'
 
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Controller, SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, UseFormSetValue, useForm } from 'react-hook-form'
 import * as z from 'zod'
 
 import { useAddCardMutation } from '../../../../services/decks/decks'
@@ -74,11 +74,16 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
     setQuestionImgPreview(null)
   }
 
-  const onQuestionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onImgChange = (
+    ///function for adding images as files and transfering it into base64
+    e: ChangeEvent<HTMLInputElement>,
+    inputName: 'question' | 'answer' | 'questionImg' | 'answerImg',
+    setPreviewCallback: (value: string) => void
+  ) => {
     const file = e.target.files ? e.target.files[0] : null
 
     if (e.target.files && e.target.files.length) {
-      setValue('questionImg', e.target.files[0], {
+      setValue(inputName, e.target.files[0], {
         shouldDirty: true,
         shouldTouch: true,
       })
@@ -89,7 +94,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
         reader.onloadend = () => {
           const file64 = reader.result as string
 
-          setQuestionImgPreview(file64)
+          setPreviewCallback(file64)
         }
         reader.readAsDataURL(file)
       } else {
@@ -98,28 +103,12 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
     }
   }
 
+  const onQuestionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+    onImgChange(e, 'questionImg', setQuestionImgPreview)
+  }
+
   const onAnswerImgChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null
-
-    if (e.target.files && e.target.files.length) {
-      setValue('answerImg', e.target.files[0], {
-        shouldDirty: true,
-        shouldTouch: true,
-      })
-
-      if (file && file.size < 4000000) {
-        const reader = new FileReader()
-
-        reader.onloadend = () => {
-          const file64 = reader.result as string
-
-          setAnswerImgPreview(file64)
-        }
-        reader.readAsDataURL(file)
-      } else {
-        console.error('Error: ', 'Файл слишком большого размера')
-      }
-    }
+    onImgChange(e, 'answerImg', setAnswerImgPreview)
   }
 
   return (
@@ -162,7 +151,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
           ) : (
             <div className={s.form__imgs}>
               <div className={s.form__imgs_question}>
-                <Subtitle2>Answer:</Subtitle2>
+                <Subtitle2>Question:</Subtitle2>
                 {questionImgPreview && <img src={questionImgPreview} alt="" />}
                 <Controller
                   control={control}
@@ -181,7 +170,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
               </div>
 
               <div className={s.form__imgs_answer}>
-                <Subtitle2>Question:</Subtitle2>
+                <Subtitle2>Answer:</Subtitle2>
                 {answerImgPreview && <img src={answerImgPreview} alt="" />}
                 <Controller
                   control={control}
