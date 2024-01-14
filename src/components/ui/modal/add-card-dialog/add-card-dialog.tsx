@@ -10,7 +10,7 @@ import { Button } from '../../button'
 import Fileinput from '../../fileinput/fileinput'
 import Input from '../../input/input'
 import SelectDemo from '../../select/select'
-import { H2 } from '../../typography/typography'
+import { H2, Subtitle2 } from '../../typography/typography'
 import Modal from '../modal'
 
 import s from './add-card-dialog.module.scss'
@@ -162,6 +162,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
           ) : (
             <div className={s.form__imgs}>
               <div className={s.form__imgs_question}>
+                <Subtitle2>Answer:</Subtitle2>
                 {questionImgPreview && <img src={questionImgPreview} alt="" />}
                 <Controller
                   control={control}
@@ -170,7 +171,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
                     return (
                       <Fileinput
                         onImgChange={onQuestionImgChange}
-                        title={'Add Question Image'}
+                        title={'Change Cover'}
                         id={'questionImg'}
                         className={s.file__input}
                       />
@@ -180,6 +181,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
               </div>
 
               <div className={s.form__imgs_answer}>
+                <Subtitle2>Question:</Subtitle2>
                 {answerImgPreview && <img src={answerImgPreview} alt="" />}
                 <Controller
                   control={control}
@@ -188,7 +190,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
                     return (
                       <Fileinput
                         onImgChange={onAnswerImgChange}
-                        title={'Add Answer Image'}
+                        title={'Change Cover'}
                         id={'answerImg'}
                         className={s.file__input}
                       />

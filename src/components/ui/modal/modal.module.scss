@@ -3,11 +3,12 @@
 
 .modal {
     position: fixed;
-    top: 10%;
+    top: 5%;
     left: 50%;
     transform: translateX(-50%);
 
     width: 30%;
+    max-height: 90%;
 
     // min-height: 55%;
     margin: 0 auto;
