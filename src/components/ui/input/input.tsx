@@ -50,7 +50,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const inputType = type === 'password' ? (passwordShown ? 'text' : 'password') : type
   const inputClassname = isSearch ? `${s.input__normal} ${s.input__search}` : `${s.input__normal}`
 
-  const errorInputClassname = s.input__error /* `${s.input__error} ${s.input__search}` */
+  const errorInputClassname = s.input__error
 
   if (type === 'file') {
     return (
@@ -76,7 +76,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
 
   return (
     <div className={`${s.inputBlock} ${className}`}>
-      {label /* && !error */ && <label htmlFor="input-field">{label}</label>}
+      {label && <label htmlFor="input-field">{label}</label>}
 
       <div className={s.input}>
         {isSearch && <div className={s.input__search_img}></div>}

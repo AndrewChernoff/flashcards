@@ -45,6 +45,28 @@
         }
     }
 
+    &__imgs {
+        margin-top: 15px;
+
+        &_question {
+            img {
+                display: block;
+                width: 20%;
+                height: 20%;
+                margin: 0 auto;
+            }
+        }
+
+        &_answer {
+            img {
+                display: block;
+                width: 20%;
+                height: 20%;
+                margin: 0 auto;
+            }
+        }
+    }
+
     &__buttons {
         display: flex;
         justify-content: space-between;

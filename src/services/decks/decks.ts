@@ -125,7 +125,7 @@ const decksApi = baseApi.injectEndpoints({
           try {
             const { data: addedCard } = await queryFulfilled
 
-            /* const patchResult = */ dispatch(
+            dispatch(
               decksApi.util.updateQueryData('getCardsDeckById', id, draft => {
                 Object.assign(draft, addedCard)
               })

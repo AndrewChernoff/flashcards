@@ -2,11 +2,12 @@ import { ChangeEvent, useState } from 'react'
 
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 
 import { useAddCardMutation } from '../../../../services/decks/decks'
 import { Button } from '../../button'
+import Fileinput from '../../fileinput/fileinput'
 import Input from '../../input/input'
 import SelectDemo from '../../select/select'
 import { H2 } from '../../typography/typography'
@@ -30,6 +31,7 @@ type AddCardDialogType = {
 const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   const [select, setSelect] = useState<string>('text') // should be 'text' or 'image'
   const [questionImgPreview, setQuestionImgPreview] = useState<string | null>(null)
+  const [answerImgPreview, setAnswerImgPreview] = useState<string | null>(null)
 
   const schema = z.object({
     question: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
@@ -64,6 +66,8 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   }
 
   const closeDialogHandler = () => {
+    setAnswerImgPreview(null)
+    setQuestionImgPreview(null)
     closeDialog(false)
     reset()
     setSelect('text')
@@ -86,6 +90,30 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
           const file64 = reader.result as string
 
           setQuestionImgPreview(file64)
+        }
+        reader.readAsDataURL(file)
+      } else {
+        console.error('Error: ', 'Файл слишком большого размера')
+      }
+    }
+  }
+
+  const onAnswerImgChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files ? e.target.files[0] : null
+
+    if (e.target.files && e.target.files.length) {
+      setValue('answerImg', e.target.files[0], {
+        shouldDirty: true,
+        shouldTouch: true,
+      })
+
+      if (file && file.size < 4000000) {
+        const reader = new FileReader()
+
+        reader.onloadend = () => {
+          const file64 = reader.result as string
+
+          setAnswerImgPreview(file64)
         }
         reader.readAsDataURL(file)
       } else {
@@ -132,47 +160,43 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
               />
             </>
           ) : (
-            <>
-              {questionImgPreview && <img src={questionImgPreview} alt="" />}
-              <div className={s.file}>
-                <label htmlFor={'questionImg'} className={s.file__label}>
-                  Add Question Image
-                </label>
-                {
-                  <input
-                    {...register('questionImg')}
-                    onChange={onQuestionImgChange}
-                    type={'file'}
-                    className={s.file__input}
-                    id={'questionImg'}
-                    name="questionImg"
-                  />
-                }
+            <div className={s.form__imgs}>
+              <div className={s.form__imgs_question}>
+                {questionImgPreview && <img src={questionImgPreview} alt="" />}
+                <Controller
+                  control={control}
+                  name={'questionImg'}
+                  render={() => {
+                    return (
+                      <Fileinput
+                        onImgChange={onQuestionImgChange}
+                        title={'Add Question Image'}
+                        id={'questionImg'}
+                        className={s.file__input}
+                      />
+                    )
+                  }}
+                />
               </div>
 
-              <div className={s.file}>
-                <label htmlFor={'answerImg'} className={s.file__label}>
-                  Add Answer Image
-                </label>
-                {
-                  <input
-                    {...register('answerImg')}
-                    onChange={e => {
-                      //e.target.files && setPriview(URL.createObjectURL(e.target.files[0]))
-                      e.target.files &&
-                        setValue('answerImg', e.target.files[0], {
-                          shouldDirty: true,
-                          shouldTouch: true,
-                        })
-                    }}
-                    type={'file'}
-                    className={s.file__input}
-                    id={'answerImg'}
-                    name="answerImg"
-                  />
-                }
+              <div className={s.form__imgs_answer}>
+                {answerImgPreview && <img src={answerImgPreview} alt="" />}
+                <Controller
+                  control={control}
+                  name={'answerImg'}
+                  render={() => {
+                    return (
+                      <Fileinput
+                        onImgChange={onAnswerImgChange}
+                        title={'Add Answer Image'}
+                        id={'answerImg'}
+                        className={s.file__input}
+                      />
+                    )
+                  }}
+                />
               </div>
-            </>
+            </div>
           )}
         </div>
 
@@ -181,7 +205,11 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
             type="button"
             className={s.form__buttons_cancel}
             variant="secondary"
-            callBack={() => reset()}
+            callBack={() => {
+              setAnswerImgPreview(null)
+              setQuestionImgPreview(null)
+              reset()
+            }}
           >
             Cancel
           </Button>
