@@ -11,8 +11,8 @@ import Input from '../../../components/ui/input/input'
 import AddCardDialog from '../../../components/ui/modal/add-card-dialog/add-card-dialog'
 import { Table } from '../../../components/ui/table/table'
 import { H1 } from '../../../components/ui/typography/typography'
+import { useGetCardsDeckByIdQuery } from '../../../services/cards/cards'
 import { closeDialog, openDialog } from '../../../services/cards/cards-slice'
-import { useGetCardsDeckByIdQuery } from '../../../services/decks/decks'
 import { CardItem } from '../../../services/decks/types'
 
 import Card from './cardItem/cardItem'
@@ -68,20 +68,20 @@ const Cards = () => {
             <Button variant="purple">Learn to Pack</Button>
           )}
         </div>
+        <div className={s.filters}>
+          <Input
+            isSearch={true}
+            placeholder="Search"
+            type="text"
+            value={title}
+            onValueChange={onInputTitleChange}
+          />
+        </div>
 
         {cards?.items.length === 0 ? (
           <EmptyDeck myId={me?.id} deckUserId={deckUserId} deckId={deckId} />
         ) : (
           <>
-            <div className={s.filters}>
-              <Input
-                isSearch={true}
-                placeholder="Search"
-                type="text"
-                value={title}
-                onValueChange={onInputTitleChange}
-              />
-            </div>
             <Table.Root className={s.table}>
               <Table.Head>
                 <Table.Row className={s.row}>

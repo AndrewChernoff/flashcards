@@ -9,10 +9,11 @@ import Edit from '../../../common/svg/edit'
 import PlayCircle from '../../../common/svg/play-circle'
 import { formatDate } from '../../../common/utils/time-transfering'
 import s from '../../../pages/decks/decks.module.scss'
+import { useLazyGetCardByIdQuery } from '../../../services/cards/cards'
 import { getDeck } from '../../../services/decks/deck-slice'
 import {
   useDeleteDeckMutation,
-  useLazyGetCardByIdQuery,
+  /* useLazyGetCardByIdQuery, */
   useUpdateDeckMutation,
 } from '../../../services/decks/decks'
 import { DeckItemType } from '../../../services/decks/types'

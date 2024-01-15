@@ -1,10 +1,14 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { Navigate } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import { useGetMeQuery, useLogInMutation } from '../../../services/auth/auth'
+import {
+  useGetMeQuery,
+  useLogInMutation,
+  useRecoverPasswordMutation,
+} from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
@@ -22,6 +26,7 @@ export const LoginForm = () => {
   const { data: me } = useGetMeQuery()
 
   const [logIn] = useLogInMutation()
+  const [recoverPassword] = useRecoverPasswordMutation()
 
   const SignUpSchema = z.object({
     email: z.string().email(),
@@ -77,7 +82,9 @@ export const LoginForm = () => {
           control={control}
         />
 
-        <h2 className={s.form__frogot}>Forgot Password?</h2>
+        <Link to="/recover-password" className={s.form__frogot} onClick={recoverPassword}>
+          Forgot Password?
+        </Link>
 
         <Button type="submit" variant={'tertiary'} className={s.form__button} fullWidth={true}>
           Sign In
@@ -85,14 +92,7 @@ export const LoginForm = () => {
 
         <h3 className={s.form__question}>Don&apos;t have an account?</h3>
 
-        <Button
-          variant="link"
-          as={'a'}
-          className={s.form__link}
-          href={'/signup'}
-          type="submit"
-          //fullWidth={true}
-        >
+        <Button variant="link" as={'a'} className={s.form__link} href={'/signup'} type="submit">
           Sign Up
         </Button>
       </form>

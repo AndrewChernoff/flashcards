@@ -3,6 +3,8 @@ import { useEffect } from 'react'
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 
 import { useAppDispatch } from './common/hooks/redux-hooks'
+import CreatePassword from './components/ui/create-password/create-password'
+import ForgotPassword from './components/ui/forgot-password/forgot-password'
 import { LoginForm } from './components/ui/login-form/login-form'
 import NotFound from './components/ui/not-found/not-found'
 import SignUp from './components/ui/sign-up/sign-up'
@@ -35,6 +37,7 @@ const publicRoutes = [
     path: '/signup',
     element: <SignUp />,
   },
+  { path: '/recover-password', element: <ForgotPassword /> },
   {
     path: '/*',
     element: <NotFound />,

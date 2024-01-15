@@ -1,8 +1,9 @@
 import { useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/redux-hooks'
+import { useRateCardMutation } from '../../../../services/cards/cards'
 import { getDeck } from '../../../../services/decks/deck-slice'
-import { useRateCardMutation } from '../../../../services/decks/decks'
+//import { useRateCardMutation } from '../../../../services/decks/decks'
 import { CardItem, DeckItemType } from '../../../../services/decks/types'
 import { Button } from '../../button'
 import RadioGroup from '../../radio-group/radio-group'

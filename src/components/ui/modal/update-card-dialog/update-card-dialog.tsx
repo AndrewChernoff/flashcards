@@ -6,37 +6,42 @@ import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 
 import { onImgChange } from '../../../../common/utils/toBase64'
-import { useAddCardMutation } from '../../../../services/cards/cards'
+import { useUpdateCardMutation } from '../../../../services/cards/cards'
 import { Button } from '../../button'
 import Fileinput from '../../fileinput/fileinput'
 import Input from '../../input/input'
 import SelectDemo from '../../select/select'
 import { H2, Subtitle2 } from '../../typography/typography'
+import s from '../add-card-dialog/add-card-dialog.module.scss'
 import Modal from '../modal'
 
-import s from './add-card-dialog.module.scss'
-
-export type AddCardInputs = {
+export type UpdateCarddInputs = {
   question: string
   answer: string
   questionImg: File
   answerImg: File
 }
 
-type AddCardDialogType = {
+type UpdateCardDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
-  deckId: string
+  cardId: string
 }
 
-const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
+const UpdateCardDialog = ({ isOpen, closeDialog, cardId }: UpdateCardDialogType) => {
   const [select, setSelect] = useState<string>('text') // should be 'text' or 'image'
   const [questionImgPreview, setQuestionImgPreview] = useState<string | null>(null)
   const [answerImgPreview, setAnswerImgPreview] = useState<string | null>(null)
 
   const schema = z.object({
-    question: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
-    answer: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+    question: z
+      .string()
+      .min(3, { message: 'name must be longer than or equal to 3 characters' })
+      .optional(),
+    answer: z
+      .string()
+      .min(3, { message: 'name must be longer than or equal to 3 characters' })
+      .optional(),
     questionImg: z.instanceof(File).optional(),
     answerImg: z.instanceof(File).optional(),
   })
@@ -48,20 +53,20 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
     reset,
     setValue,
     formState: { errors },
-  } = useForm<AddCardInputs>({
+  } = useForm<UpdateCarddInputs>({
     resolver: zodResolver(schema),
   })
 
-  const [addCard] = useAddCardMutation()
+  const [updateCard] = useUpdateCardMutation()
 
-  const onSubmit: SubmitHandler<AddCardInputs> = data => {
+  const onSubmit: SubmitHandler<UpdateCarddInputs> = data => {
     const formData: any = new FormData()
 
-    formData.append('answer', data.answer)
-    formData.append('question', data.question)
+    data.answer && formData.append('answer', data.answer)
+    data.question && formData.append('question', data.question)
     data.questionImg && formData.append('questionImg', data.questionImg)
     data.answerImg && formData.append('answerImg', data.answerImg)
-    addCard({ id: deckId, card: formData })
+    updateCard({ id: cardId, card: formData })
     reset()
     closeDialog(false)
   }
@@ -89,7 +94,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
         <DevTool control={control} />
 
         <div className={s.form__header}>
-          <H2>Add New Card</H2>
+          <H2>Edit Card</H2>
           <button onClick={closeDialogHandler}>X</button>
         </div>
 
@@ -173,7 +178,7 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
             Cancel
           </Button>
           <Button type="submit" className={s.form__buttons_add} variant="tertiary">
-            Add New Card
+            Edit Card
           </Button>
         </div>
       </form>
@@ -181,4 +186,4 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   )
 }
 
-export default AddDeckDialog
+export default UpdateCardDialog

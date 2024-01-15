@@ -1,8 +1,6 @@
-import { omit } from 'remeda'
-
 import { baseApi } from '../base-api'
 
-import { CardItem, CardsResponse, Deck, DeckResponse, DecksParams } from './types'
+import { Deck, DeckResponse, DecksParams } from './types'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -60,7 +58,10 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      updateDeck: builder.mutation<any, { id: string; data: Deck }>({
+      updateDeck: builder.mutation<
+        DeckResponse,
+        { id: string; data: { name?: string; isPrivate?: boolean } }
+      >({
         query(obj) {
           return {
             url: `v1/decks/${obj.id}`,
@@ -68,10 +69,11 @@ const decksApi = baseApi.injectEndpoints({
             body: obj.data,
           }
         },
-        async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled }) {
+        async onQueryStarted({ id, data }, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
             decksApi.util.updateQueryData('getDecks', undefined, draft => {
-              Object.assign(draft, patch)
+              ////?
+              draft.items = draft.items.map(el => (el.id === id ? { ...el, ...data } : el))
             })
           )
 
@@ -83,79 +85,6 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      getCardsDeckById: builder.query<CardsResponse, { id: string; question: string }>({
-        query: params => {
-          return {
-            url: `v1/decks/${params.id}/cards`,
-            method: 'GET',
-            params: omit(params, ['id']) || {},
-          }
-        },
-        providesTags: ['Cards'],
-      }),
-      getCardById: builder.query<CardItem, string>({
-        query: id => {
-          return {
-            url: `v1/decks/${id}/learn`,
-            method: 'GET',
-          }
-        },
-        providesTags: ['Cards'],
-      }),
-      rateCard: builder.mutation<any, { grade: string; cardId: string; deckId: string }>({
-        query: params => {
-          return {
-            url: `v1/decks/${params.deckId}/learn`,
-            method: 'POST',
-            body: {
-              grade: Number(params.grade),
-              cardId: params.cardId,
-            },
-          }
-        },
-        invalidatesTags: ['Cards'],
-      }),
-      addCard: builder.mutation<any, any>({
-        query: ({ id, card }) => ({
-          url: `/v1/decks/${id}/cards`,
-          method: 'POST',
-          body: card,
-        }),
-        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-          try {
-            const { data: addedCard } = await queryFulfilled
-
-            dispatch(
-              decksApi.util.updateQueryData('getCardsDeckById', id, draft => {
-                Object.assign(draft, addedCard)
-              })
-            )
-          } catch (error) {
-            console.error(error)
-          }
-        },
-        invalidatesTags: ['Cards'],
-      }),
-      deleteCard: builder.mutation<any, any>({
-        query: id => ({
-          url: `/v1/cards/${id}`,
-          method: 'DELETE',
-        }),
-        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-          const patchResult = dispatch(
-            decksApi.util.updateQueryData('getCardsDeckById', id, draft => {
-              draft.items = draft.items.filter(el => el.id !== id)
-            })
-          )
-
-          try {
-            await queryFulfilled
-          } catch {
-            patchResult.undo()
-          }
-        },
-        invalidatesTags: ['Cards'],
-      }),
     }
   },
 })
@@ -165,9 +94,4 @@ export const {
   useDeleteDeckMutation,
   useAddDeckMutation,
   useUpdateDeckMutation,
-  useGetCardsDeckByIdQuery,
-  useLazyGetCardByIdQuery,
-  useRateCardMutation,
-  useAddCardMutation,
-  useDeleteCardMutation,
 } = decksApi

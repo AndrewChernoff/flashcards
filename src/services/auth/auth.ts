@@ -48,7 +48,7 @@ const authApi = baseApi.injectEndpoints({
             body: signUpObj,
           }
         },
-        invalidatesTags: ['Me'], ///added this stuff
+        invalidatesTags: ['Me'],
       }),
       patchMe: builder.mutation<{ avatar?: File; name?: string; email?: string }, any>({
         query(data) {
@@ -56,6 +56,19 @@ const authApi = baseApi.injectEndpoints({
             url: `v1/auth/me`,
             method: 'PATCH',
             body: data,
+          }
+        },
+        invalidatesTags: ['Me'],
+      }),
+      recoverPassword: builder.mutation<any, any>({
+        query(data) {
+          return {
+            url: `/v1/auth/recover-password`,
+            method: 'POST',
+            body: {
+              html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/7ec9adeb-1882-4670-a09f-c9f9089886f8">here</a> to recover your password</p>',
+              email: data.email,
+            },
           }
         },
         invalidatesTags: ['Me'],
@@ -70,4 +83,5 @@ export const {
   useGetMeQuery,
   useLogOutMutation,
   usePatchMeMutation,
+  useRecoverPasswordMutation,
 } = authApi
