@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import { useRecoverPasswordMutation } from '../../../services/auth/auth'
@@ -27,16 +28,41 @@ const ForgotPassword = () => {
 
   const {
     register,
-    handleSubmit,
     reset,
+    handleSubmit,
     formState: { errors },
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) })
 
-  const [recoverPassword] = useRecoverPasswordMutation()
+  const [recoverPassword, { isSuccess, error }] = useRecoverPasswordMutation()
 
   const onSubmit: SubmitHandler<InputPAsswordType> = data => {
     recoverPassword(data)
     reset()
+  }
+
+  if (isSuccess) {
+    toast.success('You will recieve email message for recovering your password', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    })
+  }
+  if (error) {
+    toast.error('Something went wrong!', {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'colored',
+    })
   }
 
   return (
