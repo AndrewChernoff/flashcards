@@ -38,6 +38,7 @@ const publicRoutes = [
     element: <SignUp />,
   },
   { path: '/recover-password', element: <ForgotPassword /> },
+  { path: '/reset-password/:token', element: <CreatePassword /> },
   {
     path: '/*',
     element: <NotFound />,

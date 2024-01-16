@@ -50,7 +50,7 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
-      patchMe: builder.mutation<{ avatar?: File; name?: string; email?: string }, any>({
+      patchMe: builder.mutation<any, { avatar?: File; name?: string; email?: string }>({
         query(data) {
           return {
             url: `v1/auth/me`,
@@ -60,14 +60,26 @@ const authApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Me'],
       }),
-      recoverPassword: builder.mutation<any, any>({
+      recoverPassword: builder.mutation<void, { email: string }>({
         query(data) {
           return {
             url: `/v1/auth/recover-password`,
             method: 'POST',
             body: {
-              html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/recover-password/7ec9adeb-1882-4670-a09f-c9f9089886f8">here</a> to recover your password</p>',
+              html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/reset-password/##token##">here</a> to recover your password</p>',
               email: data.email,
+            },
+          }
+        },
+        invalidatesTags: ['Me'],
+      }),
+      resetPassword: builder.mutation<void, { password: string; token: string }>({
+        query(data) {
+          return {
+            url: `/v1/auth/reset-password/${data.token}`,
+            method: 'POST',
+            body: {
+              password: data.password,
             },
           }
         },
@@ -84,4 +96,5 @@ export const {
   useLogOutMutation,
   usePatchMeMutation,
   useRecoverPasswordMutation,
+  useResetPasswordMutation,
 } = authApi

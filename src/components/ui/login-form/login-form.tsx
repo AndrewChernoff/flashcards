@@ -26,7 +26,6 @@ export const LoginForm = () => {
   const { data: me } = useGetMeQuery()
 
   const [logIn] = useLogInMutation()
-  const [recoverPassword] = useRecoverPasswordMutation()
 
   const SignUpSchema = z.object({
     email: z.string().email(),
@@ -82,7 +81,7 @@ export const LoginForm = () => {
           control={control}
         />
 
-        <Link to="/recover-password" className={s.form__frogot} onClick={recoverPassword}>
+        <Link to="/recover-password" className={s.form__frogot}>
           Forgot Password?
         </Link>
 
@@ -92,9 +91,9 @@ export const LoginForm = () => {
 
         <h3 className={s.form__question}>Don&apos;t have an account?</h3>
 
-        <Button variant="link" as={'a'} className={s.form__link} href={'/signup'} type="submit">
+        <Link className={s.form__link} to={'/signup'}>
           Sign Up
-        </Button>
+        </Link>
       </form>
     </Card>
   )

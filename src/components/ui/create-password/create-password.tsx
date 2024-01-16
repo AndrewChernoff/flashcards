@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 import { z } from 'zod'
 
+import { useResetPasswordMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
@@ -12,22 +14,31 @@ type InputPAsswordType = {
   password: string
 }
 
+const SignUpSchema = z.object({
+  password: z.string().min(3).max(20),
+})
+
+type SignUpSchemaType = z.infer<typeof SignUpSchema>
+
 const CreatePassword = () => {
-  const SignUpSchema = z.object({
-    password: z.string().min(3).max(20),
-  })
-
-  type SignUpSchemaType = z.infer<typeof SignUpSchema>
-
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) })
-  const onSubmit: SubmitHandler<InputPAsswordType> = data => alert(JSON.stringify(data))
+
+  const { token } = useParams()
+
+  const [resetPassword] = useResetPasswordMutation()
+
+  const onSubmit: SubmitHandler<InputPAsswordType> = data => {
+    token && resetPassword({ password: data.password, token })
+    reset()
+  }
 
   return (
-    <Card>
+    <Card className={s.card}>
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
         <h2 className={s.form__title}>Create new password</h2>
 

@@ -1,12 +1,14 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
 import { useSignupMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
+import { H2 } from '../typography/typography'
 
 import s from './sign-up.module.scss'
 
@@ -60,7 +62,7 @@ function SignUp() {
     <Card className={s.card}>
       <DevTool control={control} />
       <form className={s.form} onSubmit={handleSubmit(onSubmit)}>
-        <h2 className={s.form__title}> Sign Up</h2>
+        <H2 className={s.form__title}> Sign Up</H2>
         <Input
           className={s.form__input}
           isSearch={false}
@@ -100,16 +102,9 @@ function SignUp() {
 
         <h3>Already have an account?</h3>
 
-        <Button
-          variant="link"
-          as={'a'}
-          className={s.form__link}
-          href={'/signin'}
-          type="submit"
-          //fullWidth={true}
-        >
+        <Link className={s.form__link} to={'/signin'}>
           Sign In
-        </Button>
+        </Link>
       </form>
     </Card>
   )

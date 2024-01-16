@@ -7,6 +7,7 @@ import { useRecoverPasswordMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
+import { Body2 } from '../typography/typography'
 
 import s from './forgot-password.module.scss'
 
@@ -27,12 +28,16 @@ const ForgotPassword = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<SignUpSchemaType>({ resolver: zodResolver(SignUpSchema) })
 
   const [recoverPassword] = useRecoverPasswordMutation()
 
-  const onSubmit: SubmitHandler<InputPAsswordType> = data => recoverPassword(data)
+  const onSubmit: SubmitHandler<InputPAsswordType> = data => {
+    recoverPassword(data)
+    reset()
+  }
 
   return (
     <Card className={s.card}>
@@ -50,14 +55,16 @@ const ForgotPassword = () => {
           label={'Email'}
         />
 
-        <h3 className={s.form__subtitle}>
+        <Body2 className={s.form__subtitle}>
           Enter your email address and we will send you further instructions
-        </h3>
+        </Body2>
 
         <Button type="submit" variant={'tertiary'} className={s.form__button} fullWidth={true}>
           Send Instructions
         </Button>
-        <Link to="/signin">Try logging in</Link>
+        <Link to="/signin" className={s.form__link}>
+          Try logging in
+        </Link>
       </form>
     </Card>
   )
