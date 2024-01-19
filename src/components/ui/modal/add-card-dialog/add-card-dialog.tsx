@@ -5,8 +5,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { onImgChange } from '../../../../common/utils/toBase64'
-import { useAddCardMutation } from '../../../../services/cards/cards'
 import { Button } from '../../button'
 import Fileinput from '../../fileinput/fileinput'
 import Input from '../../input/input'
@@ -15,6 +13,9 @@ import { H2, Subtitle2 } from '../../typography/typography'
 import Modal from '../modal'
 
 import s from './add-card-dialog.module.scss'
+
+import { onImgChange } from '@/common/utils/toBase64'
+import { useAddCardMutation } from '@/services/cards/cards'
 
 export type AddCardInputs = {
   question: string

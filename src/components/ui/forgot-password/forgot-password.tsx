@@ -4,13 +4,14 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { useRecoverPasswordMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
 import { Body2 } from '../typography/typography'
 
 import s from './forgot-password.module.scss'
+
+import { useRecoverPasswordMutation } from '@/services/auth/auth'
 
 type InputPAsswordType = {
   email: string

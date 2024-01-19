@@ -1,15 +1,16 @@
 import { useState } from 'react'
 
-import Delete from '../../../../common/svg/delete'
-import Edit from '../../../../common/svg/edit'
-import { formatDate } from '../../../../common/utils/time-transfering'
-import DeleteDeckDialog from '../../../../components/ui/modal/delete-dialog/delete-dialog'
-import UpdateCardDialog from '../../../../components/ui/modal/update-card-dialog/update-card-dialog'
-import StarRating from '../../../../components/ui/star-rating/star-rating'
-import { Table } from '../../../../components/ui/table/table'
-import { useDeleteCardMutation } from '../../../../services/cards/cards'
-import { CardItem } from '../../../../services/decks/types'
 import s from '../cards.module.scss'
+
+import Delete from '@/common/svg/delete'
+import Edit from '@/common/svg/edit'
+import { formatDate } from '@/common/utils/time-transfering'
+import DeleteDeckDialog from '@/components/ui/modal/delete-dialog/delete-dialog'
+import UpdateCardDialog from '@/components/ui/modal/update-card-dialog/update-card-dialog'
+import StarRating from '@/components/ui/star-rating/star-rating'
+import { Table } from '@/components/ui/table/table'
+import { useDeleteCardMutation } from '@/services/cards/cards'
+import { CardItem } from '@/services/decks/types'
 
 interface CardItemProps {
   card: CardItem
@@ -54,6 +55,10 @@ const Card = ({ card, myId }: CardItemProps) => {
       />
 
       <UpdateCardDialog
+        cardAnswer={card.answer}
+        cardQuestion={card.question}
+        cardQuestionImg={card.questionImg}
+        cardAnswerImg={card.answerImg}
         isOpen={isEditOpen}
         closeDialog={() => setIsEditOen(false)}
         cardId={card.id}

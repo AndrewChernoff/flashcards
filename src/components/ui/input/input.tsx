@@ -1,16 +1,8 @@
 import { ChangeEvent, forwardRef, memo, useState } from 'react'
 
-/* import { Path } from 'react-hook-form' */
-
 import eye from '../../../common/imgs/eye.png'
 
 import s from './input.module.scss'
-
-/* interface IFormValues {
-  email: string
-  password: string
-  rememberMe: boolean
-} */
 
 export interface InputProps {
   isSearch: boolean

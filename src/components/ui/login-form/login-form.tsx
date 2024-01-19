@@ -4,17 +4,14 @@ import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
 import { z } from 'zod'
 
-import {
-  useGetMeQuery,
-  useLogInMutation,
-  useRecoverPasswordMutation,
-} from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import ControlledCheckbox from '../controlled/controlled-checkbox'
 import Input from '../input/input'
 
 import s from './login-form.module.scss'
+
+import { useGetMeQuery, useLogInMutation } from '@/services/auth/auth'
 
 export type FormValues = {
   email: string

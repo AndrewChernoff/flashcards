@@ -2,25 +2,22 @@ import { useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
-import { useAppDispatch } from '../../../common/hooks/redux-hooks'
-import defaultCover from '../../../common/imgs/default-cover.png'
-import Delete from '../../../common/svg/delete'
-import Edit from '../../../common/svg/edit'
-import PlayCircle from '../../../common/svg/play-circle'
-import { formatDate } from '../../../common/utils/time-transfering'
-import s from '../../../pages/decks/decks.module.scss'
-import { useLazyGetCardByIdQuery } from '../../../services/cards/cards'
-import { getDeck } from '../../../services/decks/deck-slice'
-import {
-  useDeleteDeckMutation,
-  /* useLazyGetCardByIdQuery, */
-  useUpdateDeckMutation,
-} from '../../../services/decks/decks'
-import { DeckItemType } from '../../../services/decks/types'
 import CardDialog from '../modal/card-dialog/card-dialog'
 import DeleteDeckDialog from '../modal/delete-dialog/delete-dialog'
 import UpdateDeckDialog from '../modal/update-deck-dialog/update-deck-dialog'
 import { Table } from '../table/table'
+
+import { useAppDispatch } from '@/common/hooks/redux-hooks'
+import defaultCover from '@/common/imgs/default-cover.png'
+import Delete from '@/common/svg/delete'
+import Edit from '@/common/svg/edit'
+import PlayCircle from '@/common/svg/play-circle'
+import { formatDate } from '@/common/utils/time-transfering'
+import s from '@/pages/decks/decks.module.scss'
+import { useLazyGetCardByIdQuery } from '@/services/cards/cards'
+import { getDeck } from '@/services/decks/deck-slice'
+import { useDeleteDeckMutation, useUpdateDeckMutation } from '@/services/decks/decks'
+import { DeckItemType } from '@/services/decks/types'
 
 type DeckItemProps = {
   deck: any

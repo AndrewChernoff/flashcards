@@ -4,13 +4,14 @@ import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
 import { z } from 'zod'
 
-import { useSignupMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
 import { H2 } from '../typography/typography'
 
 import s from './sign-up.module.scss'
+
+import { useSignupMutation } from '@/services/auth/auth'
 
 type SignUpFormValues = {
   email: string

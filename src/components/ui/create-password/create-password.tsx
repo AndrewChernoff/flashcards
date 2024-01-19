@@ -4,12 +4,13 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { useResetPasswordMutation } from '../../../services/auth/auth'
 import { Button } from '../button'
 import Card from '../card/card'
 import Input from '../input/input'
 
 import s from './create-password.module.scss'
+
+import { useResetPasswordMutation } from '@/services/auth/auth'
 
 type InputPAsswordType = {
   password: string

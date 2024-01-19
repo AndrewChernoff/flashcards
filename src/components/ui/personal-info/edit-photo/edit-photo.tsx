@@ -23,18 +23,12 @@ const EditPhoto = ({ userAva, changeEditPhoto }: EditPhotoPropsType) => {
     avatar: z.instanceof(FileList),
   })
 
-  const {
-    register,
-    control,
-
-    /* formState: { errors }, */
-    handleSubmit,
-  } = useForm<FormValues>({
+  const { register, control, handleSubmit } = useForm<FormValues>({
     resolver: zodResolver(SignUpSchema),
   })
 
   const onSubmit = (data: any) => {
-    const formData = new FormData()
+    const formData: any = new FormData()
 
     formData.append('avatar', data.avatar[0])
 

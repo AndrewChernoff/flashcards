@@ -1,9 +1,10 @@
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/redux-hooks'
-import s from '../../../pages/decks/cards/cards.module.scss'
-import { closeDialog, openDialog } from '../../../services/cards/cards-slice'
 import { Button } from '../button'
 import AddCardDialog from '../modal/add-card-dialog/add-card-dialog'
 import { Body1 } from '../typography/typography'
+
+import { useAppDispatch, useAppSelector } from '@/common/hooks/redux-hooks'
+import s from '@/pages/decks/cards/cards.module.scss'
+import { closeDialog, openDialog } from '@/services/cards/cards-slice'
 
 type EmptyDeckProps = { myId: string | null | undefined; deckUserId: string; deckId: string }
 

@@ -1,16 +1,16 @@
 import { useState } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/redux-hooks'
-import { useRateCardMutation } from '../../../../services/cards/cards'
-import { getDeck } from '../../../../services/decks/deck-slice'
-//import { useRateCardMutation } from '../../../../services/decks/decks'
-import { CardItem, DeckItemType } from '../../../../services/decks/types'
 import { Button } from '../../button'
 import RadioGroup from '../../radio-group/radio-group'
 import { Body2, H2, Subtitle1 } from '../../typography/typography'
 import Modal from '../modal'
 
 import s from './card-dialog.module.scss'
+
+import { useAppDispatch, useAppSelector } from '@/common/hooks/redux-hooks'
+import { useRateCardMutation } from '@/services/cards/cards'
+import { getDeck } from '@/services/decks/deck-slice'
+import { CardItem, DeckItemType } from '@/services/decks/types'
 
 type AddDeckDialogType = {
   isOpen: boolean

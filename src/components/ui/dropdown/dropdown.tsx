@@ -2,10 +2,11 @@ import { ReactNode } from 'react'
 
 import * as DropdownMenu from '@radix-ui/react-dropdown-menu'
 
-import { useLogOutMutation } from '../../../services/auth/auth'
 import { Caption, Subtitle2 } from '../typography/typography'
 
 import s from './dropdown.module.scss'
+
+import { useLogOutMutation } from '@/services/auth/auth'
 
 type DropdownProps = {
   children: ReactNode

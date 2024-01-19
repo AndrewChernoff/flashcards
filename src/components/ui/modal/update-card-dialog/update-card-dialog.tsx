@@ -1,12 +1,10 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
 
-import { onImgChange } from '../../../../common/utils/toBase64'
-import { useUpdateCardMutation } from '../../../../services/cards/cards'
 import { Button } from '../../button'
 import Fileinput from '../../fileinput/fileinput'
 import Input from '../../input/input'
@@ -14,6 +12,9 @@ import SelectDemo from '../../select/select'
 import { H2, Subtitle2 } from '../../typography/typography'
 import s from '../add-card-dialog/add-card-dialog.module.scss'
 import Modal from '../modal'
+
+import { onImgChange } from '@/common/utils/toBase64'
+import { useUpdateCardMutation } from '@/services/cards/cards'
 
 export type UpdateCarddInputs = {
   question: string
@@ -26,22 +27,30 @@ type UpdateCardDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
   cardId: string
+  cardQuestion: string
+  cardAnswer: string
+  cardQuestionImg: string | null
+  cardAnswerImg: string | null
 }
 
-const UpdateCardDialog = ({ isOpen, closeDialog, cardId }: UpdateCardDialogType) => {
+const UpdateCardDialog = ({
+  isOpen,
+  closeDialog,
+  cardId,
+  cardQuestion,
+  cardAnswer,
+  cardQuestionImg,
+  cardAnswerImg,
+}: UpdateCardDialogType) => {
   const [select, setSelect] = useState<string>('text') // should be 'text' or 'image'
   const [questionImgPreview, setQuestionImgPreview] = useState<string | null>(null)
   const [answerImgPreview, setAnswerImgPreview] = useState<string | null>(null)
 
   const schema = z.object({
-    question: z
-      .string()
-      .min(3, { message: 'name must be longer than or equal to 3 characters' })
-      .optional(),
-    answer: z
-      .string()
-      .min(3, { message: 'name must be longer than or equal to 3 characters' })
-      .optional(),
+    question: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+
+    answer: z.string().min(3, { message: 'name must be longer than or equal to 3 characters' }),
+
     questionImg: z.instanceof(File).optional(),
     answerImg: z.instanceof(File).optional(),
   })
@@ -52,10 +61,16 @@ const UpdateCardDialog = ({ isOpen, closeDialog, cardId }: UpdateCardDialogType)
     control,
     reset,
     setValue,
+    getValues,
     formState: { errors },
   } = useForm<UpdateCarddInputs>({
     resolver: zodResolver(schema),
   })
+
+  useEffect(() => {
+    setValue('question', cardQuestion)
+    setValue('answer', cardAnswer)
+  }, [cardQuestion, cardAnswer, getValues().question, getValues().answer])
 
   const [updateCard] = useUpdateCardMutation()
 
@@ -68,16 +83,13 @@ const UpdateCardDialog = ({ isOpen, closeDialog, cardId }: UpdateCardDialogType)
     data.answerImg && formData.append('answerImg', data.answerImg)
     updateCard({ id: cardId, card: formData })
     reset()
-    closeDialog(false)
+    closeDialogHandler()
   }
 
   const closeDialogHandler = () => {
-    setAnswerImgPreview(null)
-    setQuestionImgPreview(null)
     closeDialog(false)
     reset()
     setSelect('text')
-    setQuestionImgPreview(null)
   }
 
   const onQuestionImgChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -130,6 +142,7 @@ const UpdateCardDialog = ({ isOpen, closeDialog, cardId }: UpdateCardDialogType)
               <div className={s.form__imgs_question}>
                 <Subtitle2>Question:</Subtitle2>
                 {questionImgPreview && <img src={questionImgPreview} alt="" />}
+                {!questionImgPreview && cardQuestionImg && <img src={cardQuestionImg} alt="" />}
                 <Controller
                   control={control}
                   name={'questionImg'}
@@ -149,6 +162,7 @@ const UpdateCardDialog = ({ isOpen, closeDialog, cardId }: UpdateCardDialogType)
               <div className={s.form__imgs_answer}>
                 <Subtitle2>Answer:</Subtitle2>
                 {answerImgPreview && <img src={answerImgPreview} alt="" />}
+                {!answerImgPreview && cardAnswerImg && <img src={cardAnswerImg} alt="" />}
                 <Controller
                   control={control}
                   name={'answerImg'}

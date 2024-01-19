@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 
-import logo from '../../../common/imgs/logo.png'
-import noava from '../../../common/imgs/noAvaUser.png'
 import { Button } from '../button'
 import Dropdown from '../dropdown/dropdown'
 
 import s from './header.module.scss'
 import ProfileDialog from './profileDialog/profileDialog'
+
+import logo from '@/common/imgs/logo.png'
+import noava from '@/common/imgs/noAvaUser.png'
 
 type UserData = {
   avatar: string | null

@@ -6,11 +6,6 @@ const meta = {
   title: 'Components/Button',
   component: Header,
   tags: ['autodocs'],
-  /* argTypes: {
-     isAuth: {
-      control: { type: 'radio' },
-    },
-  }, */
 } satisfies Meta<typeof Header>
 
 export default meta
