@@ -11,7 +11,6 @@ import DeckItem from '@/components/ui/deckItem/deckItem'
 import Input from '@/components/ui/input/input'
 import AddDeckDialog from '@/components/ui/modal/add-deck-dialog/add-deck-dialog'
 import Pagination from '@/components/ui/pagination/pagination'
-import SkeletonCard from '@/components/ui/skeleton/skeleton'
 import EditableSlider from '@/components/ui/slider/slider'
 import { Table } from '@/components/ui/table/table'
 import Tabs from '@/components/ui/tabs/tabs'
@@ -31,11 +30,7 @@ const Decks = () => {
 
   const me = useAppSelector(state => state.auth?.user)
 
-  const {
-    data: decks,
-    isError,
-    isFetching,
-  } = useGetDecksQuery({
+  const { data: decks, isError } = useGetDecksQuery({
     itemsPerPage: 10,
     authorId: tabValue === 'My cards' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
@@ -74,11 +69,6 @@ const Decks = () => {
   return (
     <WrapperHeader>
       <div className={s.decks}>
-        {isFetching && (
-          <div className={s.skeleton}>
-            <SkeletonCard />
-          </div>
-        )}
         {decks && decks?.items.length > 0 && (
           <>
             <div className={s.header}>

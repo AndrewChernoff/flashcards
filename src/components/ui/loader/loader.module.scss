@@ -1,0 +1,76 @@
+$n: 4;
+$d: 2.5em;
+$r: 0.5 * $d;
+$g: $r;
+$u: $d + $g;
+$b: 9;
+$t: 2s;
+
+.loaderContainer,
+.loader {
+  display: grid;
+}
+
+.loaderContainer {
+  overflow: hidden;
+  height: 100px;
+  margin: 150px 0 0;
+
+  &::before,
+  .loader {
+    grid-area: 1/ 1;
+  }
+
+  &::before {
+    content: '';
+    background: var(--color-dark-900);
+  }
+}
+
+.loaderContainer .loader {
+  transform: translate(-1 * $u);
+
+  grid-gap: $g;
+  grid-template: #{$d}/ repeat($n, $d);
+  place-content: center;
+
+  background: var(--color-dark-900);
+  filter: blur($b * 1px) contrast(3 * $b) blur(1px);
+  mix-blend-mode: lighten;
+
+  animation: p $t cubic-bezier(0.32, 1, 0.68, 1) infinite;
+
+  &::before,
+  &::after {
+    --i: 0;
+
+    content: '';
+
+    grid-column: calc(1 + var(--i)) / span calc(1 + var(--i) * (#{$n} - 1));
+
+    // prettier-ignore
+    background: radial-gradient(circle, var(--color-light-100) $r, var(--color-dark-900) 0) - 0.5 * $r/ #{$u};
+
+    animation: inherit;
+    animation-name: b;
+    animation-duration: calc((1 - var(--i)) * #{$t});
+  }
+
+  &::after {
+    --i: 1;
+  }
+}
+
+@keyframes p {
+  0%,
+  75% {
+    transform: none;
+  }
+}
+
+@keyframes b {
+  75%,
+  100% {
+    transform: translate($n * $u);
+  }
+}

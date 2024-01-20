@@ -6,7 +6,7 @@ type FileinputProps = {
   onImgChange: (e: ChangeEvent<HTMLInputElement>) => void
   title: string
   id: string
-  className: string
+  className?: string
 }
 
 const Fileinput = forwardRef<HTMLInputElement, FileinputProps>((props, ref) => {
@@ -21,7 +21,7 @@ const Fileinput = forwardRef<HTMLInputElement, FileinputProps>((props, ref) => {
         <input
           onChange={onImgChange}
           type={'file'}
-          className={className}
+          className={s.file__input}
           id={id}
           ref={ref}
           {...rest}

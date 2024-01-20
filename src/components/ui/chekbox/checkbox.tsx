@@ -12,7 +12,7 @@ export interface CheckboxProps {
 }
 
 const CheckboxDemo = ({ className, id, label, checked, onCheckedChange }: CheckboxProps) => {
-  const checkboxBackground = checked ? 'white' : 'black'
+  const checkboxBackground = checked ? 'white' : '#333'
 
   const checkboxClassname = className ? `${s.checkbox} ${className}` : s.checkbox
 

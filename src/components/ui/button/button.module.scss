@@ -43,14 +43,8 @@ button {
   .purple {
     @include background-and-border; // added
 
-    /* padding: 6px 28px;
-
-    font-size: 14px;
-    font-weight: 700;
-    color: white; */
     background-color: #704ECC;
-
-    // border-radius: 4px;
+    box-shadow: 0 4px 18px 0 rgb(140 97 255 / 35%);
   }
    
   .fullWidth {

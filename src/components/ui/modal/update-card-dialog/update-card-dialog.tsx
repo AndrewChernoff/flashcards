@@ -152,7 +152,6 @@ const UpdateCardDialog = ({
                         onImgChange={onQuestionImgChange}
                         title={'Change Cover'}
                         id={'questionImg'}
-                        className={s.file__input}
                       />
                     )
                   }}
@@ -172,7 +171,6 @@ const UpdateCardDialog = ({
                         onImgChange={onAnswerImgChange}
                         title={'Change Cover'}
                         id={'answerImg'}
-                        className={s.file__input}
                       />
                     )
                   }}

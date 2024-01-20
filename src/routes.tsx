@@ -5,6 +5,7 @@ import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-rou
 import { useAppDispatch } from './common/hooks/redux-hooks'
 import CreatePassword from './components/ui/create-password/create-password'
 import ForgotPassword from './components/ui/forgot-password/forgot-password'
+import { Loader } from './components/ui/loader/loader'
 import { LoginForm } from './components/ui/login-form/login-form'
 import NotFound from './components/ui/not-found/not-found'
 import SignUp from './components/ui/sign-up/sign-up'
@@ -14,10 +15,10 @@ import { useGetMeQuery } from './services/auth/auth'
 import { getUserData } from './services/auth/auth-slice'
 
 const privateRoutes = [
-  {
+  /* {
     path: '/',
     element: <div>Hello world!</div>,
-  },
+  }, */
   {
     path: '/decks',
     element: <Decks />,
@@ -55,7 +56,7 @@ const PrivateRoute = () => {
     dispatch(getUserData(me))
   }, [me])
 
-  if (isMeLoading) return <div>Loading...</div>
+  if (isMeLoading) return <Loader />
 
   return isAuth?.success === false ? <Navigate to="/signin" /> : <Outlet />
 }

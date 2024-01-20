@@ -1,10 +1,26 @@
-import { H1 } from '../typography/typography'
+import { useNavigate } from 'react-router-dom'
+
+import { Button } from '../button'
+import { Body1 } from '../typography/typography'
 
 import s from './not-found.module.scss'
+
+import error404 from '@/common/imgs/404.png'
+
 const NotFound = () => {
+  const navigate = useNavigate()
+
+  const backToHome = () => navigate('/signin')
+
   return (
-    <div>
-      <H1 className={s.title}> The resource is not Found</H1>
+    <div className={s.notFound}>
+      <div className={s.notFound__content}>
+        <img src={error404} alt="page not found" />
+        <Body1> Sorry! Page not found!</Body1>
+        <Button callBack={backToHome} variant="purple">
+          Back to home page
+        </Button>
+      </div>
     </div>
   )
 }

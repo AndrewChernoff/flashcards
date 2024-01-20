@@ -20,7 +20,7 @@ import { useDeleteDeckMutation, useUpdateDeckMutation } from '@/services/decks/d
 import { DeckItemType } from '@/services/decks/types'
 
 type DeckItemProps = {
-  deck: any
+  deck: DeckItemType
   myId?: string | null
 }
 
@@ -125,6 +125,9 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
         requestCard={trigger}
       />
       <UpdateDeckDialog
+        deckName={deck.name}
+        deckCover={deck.cover}
+        deckIsPrivate={deck.isPrivate}
         isOpen={isUpdatePackDialodOpen}
         closeDialog={(value: boolean) => setIsUpdatePackDialodOpen(value)}
         callback={handleUpdateDeck}

@@ -21,7 +21,6 @@
     }
   }
 
-
 .form {
     &__header {
         display: flex;
@@ -35,6 +34,10 @@
         button {
             cursor: pointer;
         }
+    }
+
+    &__cover {
+        margin-top: 24px;
     }
 
     &__checkbox {
