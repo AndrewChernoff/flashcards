@@ -1,6 +1,10 @@
 .decks {
     width: 80%;
-    margin: 0 auto; 
+    margin: 0 auto;
+    
+    .skeleton {
+        margin-top: 33px;
+    }
 
     .header {
         display: flex;

@@ -1,5 +1,7 @@
 import { ChangeEvent, memo, useCallback, useState } from 'react'
 
+import { toast } from 'react-toastify'
+
 import s from './decks.module.scss'
 
 import WrapperHeader from '@/common/component/wrapper-header'
@@ -9,10 +11,10 @@ import DeckItem from '@/components/ui/deckItem/deckItem'
 import Input from '@/components/ui/input/input'
 import AddDeckDialog from '@/components/ui/modal/add-deck-dialog/add-deck-dialog'
 import Pagination from '@/components/ui/pagination/pagination'
+import SkeletonCard from '@/components/ui/skeleton/skeleton'
 import EditableSlider from '@/components/ui/slider/slider'
 import { Table } from '@/components/ui/table/table'
 import Tabs from '@/components/ui/tabs/tabs'
-import { H2 } from '@/components/ui/typography/typography'
 import { useAddDeckMutation, useGetDecksQuery } from '@/services/decks/decks'
 import { DeckItemType } from '@/services/decks/types'
 
@@ -29,7 +31,11 @@ const Decks = () => {
 
   const me = useAppSelector(state => state.auth?.user)
 
-  const { data: decks } = useGetDecksQuery({
+  const {
+    data: decks,
+    isError,
+    isFetching,
+  } = useGetDecksQuery({
     itemsPerPage: 10,
     authorId: tabValue === 'My cards' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
@@ -52,32 +58,51 @@ const Decks = () => {
   /*Add deck dialog functionality */
   const handleAddDeckDialog = () => setIsNewPackDialogOpen(!isNewPackDialodOpen)
 
+  if (isError) {
+    toast.error('Something went wrong. Try to refresh the page or come here later', {
+      position: 'bottom-right',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    })
+  }
+
   return (
     <WrapperHeader>
       <div className={s.decks}>
-        <div className={s.header}>
-          <h1>Packs list</h1>
-          <Button variant="purple" callBack={handleAddDeckDialog}>
-            Add New Pack
-          </Button>
-        </div>
-
-        <div className={s.filters}>
-          <Input
-            isSearch={true}
-            placeholder="Search"
-            type="text"
-            value={deckNameValue}
-            onValueChange={onInputValueChange}
-          />
-          <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
-
-          <EditableSlider value={sliderValue} callback={changeSliderValue} />
-
-          <Button className={s.clear}>Clear Filter</Button>
-        </div>
-        {decks && decks?.items.length > 0 ? (
+        {isFetching && (
+          <div className={s.skeleton}>
+            <SkeletonCard />
+          </div>
+        )}
+        {decks && decks?.items.length > 0 && (
           <>
+            <div className={s.header}>
+              <h1>Packs list</h1>
+              <Button variant="purple" callBack={handleAddDeckDialog}>
+                Add New Pack
+              </Button>
+            </div>
+
+            <div className={s.filters}>
+              <Input
+                isSearch={true}
+                placeholder="Search"
+                type="text"
+                value={deckNameValue}
+                onValueChange={onInputValueChange}
+              />
+              <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
+
+              <EditableSlider value={sliderValue} callback={changeSliderValue} />
+
+              <Button className={s.clear}>Clear Filter</Button>
+            </div>
+
             <Table.Root className={s.table}>
               <Table.Head>
                 <Table.Row className={s.row}>
@@ -105,8 +130,6 @@ const Decks = () => {
               className={s.decks__pagination}
             />
           </>
-        ) : (
-          <H2>No Decks Here</H2>
         )}
 
         <AddDeckDialog
