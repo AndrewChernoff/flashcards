@@ -1,7 +1,9 @@
 import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
 import { Button } from '../button'
@@ -13,6 +15,17 @@ import s from './login-form.module.scss'
 
 import { useGetMeQuery, useLogInMutation } from '@/services/auth/auth'
 
+function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
+  return typeof error === 'object' && error != null && 'status' in error && 'data' in error
+}
+
+type LogInError = {
+  statusCode: number
+  message: string
+  timestamp: string
+  path: string
+}
+
 export type FormValues = {
   email: string
   password: string
@@ -22,7 +35,7 @@ export type FormValues = {
 export const LoginForm = () => {
   const { data: me } = useGetMeQuery()
 
-  const [logIn] = useLogInMutation()
+  const [logIn, { error: logInError }] = useLogInMutation()
 
   const SignUpSchema = z.object({
     email: z.string().email(),
@@ -42,6 +55,22 @@ export const LoginForm = () => {
   }
 
   if (me && me?.success !== false) return <Navigate to={'/decks'} />
+
+  if (logInError) {
+    if (isFetchBaseQueryError(logInError)) {
+      toast.error((logInError.data as LogInError).message, {
+        toastId: 'loginError',
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    }
+  }
 
   return (
     <Card className={s.card}>
