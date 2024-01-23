@@ -6,6 +6,7 @@ import s from './decks.module.scss'
 
 import WrapperHeader from '@/common/component/wrapper-header'
 import { useAppSelector } from '@/common/hooks/redux-hooks'
+import FilterArrow from '@/common/svg/filterArrow'
 import { Button } from '@/components/ui/button'
 import DeckItem from '@/components/ui/deckItem/deckItem'
 import Input from '@/components/ui/input/input'
@@ -14,6 +15,7 @@ import Pagination from '@/components/ui/pagination/pagination'
 import EditableSlider from '@/components/ui/slider/slider'
 import { Table } from '@/components/ui/table/table'
 import Tabs from '@/components/ui/tabs/tabs'
+import { H2 } from '@/components/ui/typography/typography'
 import { useAddDeckMutation, useGetDecksQuery } from '@/services/decks/decks'
 import { DeckItemType } from '@/services/decks/types'
 
@@ -23,6 +25,7 @@ const Decks = () => {
   const [sliderValue, setSliderValue] = useState<number[]>([0, 50]) ////slider range
   const [tabValue, setTabValue] = useState<TabValue>('All cards') ////tabs for decks
   const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
+  const [orderedBy, setOrderedBy] = useState<'updated-asc' | 'updated-desc'>('updated-desc')
 
   const currentPage = useAppSelector(state => state.pagination.currentPage) // for pagination
 
@@ -30,13 +33,14 @@ const Decks = () => {
 
   const me = useAppSelector(state => state.auth?.user)
 
-  const { data: decks, isError } = useGetDecksQuery({
+  const { currentData: decks, isError } = useGetDecksQuery({
     itemsPerPage: 10,
     authorId: tabValue === 'My cards' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
     maxCardsCount: String(sliderValue[1]),
-    name: deckNameValue,
+    name: deckNameValue.trim(),
     currentPage: currentPage,
+    orderBy: orderedBy,
   })
 
   /* deck manipulations */
@@ -52,6 +56,16 @@ const Decks = () => {
   )
   /*Add deck dialog functionality */
   const handleAddDeckDialog = () => setIsNewPackDialogOpen(!isNewPackDialodOpen)
+
+  const filterOrder = (order: 'updated-asc' | 'updated-desc') =>
+    order === 'updated-asc' ? setOrderedBy('updated-desc') : setOrderedBy('updated-asc')
+
+  const clearFilters = () => {
+    setOrderedBy('updated-asc')
+    setDeckNameValue('')
+    setSliderValue([0, 50])
+    setTabValue('All cards')
+  }
 
   if (isError) {
     toast.error('Something went wrong. Try to refresh the page or come here later', {
@@ -69,30 +83,32 @@ const Decks = () => {
   return (
     <WrapperHeader>
       <div className={s.decks}>
-        {decks && decks?.items.length > 0 && (
+        <div className={s.header}>
+          <h1>Packs list</h1>
+          <Button variant="purple" callBack={handleAddDeckDialog}>
+            Add New Pack
+          </Button>
+        </div>
+
+        <div className={s.filters}>
+          <Input
+            isSearch={true}
+            placeholder="Search"
+            type="text"
+            value={deckNameValue}
+            onValueChange={onInputValueChange}
+          />
+
+          <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
+
+          <EditableSlider value={sliderValue} callback={changeSliderValue} />
+
+          <Button className={s.clear} callBack={clearFilters}>
+            Clear Filter
+          </Button>
+        </div>
+        {decks && decks?.items.length > 0 ? (
           <>
-            <div className={s.header}>
-              <h1>Packs list</h1>
-              <Button variant="purple" callBack={handleAddDeckDialog}>
-                Add New Pack
-              </Button>
-            </div>
-
-            <div className={s.filters}>
-              <Input
-                isSearch={true}
-                placeholder="Search"
-                type="text"
-                value={deckNameValue}
-                onValueChange={onInputValueChange}
-              />
-              <Tabs tabValue={tabValue} onTabValueChange={onTabValueChange} />
-
-              <EditableSlider value={sliderValue} callback={changeSliderValue} />
-
-              <Button className={s.clear}>Clear Filter</Button>
-            </div>
-
             <Table.Root className={s.table}>
               <Table.Head>
                 <Table.Row className={s.row}>
@@ -100,10 +116,10 @@ const Decks = () => {
                   <Table.HeadCell className={s.headCell}>Name</Table.HeadCell>
                   <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
                   <Table.HeadCell className={s.headCell}>
-                    Updated
-                    {/* <button onClick={filterDirection}>
-                <Arrow />
-              </button> */}
+                    Updated{' '}
+                    <button onClick={() => filterOrder(orderedBy)}>
+                      <FilterArrow direction={orderedBy} />
+                    </button>
                   </Table.HeadCell>
                   <Table.HeadCell className={s.headCell}>Created By</Table.HeadCell>
                 </Table.Row>
@@ -120,6 +136,10 @@ const Decks = () => {
               className={s.decks__pagination}
             />
           </>
+        ) : (
+          <div>
+            <H2>No decks with this name</H2>
+          </div>
         )}
 
         <AddDeckDialog

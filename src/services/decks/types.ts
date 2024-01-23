@@ -38,7 +38,7 @@ export type DecksParams = {
   maxCardsCount?: string
   name?: string
   authorId?: string
-  orderBy?: string
+  orderBy?: 'updated-asc' | 'updated-desc'
   currentPage?: number
   itemsPerPage?: number
 } | void

@@ -42,9 +42,47 @@ const decksApi = baseApi.injectEndpoints({
           url: `v1/decks/${data.id}`,
           method: 'DELETE',
         }),
+        async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
+          console.log('DELETED')
+
+          const args: DecksParams = {
+            authorId: '', //6dbbc288-038d-4af2-84a6-abd97c451576
+            currentPage: 1,
+            name: '',
+            itemsPerPage: 10,
+            minCardsCount: '0',
+            maxCardsCount: '50',
+            orderBy: 'updated-desc',
+          }
+
+          const patchResult = dispatch(
+            decksApi.util.updateQueryData('getDecks', args, draft => {
+              console.log({ draft })
+              draft.items = draft.items.filter(el => el.id !== id)
+            })
+          )
+
+          try {
+            /* const { data: deletedDeck } = */ await queryFulfilled
+          } catch (error) {
+            console.log({ error })
+            // Отмена оптимистичного обновления в случае ошибки
+            patchResult.undo()
+            console.error(error)
+            // decksApi.util.invalidateTags()
+            //dispatch(decksApi.util.invalidateTags(['Decks']))
+          }
+        },
+        invalidatesTags: ['Decks'],
+      }),
+      /* deleteDeck: builder.mutation<any, { id: string }>({
+        query: data => ({
+          url: `v1/decks/${data.id}`,
+          method: 'DELETE',
+        }),
         async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
           const patchResult = dispatch(
-            decksApi.util.updateQueryData('getDecks', undefined, (draft: { items: any[] }) => {
+            decksApi.util.updateQueryData('getDecks', { id }, (draft: { items: any[] }) => {
               draft.items = draft.items.filter(el => el.id !== id)
             })
           )
@@ -57,7 +95,7 @@ const decksApi = baseApi.injectEndpoints({
           }
         },
         invalidatesTags: ['Decks'],
-      }),
+      }), */
       updateDeck: builder.mutation<
         DeckResponse,
         { id: string; data: { name?: string; isPrivate?: boolean } }
