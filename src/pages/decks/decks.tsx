@@ -29,7 +29,7 @@ export type TabValue = 'All cards' | 'My cards'
 
 const Decks = () => {
   const dispatch = useAppDispatch()
-  const sliderValue = useAppSelector(state => state.deck.sliderValue) ////slider range
+  const sliderValue = useAppSelector(state => state.deck.sliderValue) ////slider range value
   const tabValue = useAppSelector(state => state.deck.tabValue) ////tabs for decks
   const deckNameValue = useAppSelector(state => state.deck.deckName) ///input value for searching deck by name
   const orderedBy = useAppSelector(state => state.deck.orderedBy) ///decks order
