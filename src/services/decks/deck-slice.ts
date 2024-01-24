@@ -3,7 +3,7 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 
 import { DeckItemType } from './types'
 
-type TabsType = 'All cards' | 'My cards'
+type TabsType = 'All decks' | 'My decks'
 
 type State = {
   deck: DeckItemType | null
@@ -19,7 +19,7 @@ type State = {
 /*for getting card to learn we need to determine deckId firstly */
 const initialState: State = {
   deck: null,
-  tabValue: 'All cards', ///tabs for decks
+  tabValue: 'All decks', ///tabs for decks
   itemsPerPage: 10,
   sliderValue: [0, 50], ////slider range
   deckName: '', /// for searching deck by name

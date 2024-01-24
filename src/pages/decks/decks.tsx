@@ -25,7 +25,7 @@ import {
 import { useAddDeckMutation, useGetDecksQuery } from '@/services/decks/decks'
 import { DeckItemType } from '@/services/decks/types'
 
-export type TabValue = 'All cards' | 'My cards'
+export type TabValue = 'All decks' | 'My decks'
 
 const Decks = () => {
   const dispatch = useAppDispatch()
@@ -42,7 +42,7 @@ const Decks = () => {
 
   const { currentData: decks, isError } = useGetDecksQuery({
     itemsPerPage: 10,
-    authorId: tabValue === 'My cards' && me?.id ? me.id : '',
+    authorId: tabValue === 'My decks' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
     maxCardsCount: String(sliderValue[1]),
     name: deckNameValue.trim(),
@@ -74,7 +74,7 @@ const Decks = () => {
     dispatch(setOrderedBy('updated-desc'))
     setDeckNameValue('')
     dispatch(setSliderValue([0, 50]))
-    setTabValue('All cards')
+    setTabValue('All decks')
   }
 
   if (isError) {
@@ -117,7 +117,7 @@ const Decks = () => {
             Clear Filter
           </Button>
         </div>
-        {decks && decks?.items.length > 0 ? (
+        {decks && decks?.items?.length > 0 ? (
           <>
             <Table.Root className={s.table}>
               <Table.Head>
@@ -148,7 +148,7 @@ const Decks = () => {
           </>
         ) : (
           <div>
-            <H2>No decks with this name</H2>
+            <H2>Loading...</H2>
           </div>
         )}
 

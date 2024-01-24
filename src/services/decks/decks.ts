@@ -22,16 +22,23 @@ const decksApi = baseApi.injectEndpoints({
           method: 'POST',
           body: data,
         }),
-        async onQueryStarted(_, { dispatch, queryFulfilled }) {
-          try {
-            const res = await queryFulfilled
+        async onQueryStarted(__, { dispatch, queryFulfilled, getState }) {
+          const state = getState() as RootState
 
-            dispatch(
-              decksApi.util.updateQueryData('getDecks', undefined, draft => {
-                /////
-                draft.items.push(res.data)
-              })
-            )
+          const args: DecksParams = {
+            authorId: state.deck.tabValue === 'My decks' ? state.auth.user?.id : '',
+            currentPage: state.pagination.currentPage,
+            name: state.deck.deckName,
+            itemsPerPage: state.deck.itemsPerPage,
+            minCardsCount: String(state.deck.sliderValue[0]),
+            maxCardsCount: String(state.deck.sliderValue[1]),
+            orderBy: state.deck.orderedBy,
+          }
+
+          try {
+            const { data: createdDeck } = await queryFulfilled
+
+            dispatch(decksApi.util.upsertQueryData('getDecks', args, createdDeck))
           } catch (error) {
             console.error(error)
           }
@@ -47,7 +54,7 @@ const decksApi = baseApi.injectEndpoints({
           const state = getState() as RootState
 
           const args: DecksParams = {
-            authorId: state.deck.tabValue === 'My cards' ? state.auth.user?.id : '',
+            authorId: state.deck.tabValue === 'My decks' ? state.auth.user?.id : '',
             currentPage: state.pagination.currentPage,
             name: state.deck.deckName,
             itemsPerPage: state.deck.itemsPerPage,
@@ -70,27 +77,6 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      /* deleteDeck: builder.mutation<any, { id: string }>({
-        query: data => ({
-          url: `v1/decks/${data.id}`,
-          method: 'DELETE',
-        }),
-        async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
-          const patchResult = dispatch(
-            decksApi.util.updateQueryData('getDecks', { id }, (draft: { items: any[] }) => {
-              draft.items = draft.items.filter(el => el.id !== id)
-            })
-          )
-
-          try {
-            await queryFulfilled
-          } catch (error) {
-            patchResult.undo()
-            console.error(error)
-          }
-        },
-        invalidatesTags: ['Decks'],
-      }), */
       updateDeck: builder.mutation<
         DeckResponse,
         { id: string; data: { name?: string; isPrivate?: boolean } }

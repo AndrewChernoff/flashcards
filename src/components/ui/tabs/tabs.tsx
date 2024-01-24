@@ -11,8 +11,8 @@ interface SwitcherProps {
 
 const Tabs = ({ tabValue, onTabValueChange }: SwitcherProps) => {
   let qwert: any[] = [
-    { name: 'My cards', id: 1 },
-    { name: 'All cards', id: 2 },
+    { name: 'My decks', id: 1 },
+    { name: 'All decks', id: 2 },
   ]
 
   return (
