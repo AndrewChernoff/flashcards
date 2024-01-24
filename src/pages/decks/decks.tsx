@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 import s from './decks.module.scss'
 
 import WrapperHeader from '@/common/component/wrapper-header'
-import { useAppSelector } from '@/common/hooks/redux-hooks'
+import { useAppDispatch, useAppSelector } from '@/common/hooks/redux-hooks'
 import FilterArrow from '@/common/svg/filterArrow'
 import { Button } from '@/components/ui/button'
 import DeckItem from '@/components/ui/deckItem/deckItem'
@@ -16,16 +16,23 @@ import EditableSlider from '@/components/ui/slider/slider'
 import { Table } from '@/components/ui/table/table'
 import Tabs from '@/components/ui/tabs/tabs'
 import { H2 } from '@/components/ui/typography/typography'
+import {
+  setDeckNameValue,
+  setOrderedBy,
+  setSliderValue,
+  setTabValue,
+} from '@/services/decks/deck-slice'
 import { useAddDeckMutation, useGetDecksQuery } from '@/services/decks/decks'
 import { DeckItemType } from '@/services/decks/types'
 
 export type TabValue = 'All cards' | 'My cards'
 
 const Decks = () => {
-  const [sliderValue, setSliderValue] = useState<number[]>([0, 50]) ////slider range
-  const [tabValue, setTabValue] = useState<TabValue>('All cards') ////tabs for decks
-  const [deckNameValue, setDeckNameValue] = useState<string>('') ///input for searching deck by name
-  const [orderedBy, setOrderedBy] = useState<'updated-asc' | 'updated-desc'>('updated-desc')
+  const dispatch = useAppDispatch()
+  const sliderValue = useAppSelector(state => state.deck.sliderValue) ////slider range
+  const tabValue = useAppSelector(state => state.deck.tabValue) ////tabs for decks
+  const deckNameValue = useAppSelector(state => state.deck.deckName) ///input value for searching deck by name
+  const orderedBy = useAppSelector(state => state.deck.orderedBy) ///decks order
 
   const currentPage = useAppSelector(state => state.pagination.currentPage) // for pagination
 
@@ -46,24 +53,27 @@ const Decks = () => {
   /* deck manipulations */
   const [addDeck] = useAddDeckMutation()
 
-  const onTabValueChange = (value: TabValue) => setTabValue(value)
+  const onTabValueChange = (value: TabValue) => dispatch(setTabValue(value))
 
-  const changeSliderValue = (value: number[]) => setSliderValue(value)
+  const changeSliderValue = (value: number[]) => dispatch(setSliderValue(value))
 
   const onInputValueChange = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => setDeckNameValue(e.currentTarget.value), ////searching input
+    (e: ChangeEvent<HTMLInputElement>) => dispatch(setDeckNameValue(e.currentTarget.value)), ////searching input
     []
   )
   /*Add deck dialog functionality */
   const handleAddDeckDialog = () => setIsNewPackDialogOpen(!isNewPackDialodOpen)
 
+  /* filteration */
   const filterOrder = (order: 'updated-asc' | 'updated-desc') =>
-    order === 'updated-asc' ? setOrderedBy('updated-desc') : setOrderedBy('updated-asc')
+    order === 'updated-asc'
+      ? dispatch(setOrderedBy('updated-desc'))
+      : dispatch(setOrderedBy('updated-asc'))
 
   const clearFilters = () => {
-    setOrderedBy('updated-asc')
+    dispatch(setOrderedBy('updated-desc'))
     setDeckNameValue('')
-    setSliderValue([0, 50])
+    dispatch(setSliderValue([0, 50]))
     setTabValue('All cards')
   }
 
@@ -117,7 +127,7 @@ const Decks = () => {
                   <Table.HeadCell className={s.headCell}>Cards</Table.HeadCell>
                   <Table.HeadCell className={s.headCell}>
                     Updated{' '}
-                    <button onClick={() => filterOrder(orderedBy)}>
+                    <button style={{ cursor: 'pointer' }} onClick={() => filterOrder(orderedBy)}>
                       <FilterArrow direction={orderedBy} />
                     </button>
                   </Table.HeadCell>

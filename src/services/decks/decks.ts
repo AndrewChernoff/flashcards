@@ -1,4 +1,5 @@
 import { baseApi } from '../base-api'
+import { RootState } from '../store'
 
 import { Deck, DeckResponse, DecksParams } from './types'
 
@@ -43,34 +44,28 @@ const decksApi = baseApi.injectEndpoints({
           method: 'DELETE',
         }),
         async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
-          console.log('DELETED')
+          const state = getState() as RootState
 
           const args: DecksParams = {
-            authorId: '', //6dbbc288-038d-4af2-84a6-abd97c451576
-            currentPage: 1,
-            name: '',
-            itemsPerPage: 10,
-            minCardsCount: '0',
-            maxCardsCount: '50',
-            orderBy: 'updated-desc',
+            authorId: state.deck.tabValue === 'My cards' ? state.auth.user?.id : '',
+            currentPage: state.pagination.currentPage,
+            name: state.deck.deckName,
+            itemsPerPage: state.deck.itemsPerPage,
+            minCardsCount: String(state.deck.sliderValue[0]),
+            maxCardsCount: String(state.deck.sliderValue[1]),
+            orderBy: state.deck.orderedBy,
           }
 
           const patchResult = dispatch(
             decksApi.util.updateQueryData('getDecks', args, draft => {
-              console.log({ draft })
               draft.items = draft.items.filter(el => el.id !== id)
             })
           )
 
           try {
-            /* const { data: deletedDeck } = */ await queryFulfilled
+            await queryFulfilled
           } catch (error) {
-            console.log({ error })
-            // Отмена оптимистичного обновления в случае ошибки
             patchResult.undo()
-            console.error(error)
-            // decksApi.util.invalidateTags()
-            //dispatch(decksApi.util.invalidateTags(['Decks']))
           }
         },
         invalidatesTags: ['Decks'],
