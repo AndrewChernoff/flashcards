@@ -12,6 +12,7 @@ import LeftArrow from '@/common/svg/left-arrow'
 import { Button } from '@/components/ui/button'
 import EmptyDeck from '@/components/ui/empty-deck/empty-deck'
 import Input from '@/components/ui/input/input'
+import { Loader } from '@/components/ui/loader/loader'
 import AddCardDialog from '@/components/ui/modal/add-card-dialog/add-card-dialog'
 import { Table } from '@/components/ui/table/table'
 import { H1 } from '@/components/ui/typography/typography'
@@ -62,7 +63,7 @@ const Cards = () => {
   })
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <Loader />
   }
   const onInputTitleChange = (e: ChangeEvent<HTMLInputElement>) =>
     dispatch(setTitle(e.currentTarget.value.trim()))
