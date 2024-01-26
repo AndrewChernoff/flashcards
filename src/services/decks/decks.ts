@@ -88,7 +88,7 @@ const decksApi = baseApi.injectEndpoints({
             body: obj.data,
           }
         },
-        async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled, getState }) {
+        async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
           const state = getState() as RootState
 
           const args: DecksParams = {

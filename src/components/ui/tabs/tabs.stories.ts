@@ -18,6 +18,6 @@ type Story = StoryObj<typeof meta>
 
 export const TabsItems: Story = {
   args: {
-    tabValue: 'All cards',
+    tabValue: 'All decks',
   },
 }
