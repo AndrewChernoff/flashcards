@@ -49,16 +49,6 @@ function SignUp() {
     signup({ email: formData.email, password: formData.password })
   }
 
-  /*   useEffect(() => {
-    if (error) {
-      if ('status' in error) {
-        ;(error?.data as any).errorMessages.forEach((errorMessage: any) => {
-          setError(errorMessage.field, { type: 'manual', message: errorMessage.message })
-        })
-      }
-    }
-  }, [error]) */
-
   return (
     <Card className={s.card}>
       <DevTool control={control} />
