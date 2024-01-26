@@ -9,8 +9,6 @@ type State = {
   deck: DeckItemType | null
   tabValue: TabsType
   itemsPerPage: number
-  /* minCardsCount: number
-  maxCardsCount: number */
   orderedBy: 'updated-asc' | 'updated-desc'
   sliderValue: number[]
   deckName: string
