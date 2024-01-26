@@ -1,7 +1,7 @@
 import { baseApi } from '../base-api'
 import { RootState } from '../store'
 
-import { Deck, DeckResponse, DecksParams } from './types'
+import { Deck, DeckDeleteResponse, DeckResponse, DecksParams } from './types'
 
 const decksApi = baseApi.injectEndpoints({
   endpoints: builder => {
@@ -45,7 +45,7 @@ const decksApi = baseApi.injectEndpoints({
         },
         invalidatesTags: ['Decks'],
       }),
-      deleteDeck: builder.mutation<any, { id: string }>({
+      deleteDeck: builder.mutation<DeckDeleteResponse, { id: string }>({
         query: data => ({
           url: `v1/decks/${data.id}`,
           method: 'DELETE',
@@ -88,18 +88,29 @@ const decksApi = baseApi.injectEndpoints({
             body: obj.data,
           }
         },
-        async onQueryStarted({ id, data }, { dispatch, queryFulfilled }) {
-          const patchResult = dispatch(
-            decksApi.util.updateQueryData('getDecks', undefined, draft => {
-              ////?
-              draft.items = draft.items.map(el => (el.id === id ? { ...el, ...data } : el))
-            })
-          )
+        async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled, getState }) {
+          const state = getState() as RootState
+
+          const args: DecksParams = {
+            authorId: state.deck.tabValue === 'My decks' ? state.auth.user?.id : '',
+            currentPage: state.pagination.currentPage,
+            name: state.deck.deckName,
+            itemsPerPage: state.deck.itemsPerPage,
+            minCardsCount: String(state.deck.sliderValue[0]),
+            maxCardsCount: String(state.deck.sliderValue[1]),
+            orderBy: state.deck.orderedBy,
+          }
 
           try {
-            await queryFulfilled
-          } catch {
-            patchResult.undo()
+            const { data: updatedDeck } = await queryFulfilled
+
+            dispatch(
+              decksApi.util.updateQueryData('getDecks', args, draft => {
+                draft.items = draft.items.map(el => (el.id === id ? { ...el, ...updatedDeck } : el))
+              })
+            )
+          } catch (error) {
+            console.error(error)
           }
         },
         invalidatesTags: ['Decks'],

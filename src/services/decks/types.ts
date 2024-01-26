@@ -43,7 +43,30 @@ export type DecksParams = {
   itemsPerPage?: number
 } | void
 
-export type Deck = { name: string; cover?: File; isPrivate?: boolean }
+export type DeckDeleteResponse = {
+  id: string
+  userId: string
+  name: string
+  isPrivate: boolean
+  cover: string | null
+  created: string
+  updated: string
+  cardsCount: number
+}
+
+export type DeckUpdateResponse = {
+  author: Author
+  id: string
+  userId: string
+  name: string
+  isPrivate: boolean
+  cover: string
+  created: string
+  updated: string
+  cardsCount: number
+}
+
+export type Deck = { name: string; cover?: File; isPrivate?: boolean } ///for uploading and updating deck
 
 ///cards from deck
 export interface CardItem {

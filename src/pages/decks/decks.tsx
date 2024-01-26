@@ -40,7 +40,11 @@ const Decks = () => {
 
   const me = useAppSelector(state => state.auth?.user)
 
-  const { currentData: decks, isError } = useGetDecksQuery({
+  const {
+    currentData: decks,
+    isError,
+    isLoading,
+  } = useGetDecksQuery({
     itemsPerPage: 10,
     authorId: tabValue === 'My decks' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
@@ -117,7 +121,7 @@ const Decks = () => {
             Clear Filter
           </Button>
         </div>
-        {decks && decks?.items?.length > 0 ? (
+        {decks && decks?.items?.length > 0 && (
           <>
             <Table.Root className={s.table}>
               <Table.Head>
@@ -146,11 +150,9 @@ const Decks = () => {
               className={s.decks__pagination}
             />
           </>
-        ) : (
-          <div>
-            <H2>Loading...</H2>
-          </div>
         )}
+        {decks && decks?.items?.length === 0 && <H2>No decks</H2>}
+        {isLoading && <H2>Loading...</H2>}
 
         <AddDeckDialog
           isOpen={isNewPackDialodOpen}
