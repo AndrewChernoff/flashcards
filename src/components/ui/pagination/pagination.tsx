@@ -74,13 +74,11 @@ const Pagination = (props: PropsType) => {
             <li
               key={pageNumber + 'asd'} ////
               className={
-                /* classnames(s.pagination__item, {
-              selected: pageNumber === currentPage,
-            }) */ pageNumber === currentPage
+                pageNumber === currentPage
                   ? `${s.pagination__item_selected} ${s.pagination__item}`
                   : s.pagination__item
               }
-              onClick={() => dispatch(setCurrentPage(pageNumber)) /* onPageChange(pageNumber) */}
+              onClick={() => dispatch(setCurrentPage(pageNumber))}
             >
               {pageNumber}
             </li>

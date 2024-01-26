@@ -46,7 +46,14 @@ const DeleteDeckDialog = ({
           >
             Cancel
           </Button>
-          <Button className={s.dialog__buttons_add} callBack={deleteItem} variant="tertiary">
+          <Button
+            className={s.dialog__buttons_add}
+            callBack={() => {
+              closeDialog()
+              deleteItem()
+            }}
+            variant="tertiary"
+          >
             {btnDescription}
           </Button>
         </div>

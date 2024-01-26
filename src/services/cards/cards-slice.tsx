@@ -1,10 +1,24 @@
-import { Slice, createSlice } from '@reduxjs/toolkit'
+import { PayloadAction, Slice, createSlice } from '@reduxjs/toolkit'
 
 type State = {
+  deckId: string | null
   isOpen: boolean
+  title: string
+  orderBy: 'updated-asc' | 'updated-desc'
+  pagination: {
+    currentPage: number
+    itemsPerPage: number
+  }
 }
 const initialState: State = {
-  isOpen: false,
+  deckId: null, /// deckId for getting card requests
+  isOpen: false, //modal window
+  title: '', //input value
+  orderBy: 'updated-desc',
+  pagination: {
+    currentPage: 1,
+    itemsPerPage: 10,
+  },
 }
 
 export const cardsSlice: Slice<State> = createSlice({
@@ -17,9 +31,29 @@ export const cardsSlice: Slice<State> = createSlice({
     closeDialog: state => {
       state.isOpen = false
     },
+    setTitle: (state, action: PayloadAction<string>) => {
+      state.title = action.payload
+    },
+    setOrderBy: (state, action: PayloadAction<'updated-asc' | 'updated-desc'>) => {
+      state.orderBy = action.payload
+    },
+    getDeckIdFromCard: (state, action: PayloadAction<string>) => {
+      state.deckId = action.payload
+    },
+    setDeckIdFromCardToNull: state => {
+      //setting to null when leaving a page
+      state.deckId = null
+    },
   },
 })
 
-export const { openDialog, closeDialog } = cardsSlice.actions
+export const {
+  openDialog,
+  closeDialog,
+  setTitle,
+  setOrderBy,
+  getDeckIdFromCard,
+  setDeckIdFromCardToNull,
+} = cardsSlice.actions
 
 export default cardsSlice.reducer

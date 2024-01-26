@@ -25,3 +25,12 @@ export interface CardsResponse {
   items: CardItem[]
   pagination: Pagination
 }
+
+export type CardsParams = {
+  id: string
+  question?: string
+  answer?: string
+  orderBy?: string
+  currentPage?: number
+  itemsPerPage?: number
+}

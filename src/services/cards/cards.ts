@@ -1,12 +1,13 @@
 import { omit } from 'remeda'
 
 import { baseApi } from '../base-api'
+import { RootState } from '../store'
 
-import { CardItem, CardsResponse } from './types'
+import { CardItem, CardsParams, CardsResponse } from './types'
 
 const cardsApi = baseApi.injectEndpoints({
   endpoints: builder => ({
-    getCardsDeckById: builder.query<CardsResponse, { id: string; question?: string | null }>({
+    getCardsDeckById: builder.query<CardsResponse, CardsParams>({
       query: params => {
         return {
           url: `v1/decks/${params.id}/cards`,
@@ -44,29 +45,45 @@ const cardsApi = baseApi.injectEndpoints({
         method: 'POST',
         body: card,
       }),
-      async onQueryStarted({ id }, { dispatch, queryFulfilled }) {
+      /*  async onQueryStarted(__, { dispatch, queryFulfilled, getState }) {
+        const state = getState() as RootState
+
+        const args: CardsParams = {
+          id: state.card.deckId as string,
+          question: state.card.title,
+          orderBy: state.card.orderBy,
+          currentPage: 1,
+          itemsPerPage: 10,
+        }
+
         try {
           const { data: addedCard } = await queryFulfilled
 
-          dispatch(
-            cardsApi.util.updateQueryData('getCardsDeckById', { id }, draft => {
-              Object.assign(draft, addedCard)
-            })
-          )
+          dispatch(cardsApi.util.upsertQueryData('getCardsDeckById', args, addedCard))
         } catch (error) {
           console.error(error)
         }
-      },
+      }, */
       invalidatesTags: ['Cards'],
     }),
-    deleteCard: builder.mutation<CardsResponse, string>({
+    deleteCard: builder.mutation<void, string>({
       query: id => ({
         url: `/v1/cards/${id}`,
         method: 'DELETE',
       }),
-      async onQueryStarted(id, { dispatch, queryFulfilled }) {
+      async onQueryStarted(id, { dispatch, queryFulfilled, getState }) {
+        const state = getState() as RootState
+
+        const args: CardsParams = {
+          id: state.card.deckId as string,
+          question: state.card.title,
+          orderBy: state.card.orderBy,
+          currentPage: 1,
+          itemsPerPage: 10,
+        }
+
         const patchResult = dispatch(
-          cardsApi.util.updateQueryData('getCardsDeckById', { id }, draft => {
+          cardsApi.util.updateQueryData('getCardsDeckById', args, draft => {
             draft.items = draft.items.filter(el => el.id !== id)
           })
         )
@@ -80,23 +97,33 @@ const cardsApi = baseApi.injectEndpoints({
       invalidatesTags: ['Cards'],
     }),
 
-    updateCard: builder.mutation<CardItem, { id: string; card: any }>({
+    updateCard: builder.mutation<CardItem, { id: string; card: CardItem }>({
       query: ({ id, card }) => ({
         url: `/v1/cards/${id}`,
         method: 'PATCH',
         body: card,
       }),
-      async onQueryStarted({ id, ...body }, { dispatch, queryFulfilled }) {
-        const patchResult = dispatch(
-          cardsApi.util.updateQueryData('getCardsDeckById', { id }, draft => {
-            draft.items = draft.items.map(el => (el.id === id ? { ...el, ...body } : el))
-          })
-        )
+      async onQueryStarted({ id }, { dispatch, queryFulfilled, getState }) {
+        const state = getState() as RootState
+
+        const args: CardsParams = {
+          id: state.card.deckId as string,
+          question: state.card.title,
+          orderBy: state.card.orderBy,
+          currentPage: 1,
+          itemsPerPage: 10,
+        }
 
         try {
-          await queryFulfilled
-        } catch {
-          patchResult.undo()
+          const { data: updatedCard } = await queryFulfilled
+
+          dispatch(
+            cardsApi.util.updateQueryData('getCardsDeckById', args, draft => {
+              draft.items = draft.items.map(el => (el.id === id ? { ...el, ...updatedCard } : el))
+            })
+          )
+        } catch (error) {
+          console.error(error)
         }
       },
       invalidatesTags: ['Cards'],
