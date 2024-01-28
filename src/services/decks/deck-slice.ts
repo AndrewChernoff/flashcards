@@ -12,6 +12,9 @@ type State = {
   orderedBy: 'updated-asc' | 'updated-desc'
   sliderValue: number[]
   deckName: string
+  pagination: {
+    currentPage: number
+  }
 }
 
 /*for getting card to learn we need to determine deckId firstly */
@@ -22,6 +25,9 @@ const initialState: State = {
   sliderValue: [0, 50], ////slider range
   deckName: '', /// for searching deck by name
   orderedBy: 'updated-desc',
+  pagination: {
+    currentPage: 1,
+  },
 }
 
 export const deckSlice = createSlice({
@@ -43,10 +49,19 @@ export const deckSlice = createSlice({
     setOrderedBy: (state, action: PayloadAction<'updated-asc' | 'updated-desc'>) => {
       state.orderedBy = action.payload
     },
+    setCurrentDecksPage: (state, action: PayloadAction<number>) => {
+      state.pagination.currentPage = action.payload
+    },
   },
 })
 
-export const { getDeck, setTabValue, setSliderValue, setDeckNameValue, setOrderedBy } =
-  deckSlice.actions
+export const {
+  getDeck,
+  setTabValue,
+  setSliderValue,
+  setDeckNameValue,
+  setOrderedBy,
+  setCurrentDecksPage,
+} = deckSlice.actions
 
 export default deckSlice.reducer

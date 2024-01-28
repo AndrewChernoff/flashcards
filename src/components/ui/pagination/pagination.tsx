@@ -1,22 +1,35 @@
 import classnames from 'classnames'
 
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/redux-hooks'
+import { useAppDispatch } from '../../../common/hooks/redux-hooks'
 import { PaginationType, usePagination, DOTS } from '../../../common/hooks/usePagination'
 import { getMultiplesOfTen } from '../../../common/utils/pagination-utils'
-import { setCurrentPage } from '../../../services/pagination/pagination-slice'
 import SelectDemo from '../select/select'
 
 import s from './pagination.module.scss'
 
+import { setCurrentDecksPage } from '@/services/decks/deck-slice'
+
 type PropsType = Omit<PaginationType, 'currentPage'> & {
   className?: string
   totalCount: number
+  currentPage: number
+  onNextPage: () => void
+  onPreviousPage: () => void
+  setCurrentDecksPageFunc: (value: string) => void
 }
 
 const Pagination = (props: PropsType) => {
-  const { totalCount, siblingCount = 1, pageSize, className } = props
+  const {
+    totalCount,
+    siblingCount = 1,
+    onNextPage,
+    onPreviousPage,
+    setCurrentDecksPageFunc,
+    currentPage,
+    pageSize,
+    className,
+  } = props
 
-  const currentPage = useAppSelector(state => state.pagination.currentPage)
   const dispatch = useAppDispatch()
 
   const paginationRange: any = usePagination({
@@ -31,14 +44,14 @@ const Pagination = (props: PropsType) => {
   }
 
   const onNext = () => {
-    dispatch(setCurrentPage(currentPage + 1))
+    onNextPage()
   }
 
   const onPrevious = () => {
-    dispatch(setCurrentPage(currentPage - 1))
+    onPreviousPage()
   }
 
-  const getValueFromSelect = (value: string) => dispatch(setCurrentPage(Number(value)))
+  const getValueFromSelect = (value: string) => setCurrentDecksPageFunc(value)
 
   let lastPage = paginationRange[paginationRange.length - 1]
 
@@ -78,7 +91,7 @@ const Pagination = (props: PropsType) => {
                   ? `${s.pagination__item_selected} ${s.pagination__item}`
                   : s.pagination__item
               }
-              onClick={() => dispatch(setCurrentPage(pageNumber))}
+              onClick={() => dispatch(setCurrentDecksPage(pageNumber))}
             >
               {pageNumber}
             </li>

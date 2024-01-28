@@ -133,6 +133,11 @@ const Cards = () => {
             </Table.Root>
           </>
         )}
+        {/* <Pagination
+              totalCount={decks.pagination.totalItems}
+              pageSize={10}
+              className={s.decks__pagination}
+            /> */}
       </div>
       <AddCardDialog isOpen={isModalOpen} deckId={deckId} closeDialog={closeDialogHandler} />
     </WrapperHeader>

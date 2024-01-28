@@ -17,6 +17,7 @@ import { Table } from '@/components/ui/table/table'
 import Tabs from '@/components/ui/tabs/tabs'
 import { H2 } from '@/components/ui/typography/typography'
 import {
+  setCurrentDecksPage,
   setDeckNameValue,
   setOrderedBy,
   setSliderValue,
@@ -34,7 +35,7 @@ const Decks = () => {
   const deckNameValue = useAppSelector(state => state.deck.deckName) ///input value for searching deck by name
   const orderedBy = useAppSelector(state => state.deck.orderedBy) ///decks order
 
-  const currentPage = useAppSelector(state => state.pagination.currentPage) // for pagination
+  const currentPage = useAppSelector(state => state.deck.pagination.currentPage) // for pagination
 
   const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
 
@@ -76,9 +77,9 @@ const Decks = () => {
 
   const clearFilters = () => {
     dispatch(setOrderedBy('updated-desc'))
-    setDeckNameValue('')
+    dispatch(setDeckNameValue(''))
     dispatch(setSliderValue([0, 50]))
-    setTabValue('All decks')
+    dispatch(setTabValue('All decks'))
   }
 
   if (isError) {
@@ -93,6 +94,16 @@ const Decks = () => {
       theme: 'light',
     })
   }
+  /*for pagination */
+  const onNextPage = () => {
+    dispatch(setCurrentDecksPage(currentPage + 1))
+  }
+
+  const onPreviousPage = () => {
+    dispatch(setCurrentDecksPage(currentPage - 1))
+  }
+
+  const setCurrentDecksPageFunc = (value: string) => dispatch(setCurrentDecksPage(Number(value))) /// for select in pagination component
 
   return (
     <WrapperHeader>
@@ -145,9 +156,13 @@ const Decks = () => {
               </Table.Body>
             </Table.Root>
             <Pagination
+              currentPage={currentPage}
               totalCount={decks.pagination.totalItems}
-              pageSize={10}
+              pageSize={decks.pagination.itemsPerPage}
               className={s.decks__pagination}
+              onNextPage={onNextPage}
+              onPreviousPage={onPreviousPage}
+              setCurrentDecksPageFunc={setCurrentDecksPageFunc}
             />
           </>
         )}
