@@ -27,7 +27,7 @@ const decksApi = baseApi.injectEndpoints({
 
           const args: DecksParams = {
             authorId: state.deck.tabValue === 'My decks' ? state.auth.user?.id : '',
-            currentPage: state.pagination.currentPage,
+            currentPage: state.deck.pagination.currentPage,
             name: state.deck.deckName,
             itemsPerPage: state.deck.itemsPerPage,
             minCardsCount: String(state.deck.sliderValue[0]),
@@ -55,7 +55,7 @@ const decksApi = baseApi.injectEndpoints({
 
           const args: DecksParams = {
             authorId: state.deck.tabValue === 'My decks' ? state.auth.user?.id : '',
-            currentPage: state.pagination.currentPage,
+            currentPage: state.deck.pagination.currentPage,
             name: state.deck.deckName,
             itemsPerPage: state.deck.itemsPerPage,
             minCardsCount: String(state.deck.sliderValue[0]),
@@ -93,7 +93,7 @@ const decksApi = baseApi.injectEndpoints({
 
           const args: DecksParams = {
             authorId: state.deck.tabValue === 'My decks' ? state.auth.user?.id : '',
-            currentPage: state.pagination.currentPage,
+            currentPage: state.deck.pagination.currentPage,
             name: state.deck.deckName,
             itemsPerPage: state.deck.itemsPerPage,
             minCardsCount: String(state.deck.sliderValue[0]),
