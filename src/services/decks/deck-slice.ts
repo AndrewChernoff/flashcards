@@ -14,6 +14,7 @@ type State = {
   deckName: string
   pagination: {
     currentPage: number
+    itemsPerPage: number
   }
 }
 
@@ -27,6 +28,7 @@ const initialState: State = {
   orderedBy: 'updated-desc',
   pagination: {
     currentPage: 1,
+    itemsPerPage: 10,
   },
 }
 

@@ -14,6 +14,7 @@ import EmptyDeck from '@/components/ui/empty-deck/empty-deck'
 import Input from '@/components/ui/input/input'
 import { Loader } from '@/components/ui/loader/loader'
 import AddCardDialog from '@/components/ui/modal/add-card-dialog/add-card-dialog'
+import Pagination from '@/components/ui/pagination/pagination'
 import { Table } from '@/components/ui/table/table'
 import { H1 } from '@/components/ui/typography/typography'
 import { useGetCardsDeckByIdQuery } from '@/services/cards/cards'
@@ -21,6 +22,7 @@ import {
   closeDialog,
   getDeckIdFromCard,
   openDialog,
+  setCurrentCardsPage,
   setDeckIdFromCardToNull,
   setOrderBy,
   setTitle,
@@ -32,9 +34,9 @@ const Cards = () => {
 
   const { id: deckId } = useParams()
   const deckProps = useLocation()
-  //const [title, setTitle] = useState<string>('') /// input value
   const title = useAppSelector(state => state.card.title) /// input value
   const ordredBy = useAppSelector(state => state.card.orderBy) ///orderedBy
+  const currentPage = useAppSelector(state => state.card.pagination.currentPage)
   const me = useAppSelector(state => state.auth.user)
 
   const isModalOpen = useAppSelector(state => state.card.isOpen)
@@ -54,11 +56,11 @@ const Cards = () => {
     }
   }, [])
 
-  const { data: cards, isLoading } = useGetCardsDeckByIdQuery({
+  const { currentData: cards, isLoading } = useGetCardsDeckByIdQuery({
     id: deckId,
     question: title.trim(),
     orderBy: ordredBy,
-    currentPage: 1,
+    currentPage: currentPage,
     itemsPerPage: 10,
   })
 
@@ -75,6 +77,17 @@ const Cards = () => {
 
   const deckName = deckProps.state.deckName
   const deckUserId = deckProps.state.userId
+
+  /*for pagination */
+  const onNextPage = () => {
+    dispatch(setCurrentCardsPage(currentPage + 1))
+  }
+
+  const onPreviousPage = () => {
+    dispatch(setCurrentCardsPage(currentPage - 1))
+  }
+
+  const setCurrentCardsPageFunc = (value: string) => dispatch(setCurrentCardsPage(Number(value))) /// for select in pagination component
 
   return (
     <WrapperHeader>
@@ -98,9 +111,11 @@ const Cards = () => {
           )}
         </div>
 
-        {cards?.items && cards.items.length === 0 && title.trim().length === 0 ? (
+        {cards && cards?.items && cards.items.length === 0 && title.trim().length === 0 && (
           <EmptyDeck myId={me?.id} deckUserId={deckUserId} deckId={deckId} />
-        ) : (
+        )}
+
+        {cards && cards?.items && cards.items.length > 0 && (
           <>
             <div className={s.filters}>
               <Input
@@ -131,13 +146,18 @@ const Cards = () => {
                 })}
               </Table.Body>
             </Table.Root>
+            <Pagination
+              totalCount={cards.pagination.totalItems}
+              pageSize={cards.pagination.itemsPerPage}
+              onNextPage={onNextPage}
+              onPreviousPage={onPreviousPage}
+              currentPage={currentPage}
+              setCurrentPageFunc={setCurrentCardsPageFunc}
+              className={s.cards__pagination}
+              totalPages={cards.pagination.totalPages}
+            />
           </>
         )}
-        {/* <Pagination
-              totalCount={decks.pagination.totalItems}
-              pageSize={10}
-              className={s.decks__pagination}
-            /> */}
       </div>
       <AddCardDialog isOpen={isModalOpen} deckId={deckId} closeDialog={closeDialogHandler} />
     </WrapperHeader>

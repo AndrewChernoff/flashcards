@@ -1,7 +1,15 @@
 export const getMultiplesOfTen = (lengthNumber: number): string[] => {
-  const arr = Array.from({ length: lengthNumber }, (_, index) => index + 1).filter(
-    number => number === 1 || number === 100 || (number % 10 === 0 && number <= 50)
-  )
+  const numbers = []
 
-  return arr.map(el => String(el))
+  // Add each tenth number
+  for (let i = 10; i <= 100; i += 10) {
+    numbers.push(String(i))
+  }
+
+  // Add each hundredth number
+  for (let i = 100; i <= lengthNumber; i += 100) {
+    numbers.push(String(i))
+  }
+
+  return numbers
 }

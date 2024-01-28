@@ -36,6 +36,7 @@ const Decks = () => {
   const orderedBy = useAppSelector(state => state.deck.orderedBy) ///decks order
 
   const currentPage = useAppSelector(state => state.deck.pagination.currentPage) // for pagination
+  const itemsPerPage = useAppSelector(state => state.deck.pagination.itemsPerPage)
 
   const [isNewPackDialodOpen, setIsNewPackDialogOpen] = useState<boolean>(false)
 
@@ -46,7 +47,7 @@ const Decks = () => {
     isError,
     isLoading,
   } = useGetDecksQuery({
-    itemsPerPage: 10,
+    itemsPerPage: itemsPerPage,
     authorId: tabValue === 'My decks' && me?.id ? me.id : '',
     minCardsCount: String(sliderValue[0]),
     maxCardsCount: String(sliderValue[1]),
@@ -162,7 +163,8 @@ const Decks = () => {
               className={s.decks__pagination}
               onNextPage={onNextPage}
               onPreviousPage={onPreviousPage}
-              setCurrentDecksPageFunc={setCurrentDecksPageFunc}
+              setCurrentPageFunc={setCurrentDecksPageFunc}
+              totalPages={decks.pagination.totalPages}
             />
           </>
         )}

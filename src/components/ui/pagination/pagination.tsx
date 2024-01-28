@@ -1,13 +1,10 @@
 import classnames from 'classnames'
 
-import { useAppDispatch } from '../../../common/hooks/redux-hooks'
 import { PaginationType, usePagination, DOTS } from '../../../common/hooks/usePagination'
 import { getMultiplesOfTen } from '../../../common/utils/pagination-utils'
 import SelectDemo from '../select/select'
 
 import s from './pagination.module.scss'
-
-import { setCurrentDecksPage } from '@/services/decks/deck-slice'
 
 type PropsType = Omit<PaginationType, 'currentPage'> & {
   className?: string
@@ -15,7 +12,8 @@ type PropsType = Omit<PaginationType, 'currentPage'> & {
   currentPage: number
   onNextPage: () => void
   onPreviousPage: () => void
-  setCurrentDecksPageFunc: (value: string) => void
+  setCurrentPageFunc: (value: string) => void
+  totalPages: number
 }
 
 const Pagination = (props: PropsType) => {
@@ -24,13 +22,12 @@ const Pagination = (props: PropsType) => {
     siblingCount = 1,
     onNextPage,
     onPreviousPage,
-    setCurrentDecksPageFunc,
+    setCurrentPageFunc,
     currentPage,
     pageSize,
     className,
+    totalPages,
   } = props
-
-  const dispatch = useAppDispatch()
 
   const paginationRange: any = usePagination({
     currentPage,
@@ -51,11 +48,11 @@ const Pagination = (props: PropsType) => {
     onPreviousPage()
   }
 
-  const getValueFromSelect = (value: string) => setCurrentDecksPageFunc(value)
+  const getValueFromSelect = (value: string) => setCurrentPageFunc(value)
 
   let lastPage = paginationRange[paginationRange.length - 1]
 
-  const arr = getMultiplesOfTen(totalCount) ////function for getting the first and each 10th element
+  const arr = getMultiplesOfTen(totalPages) ////function for getting the first and each 10th and 100th element
 
   return (
     <div className={classnames(s.pagination, className)}>
@@ -91,7 +88,7 @@ const Pagination = (props: PropsType) => {
                   ? `${s.pagination__item_selected} ${s.pagination__item}`
                   : s.pagination__item
               }
-              onClick={() => dispatch(setCurrentDecksPage(pageNumber))}
+              onClick={() => setCurrentPageFunc(pageNumber)}
             >
               {pageNumber}
             </li>
@@ -108,15 +105,17 @@ const Pagination = (props: PropsType) => {
         </button>
       </ul>
 
-      <div className={s.pagination__select}>
-        <p>Показать</p>
-        <SelectDemo
-          className={s.pagination__select_tab}
-          callback={getValueFromSelect}
-          items={arr}
-        />
-        <p>на странице</p>
-      </div>
+      {totalCount > 100 && (
+        <div className={s.pagination__select}>
+          <p>Показать</p>
+          <SelectDemo
+            className={s.pagination__select_tab}
+            callback={getValueFromSelect}
+            items={arr}
+          />
+          <p>на странице</p>
+        </div>
+      )}
     </div>
   )
 }

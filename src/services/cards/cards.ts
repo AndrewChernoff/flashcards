@@ -52,7 +52,7 @@ const cardsApi = baseApi.injectEndpoints({
           id: state.card.deckId as string,
           question: state.card.title,
           orderBy: state.card.orderBy,
-          currentPage: 1,
+          currentPage: state.card.pagination.currentPage,
           itemsPerPage: 10,
         }
 
@@ -78,7 +78,7 @@ const cardsApi = baseApi.injectEndpoints({
           id: state.card.deckId as string,
           question: state.card.title,
           orderBy: state.card.orderBy,
-          currentPage: 1,
+          currentPage: state.card.pagination.currentPage,
           itemsPerPage: 10,
         }
 
@@ -110,7 +110,7 @@ const cardsApi = baseApi.injectEndpoints({
           id: state.card.deckId as string,
           question: state.card.title,
           orderBy: state.card.orderBy,
-          currentPage: 1,
+          currentPage: state.card.pagination.currentPage,
           itemsPerPage: 10,
         }
 

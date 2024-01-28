@@ -7,13 +7,14 @@
 
 .cards {
     width: 80%;
-    margin: 0 auto; 
+    margin: 0 auto;
+    padding-bottom: 144px;
 
     
     &__header {
         display: flex;
-        justify-content: space-between;
         align-items: center;
+        justify-content: space-between;
 
         &_title {
         display: flex;
@@ -116,5 +117,9 @@
                     }
             }
         }  
+    }
+
+     &__pagination {
+       margin-top: 24px;
     }
 }

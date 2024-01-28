@@ -1,6 +1,7 @@
 .decks {
     width: 80%;
     margin: 0 auto;
+    padding-bottom: 144px;
     
     .skeleton {
         margin-top: 33px;
@@ -97,6 +98,6 @@
     }
 
      &__pagination {
-       margin: 50px auto;
+       margin-top: 24px;
     }
 }

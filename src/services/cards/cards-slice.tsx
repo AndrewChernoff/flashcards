@@ -44,6 +44,9 @@ export const cardsSlice: Slice<State> = createSlice({
       //setting to null when leaving a page
       state.deckId = null
     },
+    setCurrentCardsPage: (state, action: PayloadAction<number>) => {
+      state.pagination.currentPage = action.payload
+    },
   },
 })
 
@@ -54,6 +57,7 @@ export const {
   setOrderBy,
   getDeckIdFromCard,
   setDeckIdFromCardToNull,
+  setCurrentCardsPage,
 } = cardsSlice.actions
 
 export default cardsSlice.reducer
