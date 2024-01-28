@@ -107,6 +107,7 @@ const ShowAnswer = ({ isShown, card, showAnother }: any) => {
             handleRateCard((deck as DeckItemType).id, cardRating, card.id)
             showAnother()
           }}
+          disabled={cardRating === '0'}
           fullWidth={true}
           className={s.card__showAnswer_btn}
         >
