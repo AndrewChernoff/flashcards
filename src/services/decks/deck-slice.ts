@@ -1,12 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-import { DeckItemType } from './types'
-
 type TabsType = 'All decks' | 'My decks'
 
 type State = {
-  deck: DeckItemType | null
   tabValue: TabsType
   itemsPerPage: number
   orderedBy: 'updated-asc' | 'updated-desc'
@@ -20,7 +17,6 @@ type State = {
 
 /*for getting card to learn we need to determine deckId firstly */
 const initialState: State = {
-  deck: null,
   tabValue: 'All decks', ///tabs for decks
   itemsPerPage: 10,
   sliderValue: [0, 50], ////slider range
@@ -36,9 +32,6 @@ export const deckSlice = createSlice({
   name: 'deck',
   initialState,
   reducers: {
-    getDeck: (state, action: PayloadAction<DeckItemType | null>) => {
-      state.deck = action.payload
-    },
     setTabValue: (state, action: PayloadAction<TabsType>) => {
       state.tabValue = action.payload
     },
@@ -57,13 +50,7 @@ export const deckSlice = createSlice({
   },
 })
 
-export const {
-  getDeck,
-  setTabValue,
-  setSliderValue,
-  setDeckNameValue,
-  setOrderedBy,
-  setCurrentDecksPage,
-} = deckSlice.actions
+export const { setTabValue, setSliderValue, setDeckNameValue, setOrderedBy, setCurrentDecksPage } =
+  deckSlice.actions
 
 export default deckSlice.reducer

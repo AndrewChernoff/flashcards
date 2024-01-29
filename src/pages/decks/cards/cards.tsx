@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { useLocation, useParams, Link } from 'react-router-dom'
 
@@ -14,10 +14,11 @@ import EmptyDeck from '@/components/ui/empty-deck/empty-deck'
 import Input from '@/components/ui/input/input'
 import { Loader } from '@/components/ui/loader/loader'
 import AddCardDialog from '@/components/ui/modal/add-card-dialog/add-card-dialog'
+import CardDialog from '@/components/ui/modal/card-dialog/card-dialog'
 import Pagination from '@/components/ui/pagination/pagination'
 import { Table } from '@/components/ui/table/table'
 import { H1 } from '@/components/ui/typography/typography'
-import { useGetCardsDeckByIdQuery } from '@/services/cards/cards'
+import { useGetCardsDeckByIdQuery, useLazyGetCardByIdQuery } from '@/services/cards/cards'
 import {
   closeDialog,
   getDeckIdFromCard,
@@ -30,6 +31,8 @@ import {
 import { CardItem } from '@/services/decks/types'
 
 const Cards = () => {
+  const [isCardDialogOpen, setIsCardDialogOpen] = useState<boolean>(false) ///card dialog
+
   const dispatch = useAppDispatch()
 
   const { id: deckId } = useParams()
@@ -63,6 +66,8 @@ const Cards = () => {
     currentPage: currentPage,
     itemsPerPage: 10,
   })
+
+  const [trigger, { data: card }] = useLazyGetCardByIdQuery() /// get card on request
 
   if (isLoading) {
     return <Loader />
@@ -107,7 +112,15 @@ const Cards = () => {
             </Button>
           )}
           {deckUserId !== me?.id && cards && cards?.items.length > 0 && (
-            <Button variant="purple">Learn to Pack</Button>
+            <Button
+              variant="purple"
+              callBack={() => {
+                trigger(deckId)
+                setIsCardDialogOpen(true)
+              }}
+            >
+              Learn to Deck
+            </Button>
           )}
         </div>
 
@@ -159,6 +172,13 @@ const Cards = () => {
           </>
         )}
       </div>
+      <CardDialog
+        isOpen={isCardDialogOpen}
+        card={card}
+        closeDialog={() => setIsCardDialogOpen(false)}
+        requestCard={trigger}
+        deckId={deckId}
+      />
       <AddCardDialog isOpen={isModalOpen} deckId={deckId} closeDialog={closeDialogHandler} />
     </WrapperHeader>
   )

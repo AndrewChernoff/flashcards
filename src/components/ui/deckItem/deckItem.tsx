@@ -7,7 +7,6 @@ import DeleteDeckDialog from '../modal/delete-dialog/delete-dialog'
 import UpdateDeckDialog from '../modal/update-deck-dialog/update-deck-dialog'
 import { Table } from '../table/table'
 
-import { useAppDispatch } from '@/common/hooks/redux-hooks'
 import defaultCover from '@/common/imgs/default-cover.png'
 import Delete from '@/common/svg/delete'
 import Edit from '@/common/svg/edit'
@@ -15,7 +14,6 @@ import PlayCircle from '@/common/svg/play-circle'
 import { formatDate } from '@/common/utils/time-transfering'
 import s from '@/pages/decks/decks.module.scss'
 import { useLazyGetCardByIdQuery } from '@/services/cards/cards'
-import { getDeck } from '@/services/decks/deck-slice'
 import { useDeleteDeckMutation, useUpdateDeckMutation } from '@/services/decks/decks'
 import { DeckItemType } from '@/services/decks/types'
 
@@ -25,8 +23,6 @@ type DeckItemProps = {
 }
 
 const DeckItem = ({ deck, myId }: DeckItemProps) => {
-  const dispatch = useAppDispatch()
-
   /*delete deck functionality */
   const [isDeletePackDialodOpen, setIsDeletePackDialogOpen] = useState<boolean>(false)
   const [deleteDeckId, setDeleteDeckId] = useState<string | null>(null)
@@ -71,14 +67,8 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
     }
   }
 
-  const openCardDialogHandler = (deck: DeckItemType) => {
-    ///retrieving random card from deck to learn
-    dispatch(getDeck(deck))
+  const learnCardHandler = () => {
     setIsCardDialogOpen(true)
-  }
-
-  const learnCardHandler = (deck: DeckItemType) => {
-    openCardDialogHandler(deck)
     deck.cardsCount > 0 && trigger(deck.id)
   }
 
@@ -100,7 +90,7 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
           {deck.author.name}
 
           <div className={s.decks__createdBy_buttons}>
-            <button onClick={() => learnCardHandler(deck)}>
+            <button onClick={learnCardHandler}>
               <PlayCircle />
             </button>
             {deck.author.id === myId && (
@@ -123,6 +113,7 @@ const DeckItem = ({ deck, myId }: DeckItemProps) => {
         card={card}
         closeDialog={() => setIsCardDialogOpen(false)}
         requestCard={trigger}
+        deckId={deck.id}
       />
       <UpdateDeckDialog
         deckName={deck.name}

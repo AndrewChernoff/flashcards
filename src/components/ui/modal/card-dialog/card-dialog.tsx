@@ -7,26 +7,25 @@ import Modal from '../modal'
 
 import s from './card-dialog.module.scss'
 
-import { useAppDispatch, useAppSelector } from '@/common/hooks/redux-hooks'
 import { useRateCardMutation } from '@/services/cards/cards'
-import { getDeck } from '@/services/decks/deck-slice'
-import { CardItem, DeckItemType } from '@/services/decks/types'
+import { useGetDeckByIdQuery } from '@/services/decks/decks'
+import { CardItem } from '@/services/decks/types'
 
 type AddDeckDialogType = {
   isOpen: boolean
   closeDialog: (value: boolean) => void
   card: CardItem | null | undefined
   requestCard: (id: string) => void
+  deckId: string
 }
 /*This Modal is for showing card when we to learn the cards from deck, question apeares in Card modal */
 
-const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogType) => {
-  const deck = useAppSelector(state => state.deck?.deck)
-  const dispatch = useAppDispatch()
+const CardDialog = ({ isOpen, closeDialog, card, requestCard, deckId }: AddDeckDialogType) => {
   const [isAnswerShown, setIsAnswerShown] = useState<boolean>(false)
 
+  const { data: deck } = useGetDeckByIdQuery({ id: deckId })
+
   const handleClose = () => {
-    dispatch(getDeck(null))
     setIsAnswerShown(false)
     closeDialog(false)
   }
@@ -66,11 +65,12 @@ const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogTyp
                   <ShowAnswer
                     isShown={isAnswerShown}
                     card={card}
-                    deckId={deck?.id}
+                    deckId={deckId}
                     showAnother={() => {
                       setIsAnswerShown(false)
-                      getAnotherQuestion(deck.id)
+                      getAnotherQuestion(deckId)
                     }}
+                    deck={deck}
                   />
                 )}
               </>
@@ -82,15 +82,14 @@ const CardDialog = ({ isOpen, closeDialog, card, requestCard }: AddDeckDialogTyp
   )
 }
 
-const ShowAnswer = ({ isShown, card, showAnother }: any) => {
-  const deck = useAppSelector(state => state.deck.deck) /// then get it from props from parent
-
+const ShowAnswer = ({ isShown, card, showAnother, deck }: any) => {
   const [cardRating, setCardRating] = useState<string>('0')
 
   const [rateCard] = useRateCardMutation()
 
-  const handleRateCard = (deckId: any, grade: string, cardId: string) =>
+  const handleRateCard = (deckId: any, grade: string, cardId: string) => {
     rateCard({ deckId, cardId, grade })
+  }
 
   if (isShown) {
     return (
@@ -104,7 +103,7 @@ const ShowAnswer = ({ isShown, card, showAnother }: any) => {
         <Button
           variant="purple"
           callBack={() => {
-            handleRateCard((deck as DeckItemType).id, cardRating, card.id)
+            handleRateCard(deck.id, cardRating, card.id)
             showAnother()
           }}
           disabled={cardRating === '0'}
