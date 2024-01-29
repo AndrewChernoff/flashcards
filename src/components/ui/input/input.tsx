@@ -4,6 +4,8 @@ import eye from '../../../common/imgs/eye.png'
 
 import s from './input.module.scss'
 
+import { Eye } from '@/common/svg/eye'
+
 export interface InputProps {
   isSearch: boolean
   label?: string
@@ -31,6 +33,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     id,
     ...rest
   } = props
+
+  console.log(id)
 
   const [passwordShown, setPasswordShown] = useState(false)
 
@@ -83,9 +87,10 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           onChange={onValueChange}
           {...rest}
         />
-        {type === 'password' && (
+        {label === 'password' && (
           <button type={'button'} className={s.showPassword} onClick={togglePassword}>
-            <img src={eye} />
+            {/* <img src={eye} /> */}
+            <Eye type={inputType} />
           </button>
         )}
 
