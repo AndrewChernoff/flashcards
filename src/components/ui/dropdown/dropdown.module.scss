@@ -1,8 +1,46 @@
 .dropdown {
+    position: absolute;
+    top: 15px;
+    right: -65px;
+
     width: 217px;
     height: 147px;
     padding: 12px;
+
     background: #171717;
+    border: #808080 1px solid;
+
+    &::after,
+        &::before {
+        pointer-events: none;
+        content: " ";
+
+        position: absolute;
+        bottom: 100%;
+
+        width: 0;
+        height: 0;
+
+        border: solid transparent;
+        }
+
+        &::after {
+        right: 3%;
+        margin-left: -20px;
+        border-width: 10px;
+        border-bottom-color: #171717;
+        }
+
+        &::before {
+            right: 2%;
+
+            margin-left: -20px;
+
+            border-color: rgb(113 158 206 / 0%);
+            border-width: 12px;
+            border-bottom-color: #808080;
+        }
+
 
     &__item {
         all: unset;

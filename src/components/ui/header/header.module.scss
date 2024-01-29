@@ -2,6 +2,8 @@
     background-color: #171717;
 
     &__container {
+        // position: relative;
+
         display: flex;
         justify-content: space-between;
 
@@ -16,9 +18,11 @@
     }
 
     &__info {
+        cursor: pointer;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-between;///
+
 
         &_user {
             display: flex;
