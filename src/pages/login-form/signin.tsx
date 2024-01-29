@@ -1,4 +1,3 @@
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { useForm } from 'react-hook-form'
@@ -75,7 +74,6 @@ export const SignIn = () => {
   return (
     <Card className={s.card}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DevTool control={control} />
         <h2 className={s.form__title}> Sign In</h2>
         <Input
           className={s.form__input}

@@ -1,7 +1,10 @@
 .file {
     margin: 24px 0;
 
-    &__label {display: block;
+    &__label {
+        cursor: pointer;
+
+        display: block;
 
         width: 100%;
         padding: 6px 28px;

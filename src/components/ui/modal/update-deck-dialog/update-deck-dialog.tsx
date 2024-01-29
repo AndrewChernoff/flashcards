@@ -1,6 +1,5 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -90,8 +89,6 @@ const UpdateDeckDialog = ({
   return (
     <Modal isOpen={isOpen} callBack={closeDialog}>
       <form onSubmit={onSubmit}>
-        <DevTool control={control} />
-
         <div className={s.form__header}>
           <H2>Edit Pack</H2>
           <button onClick={closeDialogHandler}>X</button>

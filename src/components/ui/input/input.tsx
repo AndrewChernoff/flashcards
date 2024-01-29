@@ -1,7 +1,5 @@
 import { ChangeEvent, forwardRef, memo, useState } from 'react'
 
-import eye from '../../../common/imgs/eye.png'
-
 import s from './input.module.scss'
 
 import { Eye } from '@/common/svg/eye'
@@ -34,8 +32,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
     ...rest
   } = props
 
-  console.log(id)
-
   const [passwordShown, setPasswordShown] = useState(false)
 
   const togglePassword = () => {
@@ -47,28 +43,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
   const inputClassname = isSearch ? `${s.input__normal} ${s.input__search}` : `${s.input__normal}`
 
   const errorInputClassname = s.input__error
-
-  if (type === 'file') {
-    return (
-      <div className={s.file}>
-        <label htmlFor={id} className={s.file__label}>
-          Change Cover
-        </label>
-        <input
-          tabIndex={0}
-          disabled={isDisabled}
-          type={inputType}
-          className={s.file__input}
-          placeholder={placeholder}
-          ref={ref}
-          value={value}
-          id={id}
-          onChange={onValueChange}
-          {...rest}
-        />
-      </div>
-    )
-  }
 
   return (
     <div className={`${s.inputBlock} ${className}`}>

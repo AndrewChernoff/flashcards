@@ -1,6 +1,5 @@
 import { ChangeEvent, useState } from 'react'
 
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Controller, SubmitHandler, useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -87,8 +86,6 @@ const AddDeckDialog = ({ isOpen, closeDialog, deckId }: AddCardDialogType) => {
   return (
     <Modal isOpen={isOpen} callBack={closeDialogHandler}>
       <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-        <DevTool control={control} />
-
         <div className={s.form__header}>
           <H2>Add New Card</H2>
           <button onClick={closeDialogHandler}>X</button>
