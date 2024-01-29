@@ -93,7 +93,7 @@ function SignUp() {
 
         <h3>Already have an account?</h3>
 
-        <Link className={s.form__link} to={'/signin'}>
+        <Link className={s.form__link} to={'/'}>
           Sign In
         </Link>
       </form>

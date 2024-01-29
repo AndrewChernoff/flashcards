@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { Button } from '../button'
-import { Body1 } from '../typography/typography'
+import { Button } from '../../components/ui/button'
+import { Body1 } from '../../components/ui/typography/typography'
 
 import s from './not-found.module.scss'
 
@@ -10,7 +10,7 @@ import error404 from '@/common/imgs/404.png'
 const NotFound = () => {
   const navigate = useNavigate()
 
-  const backToHome = () => navigate('/signin')
+  const backToHome = () => navigate('/')
 
   return (
     <div className={s.notFound}>

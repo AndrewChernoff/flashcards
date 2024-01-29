@@ -3,22 +3,18 @@ import { useEffect } from 'react'
 import { createBrowserRouter, RouterProvider, Outlet, Navigate } from 'react-router-dom'
 
 import { useAppDispatch } from './common/hooks/redux-hooks'
-import CreatePassword from './components/ui/create-password/create-password'
-import ForgotPassword from './components/ui/forgot-password/forgot-password'
 import { Loader } from './components/ui/loader/loader'
-import { LoginForm } from './components/ui/login-form/login-form'
-import NotFound from './components/ui/not-found/not-found'
 import SignUp from './components/ui/sign-up/sign-up'
+import CreatePassword from './pages/create-password/create-password'
 import DeckItem from './pages/decks/cards/cards'
 import Decks from './pages/decks/decks'
+import ForgotPassword from './pages/forgot-password/forgot-password'
+import NotFound from './pages/not-found/not-found'
 import { useGetMeQuery } from './services/auth/auth'
 import { getUserData } from './services/auth/auth-slice'
+import { SignIn } from './pages/login-form/signin'
 
 const privateRoutes = [
-  /* {
-    path: '/',
-    element: <div>Hello world!</div>,
-  }, */
   {
     path: '/decks',
     element: <Decks />,
@@ -31,8 +27,8 @@ const privateRoutes = [
 
 const publicRoutes = [
   {
-    path: '/signin',
-    element: <LoginForm />,
+    path: '/',
+    element: <SignIn />,
   },
   {
     path: '/signup',
@@ -58,7 +54,7 @@ const PrivateRoute = () => {
 
   if (isMeLoading) return <Loader />
 
-  return isAuth?.success === false ? <Navigate to="/signin" /> : <Outlet />
+  return isAuth?.success === false ? <Navigate to="/" /> : <Outlet />
 }
 
 const router = createBrowserRouter([

@@ -4,10 +4,10 @@ import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { Button } from '../button'
-import Card from '../card/card'
-import Input from '../input/input'
-import { Body2 } from '../typography/typography'
+import { Button } from '../../components/ui/button'
+import Card from '../../components/ui/card/card'
+import Input from '../../components/ui/input/input'
+import { Body2 } from '../../components/ui/typography/typography'
 
 import s from './forgot-password.module.scss'
 
@@ -89,7 +89,7 @@ const ForgotPassword = () => {
         <Button type="submit" variant={'tertiary'} className={s.form__button} fullWidth={true}>
           Send Instructions
         </Button>
-        <Link to="/signin" className={s.form__link}>
+        <Link to="/" className={s.form__link}>
           Try logging in
         </Link>
       </form>

@@ -6,12 +6,12 @@ import { Link, Navigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { Button } from '../button'
-import Card from '../card/card'
-import ControlledCheckbox from '../controlled/controlled-checkbox'
-import Input from '../input/input'
+import { Button } from '../../components/ui/button'
+import Card from '../../components/ui/card/card'
+import ControlledCheckbox from '../../components/ui/controlled/controlled-checkbox'
+import Input from '../../components/ui/input/input'
 
-import s from './login-form.module.scss'
+import s from './signin.module.scss'
 
 import { useGetMeQuery, useLogInMutation } from '@/services/auth/auth'
 
@@ -32,7 +32,7 @@ export type FormValues = {
   rememberMe: boolean
 }
 
-export const LoginForm = () => {
+export const SignIn = () => {
   const { data: me } = useGetMeQuery()
 
   const [logIn, { error: logInError }] = useLogInMutation()

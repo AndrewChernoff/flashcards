@@ -4,9 +4,9 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { Button } from '../button'
-import Card from '../card/card'
-import Input from '../input/input'
+import { Button } from '../../components/ui/button'
+import Card from '../../components/ui/card/card'
+import Input from '../../components/ui/input/input'
 
 import s from './create-password.module.scss'
 
@@ -51,7 +51,7 @@ const CreatePassword = () => {
       progress: undefined,
       theme: 'colored',
     })
-    navigate('/signin')
+    navigate('/')
   }
   if (error) {
     toast.error('Something went wrong!', {
