@@ -63,7 +63,6 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
         />
         {label === 'password' && (
           <button type={'button'} className={s.showPassword} onClick={togglePassword}>
-            {/* <img src={eye} /> */}
             <Eye type={inputType} />
           </button>
         )}
