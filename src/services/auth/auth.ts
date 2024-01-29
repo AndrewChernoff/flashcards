@@ -66,7 +66,7 @@ const authApi = baseApi.injectEndpoints({
             url: `/v1/auth/recover-password`,
             method: 'POST',
             body: {
-              html: '<h1>Hi, ##name##</h1><p>Click <a href="http://localhost:5173/reset-password/##token##">here</a> to recover your password</p>',
+              html: '<h1>Hi, ##name##</h1><p>Click <a href="https://flashcards-owrzzvdzp-andrewchernoff.vercel.app//reset-password/##token##">here</a> to recover your password</p>',
               email: data.email,
             },
           }
