@@ -1,7 +1,7 @@
 import { UseControllerProps, useController } from 'react-hook-form'
 
 import CheckboxDemo, { CheckboxProps } from '../chekbox/checkbox'
-import { FormValues } from '../../../pages/login-form/signin'
+import { FormValues } from '../../../pages/signin/signin'
 import { AddDeckInputs } from '../modal/add-deck-dialog/add-deck-dialog'
 
 export type ControlledCheckboxProps<T extends FormValues | AddDeckInputs> = UseControllerProps<T> &

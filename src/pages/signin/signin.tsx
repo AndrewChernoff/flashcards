@@ -1,5 +1,4 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/query'
 import { useForm } from 'react-hook-form'
 import { Link, Navigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -12,11 +11,8 @@ import Input from '../../components/ui/input/input'
 
 import s from './signin.module.scss'
 
+import { isFetchBaseQueryError } from '@/common/utils/isFetchBAseQueryError'
 import { useGetMeQuery, useLogInMutation } from '@/services/auth/auth'
-
-function isFetchBaseQueryError(error: unknown): error is FetchBaseQueryError {
-  return typeof error === 'object' && error != null && 'status' in error && 'data' in error
-}
 
 type LogInError = {
   statusCode: number

@@ -61,7 +61,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>((props, ref) => {
           onChange={onValueChange}
           {...rest}
         />
-        {label === 'password' && (
+        {(label === 'password' || label === 'confirm password') && (
           <button type={'button'} className={s.showPassword} onClick={togglePassword}>
             <Eye type={inputType} />
           </button>

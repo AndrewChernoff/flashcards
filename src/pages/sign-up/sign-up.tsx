@@ -2,16 +2,25 @@ import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { z } from 'zod'
 
-import { Button } from '../button'
-import Card from '../card/card'
-import Input from '../input/input'
-import { H2 } from '../typography/typography'
+import { Button } from '../../components/ui/button'
+import Card from '../../components/ui/card/card'
+import Input from '../../components/ui/input/input'
+import { H2 } from '../../components/ui/typography/typography'
 
 import s from './sign-up.module.scss'
 
+import { isFetchBaseQueryError } from '@/common/utils/isFetchBAseQueryError'
 import { useSignupMutation } from '@/services/auth/auth'
+
+type SignUpError = {
+  data: {
+    errorMessages: Array<string>
+  }
+  status: 400
+}
 
 type SignUpFormValues = {
   email: string
@@ -20,7 +29,7 @@ type SignUpFormValues = {
 }
 
 function SignUp() {
-  const [signup /* , { error } */] = useSignupMutation()
+  const [signup, { error: signUpError, isSuccess }] = useSignupMutation()
 
   const SignUpSchema = z
     .object({
@@ -49,6 +58,36 @@ function SignUp() {
     signup({ email: formData.email, password: formData.password })
   }
 
+  if (signUpError) {
+    if (isFetchBaseQueryError(signUpError)) {
+      toast.error((signUpError as SignUpError).data.errorMessages[0], {
+        toastId: 'signUpError',
+        position: 'bottom-left',
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      })
+    }
+  }
+
+  if (isSuccess) {
+    toast.success('Successfully registered. Try to sign in', {
+      toastId: 'signup',
+      position: 'bottom-left',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    })
+  }
+
   return (
     <Card className={s.card}>
       <DevTool control={control} />
@@ -62,7 +101,7 @@ function SignUp() {
           error={errors.email?.message}
           isDisabled={false}
           {...register('email')}
-          label={'Email'}
+          label={'email'}
         />
 
         <Input
@@ -73,7 +112,7 @@ function SignUp() {
           error={errors.password?.message}
           isDisabled={false}
           {...register('password')}
-          label={'Password'}
+          label={'password'}
         />
 
         <Input
@@ -84,7 +123,7 @@ function SignUp() {
           error={errors.passwordConfirmation?.message}
           isDisabled={false}
           {...register('passwordConfirmation')}
-          label={'Confirm Password'}
+          label={'confirm password'}
         />
 
         <Button type="submit" className={s.form__button} variant={'tertiary'} fullWidth={true}>
